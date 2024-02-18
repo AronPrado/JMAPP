@@ -1,6 +1,8 @@
 package com.javierprado.jmapp.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -23,5 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         welcomeView.animation = animacion2
         logoColegio.animation = animacion1
+
+        Handler().postDelayed({
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 4000)
     }
 }
