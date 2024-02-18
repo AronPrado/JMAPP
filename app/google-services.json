@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270043942864",
+    "project_id": "prueba-9b8fe",
+    "storage_bucket": "prueba-9b8fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270043942864:android:c46b19293e13572e4833d5",
+        "android_client_info": {
+          "package_name": "com.javierprado.jmapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoVx51iv0KUTDaqkTAEeDOmUXO0O9aO4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -39,9 +39,9 @@ android {
 dependencies {
 
     //Room
-    implementation ("androidx.room: room-runtime:2.2.5")
-    //kapt ("androidx.room: room-compiler:2.2.5")
-    implementation ("androidx.room: room-ktx:2.2.5")
+    implementation ("androidx.room:room-runtime:2.3.0")
+    //kapt ("androidx.room:room-compiler:2.3.0")
+    implementation ("androidx.room:room-ktx:2.3.0")
     implementation("androidx.room:room-common:2.6.1")
     testImplementation ("androidx.room: room-testing:2.2.5")
 
