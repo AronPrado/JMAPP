@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -22,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         val btn_login = findViewById<Button>(R.id.btn_inicioSesion)
         val olvidasteContrasena = findViewById<TextView>(R.id.olvidasteContrasena)
 
-        val mAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
 
         btn_login.setOnClickListener {
             val emailUser = emailEditText.text.toString().trim()
@@ -47,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     finish()
-                    startActivity(Intent(this@LoginActivity, Seleccion_Sesion_Activity::class.java))
+                    startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
                     Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()

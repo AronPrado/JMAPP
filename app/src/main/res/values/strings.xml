@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">JMAPP</string>
+
+    <string name="NotiTitle">!Aviso!</string>
+    <string name="notiDescription">¿El Alumno no se encuentra en el salon de clases?</string>
+    <string name="escribir_mensaje">Escribir mensaje...</string>
+    <string name="enviar">Enviar</string>
+    <string name="Justificacion_Tittle">Justifique la Inasistencia de su hijo</string>
+    <string name="enviar_justificacion">Enviar mi Justificacion</string>
+    <string name="resp_escuela">Respuesta de la Escuela</string>
+    <string name="comunicar_docente">Comuniquese con el Docente a cargo</string>
+    <string name="Mandar_Notifiación">Notifique al Padre o Apoderado</string>
+    <string name="tareas">Tareas</string>
+    <string name="proyectos">Proyectos</string>
+
 </resources>

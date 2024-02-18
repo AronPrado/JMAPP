@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Seleccion_Sesion_Activity">
+    tools:context=".view.Seleccion_Sesion_Activity">
 
     <Button
         android:id="@+id/button"
@@ -14,5 +14,6 @@
         android:textColorHighlight="@color/md_theme_light_tertiary"
         android:backgroundTint="@color/md_theme_light_tertiary"
         tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="90dp" />
+        tools:layout_editor_absoluteY="90dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

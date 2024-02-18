@@ -1,10 +1,10 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "roles")
+@Entity(tableName = "roles_table")
 data class Roles(
     @PrimaryKey(autoGenerate = true)
     val rol_id: Int,

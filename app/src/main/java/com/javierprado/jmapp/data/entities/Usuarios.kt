@@ -1,10 +1,10 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "usuario")
+@Entity(tableName = "usuario_table")
 data class Usuarios(
     @PrimaryKey(autoGenerate = true)
     val id_usuario: Int,

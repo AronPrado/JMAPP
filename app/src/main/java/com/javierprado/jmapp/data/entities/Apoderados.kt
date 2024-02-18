@@ -1,13 +1,12 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-@Entity(tableName = "Docentes")
-data class Docentes(
+@Entity(tableName = "apoderados_table")
+data class Apoderados(
     @PrimaryKey(autoGenerate = true)
-    val id_docente: Int,
+    val id_apoderado: Int,
 
     @ColumnInfo(name = "id_usuario") //Referencia al id del usuario
     val id_usuario: Int,
@@ -24,19 +23,6 @@ data class Docentes(
     @ColumnInfo(name = "telefono")
     val telefono: String,
 
-    @ColumnInfo(name = "fecha_nacimiento")
-    val fecha_nacimiento: String,
-
-    @ColumnInfo(name = "genero")
-    val genero: String,
-
-    @ColumnInfo(name = "especialidad")
-    val especialidad: String,
-
     @ColumnInfo(name = "direccion")
-    val direccion: String,
-
-    @ColumnInfo(name = "fecha_contratacion")
-    val fecha_contratacion: String
-
+    val direccion: String
 )

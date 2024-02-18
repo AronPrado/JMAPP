@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
 
-@Entity(tableName = "usuarios_roles", primaryKeys = ["id_usuario", "rol_id"])
+@Entity(tableName = "usuarios_roles_table", primaryKeys = ["id_usuario", "rol_id"])
 data class UsuarioRolUnion(
     @ColumnInfo(name = "id_usuario") val idUsuario: Int,
     @ColumnInfo(name = "rol_id") val rolId: Int

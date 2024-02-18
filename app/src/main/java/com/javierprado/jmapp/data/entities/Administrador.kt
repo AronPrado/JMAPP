@@ -1,9 +1,9 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity(tableName = "Administrador")
+@Entity(tableName = "administrador_table")
 data class Administrador(
     @PrimaryKey(autoGenerate = true)
     val id_admin: Int,

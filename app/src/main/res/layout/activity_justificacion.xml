@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color4"
+    tools:context=".view.Justificacion">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ToolbarP"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/color1"
+        android:elevation="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewEntorno"
+        android:layout_width="230dp"
+        android:layout_height="171dp"
+        android:src="@drawable/colegio"
+        app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJustificationMessage" />
+
+    <TextView
+        android:id="@+id/textViewJustificationMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/librefranklin_bold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/Justificacion_Tittle"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ToolbarP"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/librefranklin_mediumitalic"
+        android:hint="@string/escribir_mensaje"
+        android:textSize="20dp"
+        android:minHeight="140dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJustificationMessage" />
+
+    <Button
+        android:id="@+id/buttonSendMessage"
+        android:layout_width="292dp"
+        android:layout_height="69dp"
+        android:backgroundTint="@color/md_theme_light_tertiary"
+        android:fontFamily="@font/librefranklin_mediumitalic"
+        android:text="@string/enviar_justificacion"
+        android:textSize="23dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMessage" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
