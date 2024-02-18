@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Inicio"/>
+        <item
+            android:id="@+id/nav_trabajos"
+            android:title="Trabajos"/>
+        <item
+            android:id="@+id/nav_recursos"
+            android:title="Recursos"/>
+        <item
+            android:id="@+id/nav_horario"
+            android:title="Horario"/>
+        <item
+            android:id="@+id/nav_eventos"
+            android:title="Eventos"/>
+        <item
+            android:id="@+id/nav_docentes"
+            android:title="Docentes"/>
+        <item
+            android:id="@+id/nav_comunicación"
+            android:title="Comunicación"/>
+    </group>
+
+</menu>
