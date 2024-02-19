@@ -12,5 +12,7 @@
     <string name="Mandar_Notifiación">Notifique al Padre o Apoderado</string>
     <string name="tareas">Tareas</string>
     <string name="proyectos">Proyectos</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="qui_n_entrar_a_la_app">¿Quién entrará a la App?</string>
 
 </resources>

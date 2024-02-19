@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         logoColegio.animation = animacion1
 
         Handler().postDelayed({
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            val intent = Intent(this@MainActivity, OptionLogin::class.java)
             startActivity(intent)
             finish()
         }, 4000)
