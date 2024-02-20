@@ -2,7 +2,6 @@ package com.javierprado.jmapp.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -48,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     finish()
-                    startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, docente_main::class.java))
                     Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()

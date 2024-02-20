@@ -5,13 +5,13 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MenuPrincipalApoderadoActivity">
+    tools:context=".view.admin_menu">
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_view_docente"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu" />
+        app:menu="@menu/menu_docente" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

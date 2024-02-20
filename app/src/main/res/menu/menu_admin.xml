@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_admin"
+            android:title="inicio"/>
+        <item
+            android:id="@+id/nav_rusuarios"
+            android:title="@string/registrar_usuario"/>
+        <item
+            android:id="@+id/nav_cnotificaciones"
+            android:title="@string/crear_notificacion"/>
+        <item
+            android:id="@+id/nav_horario"
+            android:title="@string/horario"/>
+        <item
+            android:id="@+id/nav_justificaciones"
+            android:title="@string/justificaciones"/>
+        <item
+            android:id="@+id/nav_tnoticias"
+            android:title="@string/tablero_de_noticias"/>
+    </group>
+
+</menu>

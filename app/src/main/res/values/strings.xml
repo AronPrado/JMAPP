@@ -13,6 +13,16 @@
     <string name="tareas">Tareas</string>
     <string name="proyectos">Proyectos</string>
     <string name="bienvenido">Bienvenido</string>
+
+    <!-- OptionLogin -->
     <string name="qui_n_entrar_a_la_app">¿Quién entrará a la App?</string>
+    <string name="inicio">Inicio</string>
+
+    <!-- menuAdmin -->
+    <string name="registrar_usuario">Registrar Usuario</string>
+    <string name="crear_notificacion">Crear Notificacion</string>
+    <string name="horario">Horario</string>
+    <string name="justificaciones">Justificaciones</string>
+    <string name="tablero_de_noticias">Tablero de Noticias</string>
 
 </resources>

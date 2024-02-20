@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_docente"
+            android:title="inicio"/>
+        <item
+            android:id="@+id/nav_secciones"
+            android:title="Secciones"/>
+        <item
+            android:id="@+id/nav_calificaciones"
+            android:title="Ingresar Calificaciones"/>
+        <item
+            android:id="@+id/nav_Apoderado"
+            android:title="Hablar con Apoderados"/>
+        <item
+            android:id="@+id/nav_tareasevaluaciones"
+            android:title="Programar Tareas y Evaluaciones"/>
+        <item
+            android:id="@+id/nav_ntareasevaluaciones"
+            android:title="Notificar Taraeas y Evaluaciones"/>
+    </group>
+
+</menu>

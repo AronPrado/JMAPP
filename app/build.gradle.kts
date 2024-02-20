@@ -47,6 +47,7 @@ dependencies {
     //kapt ("androidx.room:room-compiler:2.3.0")
     implementation ("androidx.room:room-ktx:2.3.0")
     implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation ("androidx.room: room-testing:2.2.5")
 
     implementation("androidx.core:core-ktx:1.9.0")
