@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_item_1"
+            android:title="Inicio"/>
+      <item android:title="Funciones del Apoderado">
+          <menu>
+        <item
+            android:id="@+id/nav_item_2"
+            android:title="Trabajos"/>
+        <item
+            android:id="@+id/nav_item_3"
+            android:title="Recursos"/>
+        <item
+            android:id="@+id/nav_item_4"
+            android:title="Horario"/>
+        <item
+            android:id="@+id/nav_item_5"
+            android:title="Eventos"/>
+          </menu>
+      </item>
+
+      <item android:title="Docentes y Comunicacion">
+          <menu>
+        <item
+            android:id="@+id/nav_item_6"
+            android:title="Docentes"/>
+        <item
+            android:id="@+id/nav_item_7"
+            android:title="Comunicación"/>
+          </menu>
+      </item>
+    </group>
+</menu>

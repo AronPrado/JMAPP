@@ -25,4 +25,7 @@
     <string name="justificaciones">Justificaciones</string>
     <string name="tablero_de_noticias">Tablero de Noticias</string>
 
+    <!-- menuApoderado -->
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>

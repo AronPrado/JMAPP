@@ -15,11 +15,17 @@
         android:theme="@style/Theme.JMAPP"
         tools:targetApi="31">
         <activity
+            android:name=".view.menu_docente"
+            android:exported="false" />
+        <activity
+            android:name=".view.menu_apoderado"
+            android:exported="false" />
+        <activity
             android:name=".view.Seleccion_Sesion_Activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.MensajeDocente"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.docente_main"
             android:exported="false" />
