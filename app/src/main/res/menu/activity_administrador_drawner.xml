@@ -28,5 +28,8 @@
                     android:title="Docentes Registrados"/>
             </menu>
         </item>
+        <item
+            android:id="@+id/nav_item_8"
+            android:title="Cerrar Sesion"/>
     </group>
 </menu>

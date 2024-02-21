@@ -10,9 +10,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.data.database.ColegioDatabase
+import com.javierprado.jmapp.view.login.OptionLogin
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

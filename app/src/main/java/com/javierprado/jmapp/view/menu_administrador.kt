@@ -10,15 +10,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.view.login.LoginAdmin
 
 class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
+
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_administrador)
+
+        auth = FirebaseAuth.getInstance()
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -39,7 +45,11 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> Toast.makeText(this, "Registrar Apoderado o Docente", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_2 -> {
+                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, activity_register_student::class.java)
+                startActivity(intent)
+            }
             R.id.nav_item_3 -> {
                 Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, NotiEventosEsco::class.java)
@@ -48,6 +58,12 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_item_4 -> Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
             R.id.nav_item_5 -> Toast.makeText(this, "Editar Tablero de Noticias", Toast.LENGTH_SHORT).show()
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_8 ->  {
+                auth.signOut()
+                val intent = Intent(this, LoginAdmin::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         drawer.closeDrawer(GravityCompat.START)
@@ -63,11 +79,11 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_perfil -> {
-                // Maneja la acción de Configuración
+
                 true
             }
             R.id.action_notificaciones -> {
-                // Maneja la acción de Búsqueda
+
                 true
             }
             else -> super.onOptionsItemSelected(item)

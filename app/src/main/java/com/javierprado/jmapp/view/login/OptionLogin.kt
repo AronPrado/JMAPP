@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view
+package com.javierprado.jmapp.view.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +18,12 @@ class OptionLogin : AppCompatActivity() {
     }
 
     fun iniciarSesionDocente(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginDocente::class.java)
         startActivity(intent)
     }
 
     fun iniciarSesionAdministrador(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginAdmin::class.java)
         startActivity(intent)
     }
 }

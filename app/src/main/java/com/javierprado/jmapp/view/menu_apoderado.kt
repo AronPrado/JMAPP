@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,15 +12,22 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.view.login.LoginActivity
+import com.javierprado.jmapp.view.login.LoginAdmin
 
 class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer:DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
+
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_apoderado)
+
+        auth = FirebaseAuth.getInstance()
 
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
@@ -46,6 +54,12 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
             R.id.nav_item_7 -> Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_8 -> {
+                auth.signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         drawer.closeDrawer(GravityCompat.START)
