@@ -16,4 +16,14 @@ class OptionLogin : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
+
+    fun iniciarSesionDocente(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun iniciarSesionAdministrador(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
 }

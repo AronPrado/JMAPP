@@ -4,31 +4,28 @@
         <item
             android:id="@+id/nav_item_1"
             android:title="Inicio"/>
-        <item android:title="Funciones del Docente">
+        <item android:title="Funciones del Administrador">
             <menu>
                 <item
                     android:id="@+id/nav_item_2"
-                    android:title="Seleccionar Seccion"/>
+                    android:title="Registrar Apoderado o Docente"/>
                 <item
                     android:id="@+id/nav_item_3"
-                    android:title="Ingresar notas"/>
+                    android:title="Redactar y Enviar Notificaciones"/>
                 <item
                     android:id="@+id/nav_item_4"
-                    android:title="Asistencia Escolar"/>
+                    android:title="Editar Horario Escolar"/>
                 <item
                     android:id="@+id/nav_item_5"
-                    android:title="Programar Taras y Evaluaciones"/>
+                    android:title="Editar Tablero de Noticias"/>
             </menu>
         </item>
 
-        <item android:title="Notificaciones y Apoderados">
+        <item android:title="Ver Docentes">
             <menu>
                 <item
                     android:id="@+id/nav_item_6"
-                    android:title="Notificar Tareas"/>
-                <item
-                    android:id="@+id/nav_item_7"
-                    android:title="Comunicarse con el apoderado"/>
+                    android:title="Docentes Registrados"/>
             </menu>
         </item>
     </group>

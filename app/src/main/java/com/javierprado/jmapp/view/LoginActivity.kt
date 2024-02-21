@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     finish()
-                    startActivity(Intent(this@LoginActivity, menu_docente::class.java))
+                    startActivity(Intent(this@LoginActivity, menu_administrador::class.java))
                     Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()

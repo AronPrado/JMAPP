@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:context=".view.menu_docente"
+    tools:context=".view.menu_administrador"
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_docente"
+        layout="@layout/app_bar_administrador"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_docente"
+        android:id="@+id/nav_view_administrador"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_docente_drawner"/>
+        app:menu="@menu/activity_administrador_drawner"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,13 +12,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.javierprado.jmapp.R
 
-class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_docente)
+        setContentView(R.layout.activity_menu_administrador)
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -31,19 +32,22 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navigationView: NavigationView = findViewById(R.id.nav_view_docente)
+        val navigationView: NavigationView = findViewById(R.id.nav_view_administrador)
         navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_3 -> Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_4 -> Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_5 -> Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_6 -> Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_7 -> Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_2 -> Toast.makeText(this, "Registrar Apoderado o Docente", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_3 -> {
+                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, NotiEventosEsco::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_item_4 -> Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_5 -> Toast.makeText(this, "Editar Tablero de Noticias", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_6 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
         }
 
         drawer.closeDrawer(GravityCompat.START)
@@ -69,4 +73,5 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

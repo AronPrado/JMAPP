@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
@@ -49,5 +50,24 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.perfil_noti_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_perfil -> {
+                // Maneja la acción de Configuración
+                true
+            }
+            R.id.action_notificaciones -> {
+                // Maneja la acción de Búsqueda
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
