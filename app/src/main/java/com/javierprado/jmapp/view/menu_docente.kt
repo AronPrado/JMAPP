@@ -12,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.view.login.LoginActivity
 import com.javierprado.jmapp.view.login.LoginDocente
 
 class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

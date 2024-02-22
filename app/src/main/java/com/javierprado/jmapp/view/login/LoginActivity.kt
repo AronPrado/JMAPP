@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view
+package com.javierprado.jmapp.view.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.AuthResponse
+import com.javierprado.jmapp.data.entities.Usuario
+import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.view.MenuPrincipalApoderadoActivity
+import com.javierprado.jmapp.view.ResetPasswordActivity
+import retrofit2.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -50,6 +57,27 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                     startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
                     Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
+                    val usuario = Usuario(emailUser, passUser)
+
+                    val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
+
+                    var msg : String
+                    api.login(usuario)?.enqueue(object : Callback<AuthResponse?> {
+                        override fun onResponse(call: Call<AuthResponse?>?, response: Response<AuthResponse?>) {
+                            if (response.isSuccessful) {
+                                msg = response.body()?.tokenDeAcceso.toString()
+                                Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                                finish()
+                                startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
+                            }
+                        }
+
+                        override fun onFailure(call: Call<AuthResponse?>?, t: Throwable?) {
+                            msg = "Error en el API y no en el Firebase."
+
+                            Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 } else {
                     Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
