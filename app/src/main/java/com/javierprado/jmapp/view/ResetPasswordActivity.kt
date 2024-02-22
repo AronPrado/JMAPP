@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.view.login.LoginActivity
 
 class ResetPasswordActivity : AppCompatActivity() {
 

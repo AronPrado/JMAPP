@@ -1,6 +1,8 @@
 package com.javierprado.jmapp.data.database
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.javierprado.jmapp.data.database.dao.AdministradorDao
 import com.javierprado.jmapp.data.database.dao.ApoderadosDao
@@ -22,4 +24,21 @@ abstract class ColegioDatabase:RoomDatabase() {
     abstract fun apoderadosDao(): ApoderadosDao
     abstract fun administradorDao(): AdministradorDao
 
+    companion object {
+        @Volatile
+        private var INSTANCE: ColegioDatabase? = null
+        fun getDatabase(context: Context): ColegioDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ColegioDatabase::class.java,
+                    "colegio_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 }

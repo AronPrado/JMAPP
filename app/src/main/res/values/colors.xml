@@ -71,4 +71,9 @@
     <color name="md_theme_dark_outlineVariant">#53433F</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
+    <color name="line_color">#FF000000</color>
+    <color name="nude">#f2e8e1</color>
+    <color name="bac_contact">#DCE8FA</color>
+    <color name="plomo">#515151</color>
+
 </resources>

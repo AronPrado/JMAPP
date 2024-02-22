@@ -51,6 +51,7 @@
         android:fontFamily="@font/librefranklin_mediumitalic"
         android:hint="Título del evento"
         android:inputType="text"
+        android:minHeight="48dp"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/descripcionEvento"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_item_1"
+            android:title="Inicio"/>
+        <item android:title="Funciones del Administrador">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_2"
+                    android:title="Registrar Apoderado o Docente"/>
+                <item
+                    android:id="@+id/nav_item_3"
+                    android:title="Redactar y Enviar Notificaciones"/>
+                <item
+                    android:id="@+id/nav_item_4"
+                    android:title="Editar Horario Escolar"/>
+                <item
+                    android:id="@+id/nav_item_5"
+                    android:title="Editar Tablero de Noticias"/>
+            </menu>
+        </item>
+
+        <item android:title="Ver Docentes">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_6"
+                    android:title="Docentes Registrados"/>
+            </menu>
+        </item>
+        <item
+            android:id="@+id/nav_item_8"
+            android:title="Cerrar Sesion"/>
+    </group>
+</menu>

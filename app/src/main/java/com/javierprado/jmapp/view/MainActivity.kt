@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.javierprado.jmapp.view
 
 import android.content.Intent
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.view.login.OptionLogin
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,4 +35,5 @@ class MainActivity : AppCompatActivity() {
             finish()
         }, 4000)
     }
+
 }
