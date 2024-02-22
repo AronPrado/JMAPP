@@ -13,22 +13,22 @@ data class UsuarioRolUnion(
 )
 
 data class UsuarioConRoles(
-    @Embedded val usuario: Usuarios,
+    @Embedded val usuario: Usuario,
     @Relation(
         parentColumn = "id_usuario",
         entityColumn = "rol_id",
         associateBy = Junction(UsuarioRolUnion::class)
     )
-    val roles: List<Roles>
+    val roles: List<Rol_Usuario>
 )
 
 data class RolConUsuarios(
-    @Embedded val rol: Roles,
+    @Embedded val rol: Rol_Usuario,
     @Relation(
         parentColumn = "rol_id",
         entityColumn = "id_usuario",
         associateBy = Junction(UsuarioRolUnion::class)
     )
-    val usuarios: List<Usuarios>
+    val usuarios: List<Usuario>
 )
 

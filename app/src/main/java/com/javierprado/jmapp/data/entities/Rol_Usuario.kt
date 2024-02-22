@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "roles_table")
-data class Roles(
+data class Rol_Usuario(
     @PrimaryKey(autoGenerate = true)
     val rol_id: Int,
 
