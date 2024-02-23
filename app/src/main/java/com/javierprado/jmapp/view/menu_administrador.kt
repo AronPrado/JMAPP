@@ -13,6 +13,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.view.login.LoginAdmin
+import com.javierprado.jmapp.view.login.OptionLogin
 
 class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,9 +61,9 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 ->  {
                 auth.signOut()
-                val intent = Intent(this, LoginAdmin::class.java)
+                val intent = Intent(this, OptionLogin::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
-                finish()
             }
         }
 

@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/docente"
         android:transitionName="logoImageEdu"
         android:layout_gravity="center"/>
 
@@ -109,7 +109,7 @@
             android:clickable="true"
             android:focusable="true"
             android:textStyle="bold"
-            android:text="!Saludos Docente!"/>
+            android:text="!Bienvenido Docente!"/>
 
         <TextView
             android:id="@+id/newdescription"

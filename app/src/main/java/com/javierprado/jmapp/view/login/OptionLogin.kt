@@ -14,16 +14,19 @@ class OptionLogin : AppCompatActivity() {
 
     fun iniciarSesionApoderado(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
     }
 
     fun iniciarSesionDocente(view: View) {
         val intent = Intent(this, LoginDocente::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
     }
 
     fun iniciarSesionAdministrador(view: View) {
         val intent = Intent(this, LoginAdmin::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
     }
 }
