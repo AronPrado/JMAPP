@@ -83,9 +83,6 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(emailUser, passUser)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    finish()
-                    startActivity(Intent(this@LoginActivity, menu_apoderado::class.java))
-                    Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
                     val usuario = Usuario(emailUser, passUser)
 
                     val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
@@ -97,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                                 msg = response.body()?.tokenDeAcceso.toString()
                                 Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
                                 finish()
-                                startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
+                                startActivity(Intent(this@LoginActivity, menu_apoderado::class.java))
                             }
                         }
 
