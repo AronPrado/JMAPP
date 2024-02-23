@@ -14,8 +14,8 @@ class activity_register_student : AppCompatActivity() {
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
             val intent = Intent(this@activity_register_student, menu_administrador::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
-            finish()
         }
     }
 }
