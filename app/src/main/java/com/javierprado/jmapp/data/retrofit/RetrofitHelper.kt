@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter
 
 
 class RetrofitHelper private constructor() {
-    private val BASE_URL = "http://192.168.1.5:8090/"
+    private val BASE_URL = "http://192.168.18.184:8090/"
     private var api: ColegioAPI
     private var bearerToken = ""
     private val client = OkHttpClient.Builder()

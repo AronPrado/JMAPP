@@ -1,58 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_main"
+    android:scaleType="centerCrop"
     tools:context=".view.login.OptionLogin">
 
-    <TextView
-        android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bienvenido"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingLeft="49dp"
+            android:paddingRight="50dp"
+            android:text="DESCUBRE EL PLACER DEL APRENDIZAJE"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:fontFamily="@font/librefranklin_semibold" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:paddingTop="40dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="80dp"
+            android:textSize="20dp"
+            android:text="Explore su rol en la plataforma"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="@font/librefranklin_regular"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+            <LinearLayout
+                android:id="@+id/lyAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="80dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="@color/color2">
 
-    <TextView
-        android:id="@+id/textSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/qui_n_entrar_a_la_app"
-        android:textSize="18sp"
-        android:layout_below="@id/textWelcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+                    <LinearLayout
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
 
-    <Button
-        android:id="@+id/btnApoderado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Sesión como Apoderado"
-        android:onClick="iniciarSesionApoderado"
-        android:layout_below="@id/textSubtitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"/>
+                        <ImageView
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:src="@drawable/administracion"
+                            android:layout_gravity="center"/>
 
-    <Button
-        android:id="@+id/btnDocente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Sesión como Docente"
-        android:onClick="iniciarSesionDocente"
-        android:layout_below="@id/btnApoderado"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Admin"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnAdministrador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Sesión como Administrador"
-        android:onClick="iniciarSesionAdministrador"
-        android:layout_below="@id/btnDocente"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+            </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/lyApoderado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="80dp"
+                android:paddingBottom="10dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvApoderado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="80dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="@color/seed">
+
+                    <LinearLayout
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:src="@drawable/apoderado"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Apoderado"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyDocente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvDocente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="80dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="@color/color2">
+
+                    <LinearLayout
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:src="@drawable/profesor"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Docente"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="Disciplina, Estudio, Lealtad"
+            android:gravity="center"
+            android:textColor="@color/seed"
+            android:textStyle="bold"
+            android:fontFamily="@font/librefranklin_lightitalic"/>
+    </LinearLayout>
 </RelativeLayout>
