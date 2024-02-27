@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/color1"
+        android:background="@color/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         android:elevation="24dp"
         app:layout_constraintTop_toTopOf="parent" />

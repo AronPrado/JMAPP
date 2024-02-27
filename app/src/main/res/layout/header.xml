@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:gravity="bottom"
     android:padding="10dp"
-    android:background="@color/md_theme_light_primary"
+    android:background="@color/toolbar"
     >
 
     <LinearLayout

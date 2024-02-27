@@ -3,21 +3,26 @@
     <group>
         <item
             android:id="@+id/nav_item_1"
-            android:title="Inicio"/>
-        <item android:title="Funciones del Docente">
+            android:title="Inicio"
+            android:icon="@drawable/ic_home"/>
+        <item android:title="Funciones del Docente" >
             <menu>
                 <item
                     android:id="@+id/nav_item_2"
-                    android:title="Seleccionar Seccion"/>
+                    android:title="Seleccionar Seccion"
+                    android:icon="@drawable/ic_select_section"/>
                 <item
                     android:id="@+id/nav_item_3"
-                    android:title="Ingresar notas"/>
+                    android:title="Ingresar notas"
+                    android:icon="@drawable/ic_enter_grades"/>
                 <item
                     android:id="@+id/nav_item_4"
-                    android:title="Asistencia Escolar"/>
+                    android:title="Asistencia Escolar"
+                    android:icon="@drawable/ic_attendance"/>
                 <item
                     android:id="@+id/nav_item_5"
-                    android:title="Programar Taras y Evaluaciones"/>
+                    android:title="Programar Tareas y Evaluaciones"
+                    android:icon="@drawable/ic_scheduled"/>
             </menu>
         </item>
 
@@ -25,14 +30,25 @@
             <menu>
                 <item
                     android:id="@+id/nav_item_6"
-                    android:title="Notificar Tareas"/>
+                    android:title="Notificar Tareas"
+                    android:icon="@drawable/ic_notify_tasks"/>
                 <item
                     android:id="@+id/nav_item_7"
-                    android:title="Comunicarse con el apoderado"/>
+                    android:title="Comunicarse con el apoderado"
+                    android:icon="@drawable/ic_communicate"/>
             </menu>
         </item>
         <item
-            android:id="@+id/nav_item_8"
-            android:title="Cerrar Sesion"/>
+            android:title="Cuenta"
+            android:fontSize="20dp">
+            <menu>
+                <item
+
+                    android:id="@+id/nav_item_8"
+                    android:title="Cerrar Sesión"
+                    android:icon="@drawable/ic_logout"
+                    android:fontSize="20sp"/>
+            </menu>
+        </item>
     </group>
 </menu>

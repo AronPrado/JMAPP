@@ -1,38 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group>
+
         <item
             android:id="@+id/nav_item_1"
-            android:title="Inicio"/>
-      <item android:title="Funciones del Apoderado">
-          <menu>
-        <item
-            android:id="@+id/nav_item_2"
-            android:title="Trabajos"/>
-        <item
-            android:id="@+id/nav_item_3"
-            android:title="Recursos"/>
-        <item
-            android:id="@+id/nav_item_4"
-            android:title="Horario"/>
-        <item
-            android:id="@+id/nav_item_5"
-            android:title="Eventos"/>
-          </menu>
-      </item>
+            android:title="Inicio"
+            android:icon="@drawable/ic_home"
+            android:fontSize="18sp"/>
 
-      <item android:title="Docentes y Comunicacion">
-          <menu>
         <item
-            android:id="@+id/nav_item_6"
-            android:title="Docentes"/>
+            android:title="Funciones del Apoderado"
+            android:fontSize="20dp">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_2"
+                    android:title="Trabajos"
+                    android:icon="@drawable/ic_work"
+                    android:fontSize="16sp"/>
+                <item
+                    android:id="@+id/nav_item_3"
+                    android:title="Recursos"
+                    android:icon="@drawable/ic_resources"
+                    android:fontSize="16sp"/>
+                <item
+                    android:id="@+id/nav_item_4"
+                    android:title="Horario"
+                    android:icon="@drawable/ic_schedule"
+                    android:fontSize="16sp"/>
+                <item
+                    android:id="@+id/nav_item_5"
+                    android:title="Eventos"
+                    android:icon="@drawable/ic_events"
+                    android:fontSize="16sp"/>
+            </menu>
+        </item>
+
         <item
-            android:id="@+id/nav_item_7"
-            android:title="Comunicación"/>
-          </menu>
-      </item>
+            android:title="Docentes y Comunicacion"
+            android:fontSize="20dp">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_6"
+                    android:title="Docentes"
+                    android:icon="@drawable/ic_teachers"
+                    android:fontSize="16sp"/>
+                <item
+                    android:id="@+id/nav_item_7"
+                    android:title="Comunicación"
+                    android:icon="@drawable/ic_communication"
+                    android:fontSize="16sp"/>
+            </menu>
+        </item>
+
         <item
-            android:id="@+id/nav_item_8"
-            android:title="Cerrar Sesion"/>
+            android:title="Cuenta"
+            android:fontSize="20dp">
+            <menu>
+                <item
+
+                    android:id="@+id/nav_item_8"
+                    android:title="Cerrar Sesión"
+                    android:icon="@drawable/ic_logout"
+                    android:fontSize="20sp"/>
+            </menu>
+        </item>
+
     </group>
 </menu>

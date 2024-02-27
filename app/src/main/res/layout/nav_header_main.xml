@@ -6,18 +6,19 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:background="@color/color1"
+    android:background="@color/toolbar"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    
+
     <ImageView
         android:id="@+id/nav_header_img"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="130dp"
+        android:paddingLeft="10dp"
         android:src="@drawable/logo"/>
 
     <TextView
@@ -26,10 +27,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I.E. José María Arguedas"
+        android:maxLines="2"
+        android:autoSizeTextType="uniform"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="23sp"
-        android:layout_marginLeft="10dp"
-        android:fontFamily="@font/librefranklin_mediumitalic" />
+        android:textSize="26sp"
+        android:fontFamily="@font/librefranklin_blackitalic" />
 
 </LinearLayout>

@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/color1"
+            android:background="@color/toolbar"
             app:layout_scrollFlags="scroll|enterAlways" >
 
             <RelativeLayout
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="Bienvenido Apoderado"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:layout_toEndOf="@id/imageView_logo"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
