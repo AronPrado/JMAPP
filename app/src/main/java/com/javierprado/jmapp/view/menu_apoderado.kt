@@ -100,7 +100,9 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_perfil -> {
-                // Maneja la acción de Configuración
+                val intent = Intent(this, activity_register_student::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
                 true
             }
             R.id.action_notificaciones -> {

@@ -42,7 +42,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:src="@drawable/login_docente"
+                    android:src="@drawable/login_docenteimg"
                     android:layout_gravity="center"/>
 
                 <TextView
