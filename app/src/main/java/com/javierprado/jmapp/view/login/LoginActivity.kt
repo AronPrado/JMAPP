@@ -2,7 +2,7 @@ package com.javierprado.jmapp.view.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
+import android.os.StrictMode
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,7 +16,17 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.MenuPrincipalApoderadoActivity
 import com.javierprado.jmapp.view.ResetPasswordActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.*
+import java.util.Properties
+import javax.mail.Message
+import javax.mail.MessagingException
+import javax.mail.Session
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
 
 class LoginActivity : AppCompatActivity() {
 
@@ -54,17 +64,14 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(emailUser, passUser)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    finish()
-                    startActivity(Intent(this@LoginActivity, MenuPrincipalApoderadoActivity::class.java))
-                    Toast.makeText(this@LoginActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
                     val usuario = Usuario(emailUser, passUser)
-
                     val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
 
                     var msg : String
                     api.login(usuario)?.enqueue(object : Callback<AuthResponse?> {
                         override fun onResponse(call: Call<AuthResponse?>?, response: Response<AuthResponse?>) {
                             if (response.isSuccessful) {
+
                                 msg = response.body()?.tokenDeAcceso.toString()
                                 Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
                                 finish()
@@ -74,7 +81,6 @@ class LoginActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<AuthResponse?>?, t: Throwable?) {
                             msg = "Error en el API y no en el Firebase."
-
                             Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
                         }
                     })
@@ -86,6 +92,5 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Error al iniciar sesión", Toast.LENGTH_SHORT)
                     .show()
             }
-
     }
 }
