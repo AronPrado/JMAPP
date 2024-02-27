@@ -1,130 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25dp"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bac_log_adm"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.login.LoginAdmin">
 
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:src="@drawable/logo"
-        android:transitionName="logoImageEdu"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/welcomeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/librefranklin_bold"
-        android:text="Jose Maria Arguedas"
-        android:layout_marginTop="28dp"
-        android:textSize="30sp"
-        android:layout_marginBottom="12dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:transitionName="textName"/>
-
-    <TextView
-        android:id="@+id/continuarLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DISCIPLINA - ESTUDIO - LEALTAD"
-        android:textSize="17sp"
-        android:layout_marginBottom="15dp"
-        android:fontFamily="@font/librefranklin_bold"
-        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="14dp"
-        android:orientation="vertical">
-        <com.google.android.material.textfield.TextInputLayout
+        android:orientation="vertical"
+        android:paddingTop="380dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:id="@+id/userTextField"
-            android:hint="Email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailEditText"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="28dp"
+            app:cardCornerRadius="16dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/librefranklin_bold"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/passwordTextField"
-            android:hint="Contraseña"
-            app:passwordToggleEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/librefranklin_bold"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/userTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/olvidasteContrasena"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:textSize="19dp"
-            android:layout_marginBottom="15dp"
-            android:textColor="@color/md_theme_dark_surface"
-            android:text="Olvidaste tu contraseña?"
-            android:fontFamily="@font/librefranklin_bold"
-            android:layout_gravity="end"
-            android:clickable="true"
-            android:focusable="true"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correo"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_inicioSesion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="INICIAR SESION"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/md_theme_light_tertiary"
-            android:layout_marginBottom="65dp"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:passwordToggleEnabled="true">
 
-        <TextView
-            android:id="@+id/helloAdmin"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:textColor="@color/md_theme_dark_surface"
-            android:fontFamily="@font/librefranklin_bold"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:textStyle="bold"
-            android:text="!Saludos Administrador!"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Contraseña"
+                        android:inputType="numberPassword"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/newdescription"
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:textColor="@color/md_theme_dark_surface"
-            android:fontFamily="@font/librefranklin_bold"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:textStyle="bold"
-            android:text="!TU ESFUERZO ES UNICO!"/>
+                <TextView
+                    android:id="@+id/olvidasteContrasena"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="8dp"
+                    android:text="¿Olvidaste tu contraseña?"/>
 
+                <Button
+                    android:id="@+id/btn_inicioSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Iniciar Sesión"
+                    android:textColor="@color/color2"
+                    android:textSize="24sp"
+                    android:backgroundTint="@color/md_theme_light_onSecondaryContainer"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

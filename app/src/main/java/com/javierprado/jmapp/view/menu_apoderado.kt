@@ -10,12 +10,17 @@ import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.clases.NewsAdapter
+import com.javierprado.jmapp.clases.Noticia
 import com.javierprado.jmapp.view.login.LoginActivity
 import com.javierprado.jmapp.view.login.LoginAdmin
+import com.javierprado.jmapp.view.login.OptionLogin
 
 class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +31,14 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_apoderado)
+
+        //Noticias
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewNews)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val noticias = obtenerListaDeNoticias()
+        val adapter = NewsAdapter(noticias)
+        recyclerView.adapter = adapter
 
         auth = FirebaseAuth.getInstance()
 
@@ -45,6 +58,19 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val navigationView: NavigationView = findViewById(R.id.nav_view_apoderado)
         navigationView.setNavigationItemSelectedListener(this)
     }
+
+    //Noticias
+    private fun obtenerListaDeNoticias(): List<Noticia> {
+
+        return listOf(
+            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
+            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
+            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
+            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
+            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
+            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
+        )
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
@@ -56,9 +82,9 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             R.id.nav_item_7 -> Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 -> {
                 auth.signOut()
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, OptionLogin::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
-                finish()
             }
         }
 
@@ -74,7 +100,9 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_perfil -> {
-                // Maneja la acción de Configuración
+                val intent = Intent(this, activity_register_student::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
                 true
             }
             R.id.action_notificaciones -> {
