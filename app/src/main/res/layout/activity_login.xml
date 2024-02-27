@@ -30,7 +30,7 @@
                 android:orientation="vertical"
                 android:paddingRight="28dp">
                 <TextView
-                    android:paddingTop="50dp"
+                    android:paddingTop="60dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="JOSE MARIA ARGUEDAS"
