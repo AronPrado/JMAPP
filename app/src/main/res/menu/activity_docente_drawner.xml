@@ -39,15 +39,13 @@
             </menu>
         </item>
         <item
-            android:title="Cuenta"
-            android:fontSize="20dp">
+            android:title="Cuenta">
             <menu>
                 <item
 
                     android:id="@+id/nav_item_8"
                     android:title="Cerrar Sesión"
-                    android:icon="@drawable/ic_logout"
-                    android:fontSize="20sp"/>
+                    android:icon="@drawable/ic_logout"/>
             </menu>
         </item>
     </group>
