@@ -9,18 +9,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.ResetPasswordActivity
-import com.javierprado.jmapp.view.menu_administrador
 
 class LoginAdmin : AppCompatActivity() {
-
-    private lateinit var mAuth: FirebaseAuth
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var btnLogin: Button
+
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_admin)
@@ -30,11 +29,9 @@ class LoginAdmin : AppCompatActivity() {
         btnLogin = findViewById(R.id.btn_inicioSesion)
         val olvidasteContrasena = findViewById<TextView>(R.id.olvidasteContrasena)
 
-        mAuth = FirebaseAuth.getInstance()
-
+        val authFunctions = AuthFunctions()
         // Deshabilitar el botón de inicio de sesión al inicio
         btnLogin.isEnabled = false
-
         // Agregar TextWatchers a los EditTexts
         emailEditText.addTextChangedListener(textWatcher)
         passwordEditText.addTextChangedListener(textWatcher)
@@ -46,7 +43,7 @@ class LoginAdmin : AppCompatActivity() {
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this@LoginAdmin, "Por favor, ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show()
             } else {
-                loginUser(emailUser, passUser)
+                authFunctions.loginUser(emailUser, passUser, RoleType.ADMIN.name, this@LoginAdmin)
             }
         }
 
@@ -71,23 +68,5 @@ class LoginAdmin : AppCompatActivity() {
             // Habilitar el botón de inicio de sesión si ambos campos no están vacíos
             btnLogin.isEnabled = emailInput.isNotEmpty() && passwordInput.isNotEmpty()
         }
-    }
-
-    private fun loginUser(emailUser: String, passUser: String) {
-        mAuth.signInWithEmailAndPassword(emailUser, passUser)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    finish()
-                    startActivity(Intent(this@LoginAdmin, menu_administrador::class.java))
-                    Toast.makeText(this@LoginAdmin, "Bienvenido Administrador", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@LoginAdmin, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this@LoginAdmin, "Contraseña o correo incorrectos", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
     }
 }

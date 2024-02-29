@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.lang.reflect.Constructor
 
-//@Entity(tableName = "usuario_table")
 class Usuario : Serializable {
     var usuarioId: Int? = null
     var email: String? = null

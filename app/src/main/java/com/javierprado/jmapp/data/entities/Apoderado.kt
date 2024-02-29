@@ -1,28 +1,16 @@
 package com.javierprado.jmapp.data.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-//@Entity(tableName = "apoderado_table")
-data class Apoderado(
-//    @PrimaryKey(autoGenerate = true)
-    val apoderadoId: Int,
+import java.io.Serializable
 
-//    @ColumnInfo(name = "nombre")
-    val nombres: String,
+class Apoderado : Serializable {
+    var apoderadoId: Int? = null
+    var nombres: String? = null
+    var apellidos: String? = null
 
-//    @ColumnInfo(name = "apellidos")
-    val apellidos: String,
+    var correo: String? = null
+    var telefono: Int? = null
+    var direccion: String? = null
 
-//    @ColumnInfo(name = "correo")
-    val correo: String,
-
-//    @ColumnInfo(name = "telefono")
-    val telefono: Int,
-
-//    @ColumnInfo(name = "direccion")
-    val direccion: String?,
-
-//    @ColumnInfo(name = "usuario_id")
-    val usuario: Usuario,
-)
+    var usuario: Usuario? = null
+    constructor() {}
+}

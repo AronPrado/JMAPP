@@ -1,25 +1,17 @@
 package com.javierprado.jmapp.data.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-@Entity(tableName = "administrador_table")
-data class Administrador(
-    @PrimaryKey(autoGenerate = true)
-    val id_admin: Int,
+import java.io.Serializable
 
-    @ColumnInfo(name = "id_usuario") //Referencia al id del usuario
-    val id_usuario: Int,
+class Administrador (
+    val  administradorId: Int,
+    val  nombres: String,
+    val  apellidos: String,
 
-    @ColumnInfo(name = "nombre")
-    val nombre: String,
+    val  correo: String,
+    val  telefono: Int,
 
-    @ColumnInfo(name = "apellidos")
-    val apellidos: String,
+    val  usuario: Usuario ,
 
-    @ColumnInfo(name = "correo_electronico")
-    val correo_electronico: String,
-
-    @ColumnInfo(name = "telefono")
-    val telefono: String
+    val  noticias: Collection<Noticia>,
+    val  eventos: Collection<Evento>,
 )

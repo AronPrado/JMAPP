@@ -1,8 +1,5 @@
 package com.javierprado.jmapp.data.retrofit
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,21 +8,21 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 class RetrofitHelper private constructor() {
-    private val BASE_URL = "http://192.168.18.184:8090/"
+    private val BASE_URL = "https://colegio-api-jma-f0c7750337fe.herokuapp.com/"
     private var api: ColegioAPI
     private var bearerToken = ""
     private val client = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor())
         .build()
+    val gson = GsonConfig.createGson()
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .addConverterFactory(JacksonConverterFactory.create(objectMapper))
             .client(client)
             .build()
         api = retrofit.create(ColegioAPI::class.java)

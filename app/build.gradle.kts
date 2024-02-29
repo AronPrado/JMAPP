@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "CORREO_JMA", "\"${project.findProperty("correoJMA")}\"")
+        buildConfigField("String", "CONTRASENA_JMA", "\"${project.findProperty("contrasenaJMA")}\"")
     }
 
     buildTypes {
@@ -34,10 +37,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
+
     packagingOptions {
         exclude("META-INF/NOTICE.md")
         exclude("META-INF/LICENSE.md")

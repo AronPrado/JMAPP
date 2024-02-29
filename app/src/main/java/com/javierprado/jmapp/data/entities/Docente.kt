@@ -3,40 +3,21 @@ package com.javierprado.jmapp.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
-@Entity(tableName = "docentes_table")
-data class Docente(
-    @PrimaryKey(autoGenerate = true)
-    val id_docente: Int,
+class Docente : Serializable {
+    var docenteId: Int? = null
+    var nombres: String? = null
+    var apellidos: String? = null
+    var fechaNacimiento: String? = null
 
-    @ColumnInfo(name = "id_usuario") //Referencia al id del usuario
-    val id_usuario: Int,
+    var genero: String? = null
+    var correo: String? = null
+    var telefono: String? = null
+    var direccion: String? = null
 
-    @ColumnInfo(name = "nombre")
-    val nombre: String,
-
-    @ColumnInfo(name = "apellidos")
-    val apellidos: String,
-
-    @ColumnInfo(name = "correo_electronico")
-    val correo_electronico: String,
-
-    @ColumnInfo(name = "telefono")
-    val telefono: String,
-
-    @ColumnInfo(name = "fecha_nacimiento")
-    val fecha_nacimiento: String,
-
-    @ColumnInfo(name = "genero")
-    val genero: String,
-
-    @ColumnInfo(name = "especialidad")
-    val especialidad: String,
-
-    @ColumnInfo(name = "direccion")
-    val direccion: String,
-
-    @ColumnInfo(name = "fecha_contratacion")
-    val fecha_contratacion: String
-
-)
+    var fechaRegistro: String? = null
+    var curso: Curso? = null
+    var usuario: Usuario? = null
+//    var mensajes : Collection<Mensaje>? = null
+}
