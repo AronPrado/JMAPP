@@ -16,6 +16,7 @@ import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.MenuPrincipalApoderadoActivity
+import com.javierprado.jmapp.view.menu_administrador
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +29,7 @@ import javax.mail.internet.MimeMessage
 
 class AuthFunctions {
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    fun loginUser(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity) {
+    fun loginUser(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity, nextMenu : AppCompatActivity) {
         mAuth.signInWithEmailAndPassword(emailUser, passUser)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -42,7 +43,7 @@ class AuthFunctions {
                             if (response.isSuccessful) {
                                 msg = response.body()?.tokenDeAcceso.toString()
                                 interfaceActual.finish()
-                                interfaceActual.startActivity(Intent(interfaceActual, MenuPrincipalApoderadoActivity::class.java))
+                                interfaceActual.startActivity(Intent(interfaceActual, nextMenu::class.java))
                             }else{
                                 msg = "No tiene permisos para ingresar."
                             }

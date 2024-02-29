@@ -13,6 +13,7 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.ResetPasswordActivity
+import com.javierprado.jmapp.view.menu_apoderado
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
@@ -41,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this@LoginActivity, "Ingresar los datos", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this@LoginActivity)
+                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this@LoginActivity, menu_apoderado())
             }
         }
 
