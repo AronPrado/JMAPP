@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.actualizar_apoderado"
+            android:exported="false" />
+        <activity
             android:name=".view.activity_noticias"
             android:exported="false" />
         <activity

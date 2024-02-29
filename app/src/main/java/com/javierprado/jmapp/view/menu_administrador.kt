@@ -47,7 +47,7 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
             R.id.nav_item_2 -> {
-                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Registrar Apoderado", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, activity_register_student::class.java)
                 startActivity(intent)
             }
