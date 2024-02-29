@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="toolbar">#004481</color>
+
     <color name="color1">#ec3c00</color>
     <color name="color2">#0089e2</color>
     <color name="color3">#fef710</color>
