@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/librefranklin_mediumitalic"
-                android:text="Datos Personales"
+                android:text="Registrar Apoderado"
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -46,754 +46,21 @@
         android:id="@+id/svRegistro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tbRegister">
+        android:layout_below="@id/tbRegister"
+        android:layout_above="@+id/lybuttons"
+        android:padding="30dp"
+        tools:ignore="NotSibling">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp">
-                <ImageView
-                    android:id="@+id/imgStudent"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/student"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lyRegisterStudent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtGrado"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Grado y Sección"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtDNI"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="D.N.I."
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtGrado"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"
-                            />
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtDNI"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtNombres"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Nombres"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtApellidos"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Apellidos"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtNombres"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"
-                            />
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtApellidos"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtFecNacimiento"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Fecha nacimiento"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtNacionalidad"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Nacionalidad"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtFecNacimiento"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"
-                            />
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtNacionalidad"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:id="@+id/txtDomicilio"
-                            android:layout_column="0"
-                            android:layout_weight="2"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:text="Domicilio actual"
-                            android:textColor="@color/plomo"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:background="@color/bac_contact"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-
-                    <TableRow android:weightSum="2">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                        <EditText
-                            android:id="@+id/edtDomicilio"
-                            android:layout_column="0"
-                            android:layout_weight="2"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingLeft="12dp"
-                            android:background="@android:color/transparent"
-                            android:inputType="none"
-                            />
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-                </TableLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp">
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line_color"/>
-                    <TableRow  android:weightSum="1">
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="32dp"
-                            android:background="@color/line_color"/>
-                        <TextView
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="32dp"
-                            android:text="Datos Familiares"
-                            android:textColor="@color/plomo"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:background="@color/md_theme_light_secondaryContainer"/>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="32dp"
-                            android:background="@color/line_color"/>
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/RegisterFamilyData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp">
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtNombrePadre"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Nombres del padre"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtDniPadre"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="DNI"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtNombrePadre"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"
-                                />
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtDniPadre"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtNombreMadre"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Nombres de la madre"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtDniMadre"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="DNI"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtNombreNadre"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"
-                                />
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtDniMadre"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtTelefono"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Telefono"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtNHermanos"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="N° de hermanos"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtTelefono"
-                                android:layout_column="0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none" />
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtNHermanos"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtEmail"
-                                android:layout_column="0"
-                                android:layout_weight="2"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Correo Electronico"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                        <TableRow android:weightSum="2">
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtEmail"
-                                android:layout_column="0"
-                                android:layout_weight="2"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="textEmailAddress" />
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                        </TableRow>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/line_color"/>
-
-                    </TableLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp">
+                android:paddingTop="10dp">
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -818,7 +85,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:gravity="center"
-                            android:background="@color/md_theme_light_secondaryContainer"/>
+                            android:background="@color/md_theme_dark_secondary"/>
                         <View
                             android:layout_width="1dp"
                             android:layout_height="32dp"
@@ -838,28 +105,26 @@
                     android:orientation="horizontal">
                     <TableLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp">
+                        android:layout_height="wrap_content">
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                             <TextView
-                                android:id="@+id/txtDniApoderado"
+                                android:id="@+id/txtNombres"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="DNI"
+                                android:layout_height="25dp"
+                                android:text="Nombres:"
                                 android:textColor="@color/plomo"
-                                android:textSize="14sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
@@ -867,72 +132,97 @@
                                 android:background="@color/bac_contact"/>
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtTelefonoApoderado"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Telefono"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
+
                         </TableRow>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                             <EditText
-                                android:id="@+id/edtDniApoderado"
+                                android:id="@+id/edtNombres"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
                                 android:inputType="none" />
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtTelefonoApoderado"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:background="@android:color/transparent"
-                                android:inputType="none"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtApellidos"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Apellidos:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtApellidos"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
 
                         <TableRow android:weightSum="1">
                             <View
@@ -989,20 +279,20 @@
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                             <TextView
-                                android:id="@+id/txtUsuarioApoderado"
+                                android:id="@+id/txtTelefono"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Usuario"
+                                android:layout_height="25dp"
+                                android:text="Telefono:"
                                 android:textColor="@color/plomo"
-                                android:textSize="14sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
@@ -1010,66 +300,89 @@
                                 android:background="@color/bac_contact"/>
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
-                            <TextView
-                                android:id="@+id/txtContraseniaApoderado"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Contraseña"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="20dp"
-                                android:background="@color/line_color"/>
+
                         </TableRow>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                             <EditText
-                                android:id="@+id/edUsuarioApoderado"
+                                android:id="@+id/edtTelefono"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
                                 android:inputType="none" />
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
-                            <EditText
-                                android:id="@+id/edtContraseniaApoderado"
-                                android:layout_column="1"
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtDireccion"
+                                android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
+                                android:layout_height="25dp"
+                                android:text="Direccion:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtDireccion"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
-                                android:inputType="none"/>
+                                android:inputType="none" />
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
                         <View
@@ -1081,29 +394,54 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:layout_gravity="center">
+                    <TextView
+                        android:layout_column="0"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:text="Selecionar estudiante"
+                        android:textColor="@color/plomo"
+                        android:textSize="18sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="center"/>
+            </TableLayout>
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="20dp">
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lybuttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="20dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
                 <Button
                     android:id="@+id/btnRegistrar"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:text="Agregar alumno"
+                    android:text="Registrar Apoderado"
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:gravity="center">
                 <Button
                     android:id="@+id/btnActualizar"
                     android:layout_width="300dp"
@@ -1113,6 +451,7 @@
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center" />
             </LinearLayout>
+
 
         </LinearLayout>
 
