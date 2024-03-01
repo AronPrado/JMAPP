@@ -446,7 +446,7 @@
                     android:id="@+id/btnActualizar"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:text="Actualizar información"
+                    android:text="Enviar Credenciales"
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center" />
