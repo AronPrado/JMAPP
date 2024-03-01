@@ -41,14 +41,14 @@ class LoginDocente : AppCompatActivity() {
             val passUser = passwordEditText.text.toString().trim()
 
             if (emailUser.isEmpty() || passUser.isEmpty()) {
-                Toast.makeText(this@LoginDocente, "Por favor, ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.DOC.name, this@LoginDocente, menu_docente())
+                authFunctions.loginUser(emailUser, passUser, RoleType.DOC.name, this, menu_docente())
             }
         }
 
         olvidasteContrasena.setOnClickListener {
-            val intent = Intent(this@LoginDocente, ResetPasswordActivity::class.java)
+            val intent = Intent(this, ResetPasswordActivity::class.java)
             startActivity(intent)
             finish()
         }

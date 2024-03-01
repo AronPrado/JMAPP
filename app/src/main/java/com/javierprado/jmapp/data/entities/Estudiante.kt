@@ -19,9 +19,8 @@ data class Estudiante(
 
     var estado: String,
 
-    var itemsCurso: Set<Curso>,
-
-    //    var calificaciones : Collection<Calificacion>,
+//    var itemsCurso: Set<Curso>,
+//        var calificaciones : Collection<Calificacion>,
 //    var itemsAsistencia : Set<Asistencia>,
-    var itemsApoderado: Set<Apoderado>,
+//    var itemsApoderado: Set<Apoderado>,
 )

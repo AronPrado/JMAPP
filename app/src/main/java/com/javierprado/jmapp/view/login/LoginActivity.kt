@@ -40,14 +40,14 @@ class LoginActivity : AppCompatActivity() {
             val passUser = passwordEditText.text.toString().trim()
 
             if (emailUser.isEmpty() || passUser.isEmpty()) {
-                Toast.makeText(this@LoginActivity, "Ingresar los datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Ingresar los datos", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this@LoginActivity, menu_apoderado())
+                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this, menu_apoderado())
             }
         }
 
         olvidasteContrasena.setOnClickListener {
-            val intent = Intent(this@LoginActivity, ResetPasswordActivity::class.java)
+            val intent = Intent(this, ResetPasswordActivity::class.java)
             startActivity(intent)
             finish()
         }

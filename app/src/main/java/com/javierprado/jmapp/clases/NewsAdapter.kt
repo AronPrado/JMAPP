@@ -1,5 +1,7 @@
 package com.javierprado.jmapp.clases
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,9 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.clases.Noticia
+import com.javierprado.jmapp.data.entities.Noticia
 
-class NewsAdapter(private val noticias: List<Noticia>) :
+class NewsAdapter(private var noticias: List<Noticia>) :
     RecyclerView.Adapter<NewsAdapter.NoticiaViewHolder>() {
 
     inner class NoticiaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,17 +28,20 @@ class NewsAdapter(private val noticias: List<Noticia>) :
         return NoticiaViewHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NoticiaViewHolder, position: Int) {
         val noticiaActual = noticias[position]
 
-        // Asignar los valores de la noticia a las vistas
         holder.tituloTextView.text = noticiaActual.titulo
-        holder.descripcionTextView.text = noticiaActual.descripcion
-        holder.autorFecha.text = noticiaActual.autor
-        holder.imagenImageView.setImageResource(noticiaActual.imagen)
+        holder.descripcionTextView.text = noticiaActual.contenido
+        holder.autorFecha.text = noticiaActual.fechaPublicacion + " - " + noticiaActual.administrador?.nombres + " " +noticiaActual.administrador?.nombres
+        holder.imagenImageView.setImageResource(R.drawable.task)
     }
 
     override fun getItemCount(): Int {
-        return noticias.size
+        return noticias.size ?: 0
+    }
+    fun setNoticias(noticias : List<Noticia> ){
+        this.noticias = noticias
     }
 }

@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,29 +16,63 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.clases.NewsAdapter
-import com.javierprado.jmapp.clases.Noticia
+import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.login.LoginDocente
 import com.javierprado.jmapp.view.login.OptionLogin
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.javierprado.jmapp.data.entities.Noticia
 class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
     private lateinit var auth: FirebaseAuth
+    val TOKEN = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_docente)
+
+        //API Y BUNDLE
+        val retro = RetrofitHelper.getInstanceStatic()
+        val bundle = intent.extras
+        if (bundle != null) {
+            val token = bundle.getString(TOKEN, "")
+            retro.setBearerToken(token)
+        }
+        val api = retro.getApi()
+
+        auth = FirebaseAuth.getInstance()
 
         //Noticias
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val noticias = obtenerListaDeNoticias()
+        var noticias : List<Noticia> = ArrayList()
         val adapter = NewsAdapter(noticias)
+        var msg : String
+        api.obtenerNoticias()?.enqueue(object :
+            Callback<List<Noticia>> {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onResponse(call: Call<List<Noticia>>, response: Response<List<Noticia>>) {
+                if (response.isSuccessful) {
+                    noticias = response.body()!!
+                    adapter.setNoticias(noticias);
+                    adapter.notifyDataSetChanged();
+                    msg = noticias.size.toString()
+                }else{
+                    msg = response.errorBody()?.string().toString()
+                }
+                Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
+            }
+            override fun onFailure(call: Call<List<Noticia>>, t: Throwable?) {
+                msg = "Error en el API"
+                Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
+            }
+        })
         recyclerView.adapter = adapter
 
-        auth = FirebaseAuth.getInstance()
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -54,19 +89,6 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView: NavigationView = findViewById(R.id.nav_view_docente)
         navigationView.setNavigationItemSelectedListener(this)
     }
-
-    private fun obtenerListaDeNoticias(): List<Noticia> {
-
-        return listOf(
-            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
-            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
-            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
-            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
-            Noticia("Título 1", "Descripción 1", "Autor 1", "Fecha 1", R.drawable.task),
-            Noticia("Título 2", "Descripción 2", "Autor 2", "Fecha 2", R.drawable.task),
-        )
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()

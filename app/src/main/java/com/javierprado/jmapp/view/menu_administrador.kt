@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.login.LoginAdmin
 import com.javierprado.jmapp.view.login.OptionLogin
 
@@ -21,9 +22,21 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
     private lateinit var toogle: ActionBarDrawerToggle
 
     private lateinit var auth: FirebaseAuth
+    val TOKEN = "token"
+    var tokenAdmin = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_administrador)
+
+        //API Y BUNDLE
+        val retro = RetrofitHelper.getInstanceStatic()
+        val bundle = intent.extras
+        if (bundle != null) {
+            val token = bundle.getString(TOKEN, "")
+            tokenAdmin=token
+            retro.setBearerToken(tokenAdmin)
+        }
+        val api = retro.getApi()
 
         auth = FirebaseAuth.getInstance()
 
@@ -49,6 +62,7 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_item_2 -> {
                 Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, activity_register_student::class.java)
+                intent.putExtra(activity_register_student().TOKEN, tokenAdmin)
                 startActivity(intent)
             }
             R.id.nav_item_3 -> {

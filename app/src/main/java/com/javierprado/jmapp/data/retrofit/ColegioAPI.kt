@@ -26,7 +26,7 @@ interface ColegioAPI {
 
     //ADMIN
     @POST("/api/apoderados") // REGISTRA APODERADO Y TAMBIEN CREA CUENTA DE USUARIO
-    fun agregarApoderado(@Body apoderado : Apoderado): Call<Apoderado?>?
+    fun agregarApoderado(@Body apoderado : Apoderado): Call<Int>
 
     // DOCENTE Y APODERADO
     @PUT("/api/docentes")
@@ -36,7 +36,7 @@ interface ColegioAPI {
 
     // ESTUDIANTES
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES
-    fun obtenerEstudiantes(@Query("curso") cursoId : Int?): Call<Collection<Estudiante>?>?
+    fun obtenerEstudiantes(@Query("curso") cursoId : Int?): Call<Collection<Estudiante>>?
     @GET("/api/estudiantes/{id}") // OBTENER ESTUDIANTES
     fun buscarEstudiantePorDNI(@Path("id")  estudianteId: Int, @Query("dni") dni : Int?): Call<Estudiante?>?
     // CURSOS
@@ -45,7 +45,7 @@ interface ColegioAPI {
 
     // NOTICIAS
     @GET("/api/noticias") // OBTENER NOTICIAS
-    fun obtenerNoticias(): Call<Collection<Noticia>?>?
+    fun obtenerNoticias(): Call<List<Noticia>>?
 
 
 }

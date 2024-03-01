@@ -42,8 +42,11 @@ class AuthFunctions {
                         override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
                             if (response.isSuccessful) {
                                 msg = response.body()?.tokenDeAcceso.toString()
+                                val intent = Intent(interfaceActual, nextMenu::class.java)
+                                intent.putExtra(menu_administrador().TOKEN, msg)
+
+                                interfaceActual.startActivity(intent)
                                 interfaceActual.finish()
-                                interfaceActual.startActivity(Intent(interfaceActual, nextMenu::class.java))
                             }else{
                                 msg = "No tiene permisos para ingresar."
                             }
@@ -81,7 +84,7 @@ class AuthFunctions {
         try {
             val message = MimeMessage(session).apply {
                 setFrom(InternetAddress(correo))
-                setRecipients(Message.RecipientType.TO, InternetAddress.parse("emabenj_22@hotmail.com"))
+                setRecipients(Message.RecipientType.TO, InternetAddress.parse(correoC))
                 subject = "Credenciales de acceso a la plataforma educativa"
                 setContent("<h2>Bienvenido(a) a la plataforma educativa de nuestra institución</h2>"+
                         "<p>A continuación, te proporcionamos las credenciales de acceso:</p>" +
