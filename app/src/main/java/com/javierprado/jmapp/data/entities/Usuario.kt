@@ -15,6 +15,7 @@ class Usuario : Serializable {
     var apellidos: String? = null
     var estado: String? = null
 
+    lateinit var apoderado: Apoderado
     constructor() {}
 
     constructor(email: String, contrasena: String) : this() {

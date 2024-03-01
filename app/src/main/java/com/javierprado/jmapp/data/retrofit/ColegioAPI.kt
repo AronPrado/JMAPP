@@ -22,7 +22,7 @@ interface ColegioAPI {
     @POST("/api/auth/contrasena") // ACTUALIZAR CONTRASEÑA DE USUARIO
     fun actualizarContrasena(@Body usuario : Usuario): Call<String?>?
     @GET("/api/auth/sesion") // COMPROBAR SESION
-    fun obtenerSesion(@Query("rol") rol : String): Call<Usuario?>?
+    fun obtenerSesion(@Query("rol") rol : String): Call<Usuario>?
 
     //ADMIN
     @POST("/api/apoderados") // REGISTRA APODERADO Y TAMBIEN CREA CUENTA DE USUARIO
@@ -32,7 +32,7 @@ interface ColegioAPI {
     @PUT("/api/docentes")
     fun actualizarInfoDocente(@Body docente: Docente): Call<String?>? // TAMBIEN ACTUALIZA INFO DE CUENTA
     @PUT("/api/apoderados")
-    fun actualizarInfoApoderado(@Body apoderado : Apoderado): Call<String?>? // TAMBIEN ACTUALIZA INFO DE CUENTA
+    fun actualizarInfoApoderado(@Body apoderado : Apoderado): Call<String>? // TAMBIEN ACTUALIZA INFO DE CUENTA
 
     // ESTUDIANTES
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES

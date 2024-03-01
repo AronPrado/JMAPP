@@ -70,12 +70,13 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     msg = noticias.get(0).titulo
                 }else{
                     msg = response.errorBody()?.string().toString()
+                    Toast.makeText(this@menu_apoderado, msg, Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(this@menu_apoderado, msg, Toast.LENGTH_SHORT).show()
             }
-            override fun onFailure(call: Call<List<Noticia>>, t: Throwable?) {
-                msg = "Error en el API"
-                Toast.makeText(this@menu_apoderado, msg, Toast.LENGTH_SHORT).show()
+            override fun onFailure(call: Call<List<Noticia>>, t: Throwable) {
+                msg = "Error en la API"
+                Log.e(msg, t.message.toString())
+                Toast.makeText(this@menu_apoderado, t.message.toString(), Toast.LENGTH_SHORT).show()
             }
         })
         recyclerView.adapter = adapter

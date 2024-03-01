@@ -34,8 +34,7 @@ class AuthFunctions {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val usuario = Usuario(emailUser, passUser)
-                    var api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
-//                    var retroActual : RetrofitHelper = RetrofitHelper.getInstanceStatic()
+                    val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
                     var msg : String
 
                     api.login(usuario, rol)?.enqueue(object : Callback<AuthResponse?> {
@@ -49,8 +48,8 @@ class AuthFunctions {
                                 interfaceActual.finish()
                             }else{
                                 msg = "No tiene permisos para ingresar."
+                                Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
                             }
-                            Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onFailure(call: Call<AuthResponse?>, t: Throwable?) {

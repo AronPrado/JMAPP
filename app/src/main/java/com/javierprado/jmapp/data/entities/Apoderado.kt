@@ -31,4 +31,10 @@ import java.io.Serializable
          this.itemsEstudiante = itemsEstudiante
      }
 
+     constructor(correo: String?, telefono: Int?, direccion: String?) {
+         this.correo = correo
+         this.telefono = telefono
+         this.direccion = direccion
+     }
+
  }
