@@ -64,10 +64,8 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             override fun onResponse(call: Call<List<Noticia>>, response: Response<List<Noticia>>) {
                 if (response.isSuccessful) {
                     noticias = response.body()!!
-                    adapter.setNoticias(noticias);
-                    adapter.notifyDataSetChanged();
-
-                    msg = noticias.get(0).titulo
+                    adapter.setNoticias(noticias)
+                    adapter.notifyDataSetChanged()
                 }else{
                     msg = response.errorBody()?.string().toString()
                     Toast.makeText(this@menu_apoderado, msg, Toast.LENGTH_SHORT).show()

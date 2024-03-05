@@ -66,7 +66,7 @@ class actualizar_apoderado : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
-        var msg = ""
+        var msg : String? = ""
         api.obtenerSesion(RoleType.APOD.name)?.enqueue(object : Callback<Usuario> {
             override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                 if (response.isSuccessful) {
@@ -90,25 +90,24 @@ class actualizar_apoderado : AppCompatActivity() {
             val nuevaDireccion = direccionEditText.text.toString()
 
             val apoderado = Apoderado(nuevoCorreo, nuevoTelefono, nuevaDireccion)
-            api.actualizarInfoApoderado(apoderado)?.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            api.actualizarInfoApoderado(apoderado)?.enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    msg = response.headers().get("message")
                     if (response.isSuccessful) {
                         val intent = Intent(this@actualizar_apoderado, menu_apoderado::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         startActivity(intent)
                     }else{
-                        msg = response.errorBody()?.string().toString()
+                        Log.e("ERROR AL ACTUALIZAR", msg ?: "")
                     }
-                    Log.e("ERROR AL ACTUALIZAR", msg)
                     Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
                 }
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"
                     Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
                     Log.e("ERROR AL ACTUALIZAR", t.message.toString())
                 }
             })
-
         }
     }
 }

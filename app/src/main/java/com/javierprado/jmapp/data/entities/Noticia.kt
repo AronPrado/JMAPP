@@ -7,6 +7,7 @@ data class Noticia (
     val titulo: String,
     val contenido: String,
     val fechaPublicacion: String,
+    val ubiImagen: String,
 
     val administrador: Administrador?
 )

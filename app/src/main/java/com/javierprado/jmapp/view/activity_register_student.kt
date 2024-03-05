@@ -64,24 +64,21 @@ class activity_register_student : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
-        var msg = ""
-        api.obtenerEstudiantes(null)?.enqueue(object : Callback<Collection<Estudiante>>{
+        var msg : String? = ""
+        api.obtenerEstudiantes(null, null, null)?.enqueue(object : Callback<Collection<Estudiante>>{
             override fun onResponse(call: Call<Collection<Estudiante>>, response: Response<Collection<Estudiante>>) {
+                msg = response.headers().get("message")
                 if (response.isSuccessful) {
                     estudiantes = response.body()!!
                     val nombresEstudiantes = estudiantes.map { it.nombres + " " + it.apellidos }
                     val adaptador = ArrayAdapter(this@activity_register_student, android.R.layout.simple_spinner_item, nombresEstudiantes)
                     adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinner.adapter = adaptador
-
-                    msg = estudiantes.size.toString()
-                }else{
-                    msg = response.errorBody()?.string().toString()
-                }
-                Log.e("LISTAR ESTUDIANTES", msg)
+                } else{ Log.e("LISTAR ESTUDIANTES:", msg?:"") }
+                Toast.makeText(this@activity_register_student, msg, Toast.LENGTH_SHORT).show()
             }
-            override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable?) {
-                Log.e("LISTAR ESTUDIANTES ERROR", t?.message.toString())
+            override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable) {
+                Log.e("LISTAR ESTUDIANTES ERROR", t.message.toString())
             }
         })
 
@@ -100,9 +97,9 @@ class activity_register_student : AppCompatActivity() {
 
             val apoderado = Apoderado(nombres, apellidos, correo, telefono.toInt(), direccion, estudiantesApoderado)
 
-            var msg : String
             api.agregarApoderado(apoderado).enqueue(object : Callback<Int> {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    msg = response.headers().get("message")
                     if (response.isSuccessful) {
                         msg = response.body().toString()
                         auth.createUserWithEmailAndPassword(correo, telefono)
@@ -110,17 +107,16 @@ class activity_register_student : AppCompatActivity() {
                                 if (task.isSuccessful) {
                                     authFunctions.enviarCredenciales(correo, telefono, this@activity_register_student)
                                 } else {
-                                    Toast.makeText(this@activity_register_student, "Error al Agregar al apoderado.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@activity_register_student, "Error al Agregar al apoderado en Firebase.", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                    }else{
-                        msg = response.errorBody()?.string().toString()
-                    }
-                    Log.e("AGREGAR APODERADO", msg)
+                    } else{ Log.e("AGREGAR APODERADO", msg ?:"") }
+                    Toast.makeText(this@activity_register_student, msg, Toast.LENGTH_SHORT).show()
                 }
                 override fun onFailure(call: Call<Int>, t: Throwable) {
-                    msg = "Error en la API y no en el Firebase."
-                    Log.e("AGREGAR APODERADO ERROR", msg)
+                    msg = "Error en la API: ${t.message}"
+                    Toast.makeText(this@activity_register_student, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())
                 }
             } )
         }

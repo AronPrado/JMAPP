@@ -58,13 +58,12 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onResponse(call: Call<List<Noticia>>, response: Response<List<Noticia>>) {
                 if (response.isSuccessful) {
                     noticias = response.body()!!
-                    adapter.setNoticias(noticias);
-                    adapter.notifyDataSetChanged();
-                    msg = noticias.size.toString()
+                    adapter.setNoticias(noticias)
+                    adapter.notifyDataSetChanged()
                 }else{
                     msg = response.errorBody()?.string().toString()
+                    Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
             }
             override fun onFailure(call: Call<List<Noticia>>, t: Throwable?) {
                 msg = "Error en el API"
