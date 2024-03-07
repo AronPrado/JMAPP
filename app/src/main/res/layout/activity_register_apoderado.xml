@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity_register_student">
+    tools:context=".view.agregar.RegisterApoderadoActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbRegister"
@@ -45,7 +45,7 @@
     <ScrollView
         android:id="@+id/svRegistro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/tbRegister"
         android:layout_above="@+id/lybuttons"
         android:padding="30dp"
@@ -397,19 +397,19 @@
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:layout_gravity="center">
-                    <TextView
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:text="Selecionar estudiante"
-                        android:textColor="@color/plomo"
-                        android:textSize="18sp"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:gravity="center"/>
+                android:paddingTop="16dp">
+                <EditText
+                    android:id="@+id/edtDniEstudiantes"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:textSize="15sp"
+                    android:hint="Ingresar dni del estudiante"
+                    android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:background="@android:color/transparent"
+                    android:inputType="number" />
             </TableLayout>
 
             <LinearLayout
@@ -419,10 +419,23 @@
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:paddingBottom="20dp">
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/pb_registerapoderado"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ListView
+                        android:id="@+id/listEstudiantes"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+
+                        android:visibility="gone"/>
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -434,6 +447,8 @@
                 android:paddingTop="20dp"
                 android:gravity="center"
                 android:layout_alignParentBottom="true">
+
+
                 <Button
                     android:id="@+id/btnRegistrar"
                     android:layout_width="300dp"
@@ -442,14 +457,6 @@
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center"/>
-                <Button
-                    android:id="@+id/btnActualizar"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="Enviar Credenciales"
-                    android:textSize="20sp"
-                    android:backgroundTint="@color/md_theme_light_tertiary"
-                    android:layout_gravity="center" />
             </LinearLayout>
 
 

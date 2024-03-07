@@ -13,7 +13,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.view.login.LoginAdmin
+import com.javierprado.jmapp.view.agregar.RegisterApoderadoActivity
+import com.javierprado.jmapp.view.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.login.OptionLogin
 
 class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -60,9 +61,8 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
             R.id.nav_item_2 -> {
-                Toast.makeText(this, "Registrar Apoderado", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, activity_register_student::class.java)
-                intent.putExtra(activity_register_student().TOKEN, tokenAdmin)
+                val intent = Intent(this, RegisterDocenteActivity::class.java)
+                intent.putExtra(RegisterDocenteActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
             }
             R.id.nav_item_3 -> {

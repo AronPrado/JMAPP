@@ -52,9 +52,10 @@ class AuthFunctions {
                             }
                         }
 
-                        override fun onFailure(call: Call<AuthResponse?>, t: Throwable?) {
+                        override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
                             msg = "Error en el API y no en el Firebase."
                             Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                            Log.e("API ERROR:", t.message.toString())
                         }
                     })
                 }

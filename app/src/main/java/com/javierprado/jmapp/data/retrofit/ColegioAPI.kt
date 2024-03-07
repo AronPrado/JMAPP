@@ -47,11 +47,11 @@ interface ColegioAPI {
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES
     fun obtenerEstudiantes(@Query("curso") cursoId : Int?, @Query("grado") grado : Int?, @Query("seccion") seccion : String?): Call<Collection<Estudiante>>?
     @GET("/api/estudiantes/{id}") // OBTENER ESTUDIANTES
-    fun buscarEstudiantePorDNI(@Path("id")  estudianteId: Int, @Query("dni") dni : Int?): Call<Estudiante?>?
+    fun buscarEstudiantePorDNI(@Path("id")  estudianteId: Int, @Query("dni") dni : Int?): Call<Estudiante>?
 
     // CURSOS
     @GET("/api/cursos") // OBTENER CURSOS
-    fun obtenerCursos(@Query("estudiante") estudianteId : Int?): Call<Collection<Curso>?>?
+    fun obtenerCursos(@Query("estudiante") estudianteId : Int?, @Query("nivel") nivel : String?): Call<Collection<Curso>>?
 
     // NOTICIAS
     @GET("/api/noticias") // OBTENER NOTICIAS

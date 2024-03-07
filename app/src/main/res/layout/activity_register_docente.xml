@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.agregar.RegisterDocenteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbRegister"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:elevation="24dp"
+        android:background="@color/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <TextView
+                android:id="@+id/tvTitleRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/librefranklin_mediumitalic"
+                android:text="Registrar Docente"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:paddingStart="4dp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/svRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tbRegister"
+        android:layout_above="@+id/lybuttons"
+        android:padding="30dp"
+        tools:ignore="NotSibling">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/line_color"/>
+                    <TableRow  android:weightSum="1">
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="@color/line_color"/>
+                        <TextView
+                            android:layout_column="0"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="32dp"
+                            android:text="Datos del docente"
+                            android:textColor="@color/plomo"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:background="@color/md_theme_dark_secondary"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="@color/line_color"/>
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/RegisterDocente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtNombres"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Nombres:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtNombres"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtApellidos"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Apellidos:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtApellidos"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="2">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtFechaNacDocente"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:text="Fecha de nacimiento:"
+                                android:textColor="@color/plomo"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <TextView
+                                android:id="@+id/txtGeneroDocente"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:text="Género:"
+                                android:textColor="@color/plomo"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="2">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtFechaNacDocente"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="date" />
+                            <Spinner
+                                android:id="@+id/s_genero__ocente"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:entries="@array/generos"
+                                android:background="@android:color/transparent" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtEmailDocente"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:text="Correo electrónico"
+                                android:textColor="@color/plomo"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtEmailDocente"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="20dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="2">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtTelefono"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Telefono:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <TextView
+                                android:id="@+id/txtDireccion"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Dirección:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_contact"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="2">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <EditText
+                                android:id="@+id/edtTelefono"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <EditText
+                                android:id="@+id/edtDireccion"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:background="@android:color/transparent"
+                                android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                    </TableLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:orientation="horizontal">
+                <TableRow android:weightSum="2">
+                    <TextView
+                        android:layout_column="0"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:textSize="15sp"
+                        android:text="Elegir nivel educativo:"
+                        android:maxLines="2"
+                        android:textStyle="bold"
+                        android:paddingLeft="12dp"
+                        android:background="@android:color/transparent"
+                        android:inputType="number"/>
+                    <TextView
+                        android:layout_column="0"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:textSize="15sp"
+                        android:text="Seleccionar curso:"
+                        android:maxLines="2"
+                        android:textStyle="bold"
+                        android:paddingLeft="12dp"
+                        android:background="@android:color/transparent"
+                        android:inputType="number"/>
+                </TableRow>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+                <Spinner
+                    android:id="@+id/s_nivel_educativo_curso__docente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:entries="@array/niveles_educativos"
+                    android:background="@android:color/transparent" />
+                <ListView
+                    android:id="@+id/lv_lista_cursos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lybuttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
+
+
+                <Button
+                    android:id="@+id/btnRegistrar"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:text="Registrar Docente"
+                    android:textSize="20sp"
+                    android:backgroundTint="@color/md_theme_light_tertiary"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

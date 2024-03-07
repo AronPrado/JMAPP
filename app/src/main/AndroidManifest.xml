@@ -17,11 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.agregar.RegisterDocenteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.agregar.RegisterApoderadoActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.actualizar_apoderado"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".view.activity_noticias"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".view.login.LoginAdmin"
             android:exported="true" />
@@ -30,9 +36,6 @@
             android:exported="true" />
         <activity
             android:name=".view.login.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.activity_register_student"
             android:exported="true" />
         <activity
             android:name=".view.menu_administrador"

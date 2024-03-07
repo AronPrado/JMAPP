@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">JMAPP</string>
 
+    <string-array name="generos">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+    <string-array name="niveles_educativos">
+        <item>Primaria</item>
+        <item>Secundaria</item>
+    </string-array>
+
     <string name="NotiTitle">!Aviso!</string>
     <string name="notiDescription">¿El Alumno no se encuentra en el salon de clases?</string>
     <string name="escribir_mensaje">Escribir mensaje...</string>
@@ -28,4 +37,5 @@
     <!-- menuApoderado -->
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+
 </resources>

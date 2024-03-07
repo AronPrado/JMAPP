@@ -11,7 +11,8 @@ import java.io.IOException
 
 
 class RetrofitHelper private constructor() {
-    private val BASE_URL = "https://colegio-api-jma-f0c7750337fe.herokuapp.com/"
+//    private val BASE_URL = "https://colegio-api-jma-f0c7750337fe.herokuapp.com/"
+    private val BASE_URL = "http://colegio-api.onrender.com/"
     private var api: ColegioAPI
     private var bearerToken = ""
     private val client = OkHttpClient.Builder()
