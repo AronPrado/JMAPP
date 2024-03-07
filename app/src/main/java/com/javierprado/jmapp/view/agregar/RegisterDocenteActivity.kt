@@ -16,13 +16,12 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.clases.NewsAdapter
 import com.javierprado.jmapp.data.entities.Curso
-import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.adapters.CursoAdapter
-import com.javierprado.jmapp.view.adapters.EstudianteAdapter
 import com.javierprado.jmapp.view.menu_administrador
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,10 +41,13 @@ class RegisterDocenteActivity : AppCompatActivity() {
     private lateinit var btnRegistrar: Button
 
     private lateinit var cursos : Collection<Curso>
-    
+
+    private val authFunctions = AuthFunctions()
     private lateinit var auth: FirebaseAuth
     private lateinit var api : ColegioAPI
     private lateinit var msg : String
+
+    private lateinit var cursoDocente : Curso
     val TOKEN = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +72,6 @@ class RegisterDocenteActivity : AppCompatActivity() {
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
             retro.setBearerToken(token)
-            Toast.makeText(this@RegisterDocenteActivity, "BEARER ESTABLECIDO", Toast.LENGTH_SHORT).show()
-            Log.e("BEARER",token)
-
         }
         api = retro.getApi()
         // Botón regresar
@@ -85,13 +84,12 @@ class RegisterDocenteActivity : AppCompatActivity() {
         listaNivelEducativo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val nivel = listaNivelEducativo.selectedItem.toString()[0]
-                api.obtenerCursos(null, nivel.toString())?.enqueue(object : Callback<Collection<Curso>> {
+                val nivel = listaNivelEducativo.selectedItem.toString()[0].toString()
+                api.obtenerCursos(null, nivel)?.enqueue(object : Callback<Collection<Curso>> {
                     override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
-                        listaCursos.visibility = if (response.isSuccessful) View.VISIBLE else View.GONE
                         if (response.isSuccessful) {
                             cursos = response.body()!!
-                            if (cursos.isEmpty()){
+                            if (!cursos.isEmpty()){
                                 listaCursos.adapter = CursoAdapter(this@RegisterDocenteActivity, cursos as MutableList<Curso>)
                             } else {
                                 msg="No se encontraron cursos en este nivel educativo."
@@ -102,14 +100,58 @@ class RegisterDocenteActivity : AppCompatActivity() {
                             Toast.makeText(this@RegisterDocenteActivity, "NOT RESPONSE", Toast.LENGTH_SHORT).show()
                             Log.e("NOT RESPONSE", msg)
                         }
+                        listaCursos.visibility = if (response.isSuccessful) View.VISIBLE else View.GONE
                     }
                     override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
-                        Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())
+                        Log.e("LISTAR CURSOS", t.message.toString())
                     }
                 } )
             }
         }
+        
+        btnRegistrar.setOnClickListener{
+            val nombres = nombresEditText.text.toString().trim()
+            val apellidos = apellidosEditText.text.toString().trim()
+            val fechaNac = fechaNacimientoEditText.text.toString().trim()
+            val genero = generoEditText.selectedItem.toString()
+            val correo = correoEditText.text.toString().trim()
+            val telefono = telefonoEditText.text.toString().trim()
+            val direccion = direccionEditText.text.toString().trim()
+            val curso = cursoDocente
+            
+            val prueba = "CURSO SELECCIONADO: ${curso.nombre} - ${curso.nivelEducativo} - ${curso.dia}"
+            
+            Log.e("SELCCION DE CURSO PARA EL DOCENTE", prueba)
+            val docente = Docente(nombres, apellidos, fechaNac, genero, correo, telefono.toInt(), direccion,  curso)
+            api.agregarDocente(docente).enqueue(object : Callback<Docente> {
+                override fun onResponse(call: Call<Docente>, response: Response<Docente>) {
+                    msg = response.headers()["message"] ?: ""
+                    if (response.isSuccessful) {
+                        val docenteRegistrado = response.body()
+                        msg = "Docente nuevo ID: ${docenteRegistrado?.docenteId}"
+                        auth.createUserWithEmailAndPassword(correo, telefono)
+                            .addOnCompleteListener { task: Task<AuthResult?> ->
+                                if (task.isSuccessful) {
+                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
+                                } else {
+                                    Toast.makeText(this@RegisterDocenteActivity, "Error al Agregar al docente en Firebase.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                    } else{ Log.e("AGREGAR DOCENTE", msg ?:"") }
+                    Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<Docente>, t: Throwable) {
+                    msg = "Error en la API: ${t.message}"
+                    Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("ERROR AL AGREGAR DOCENTE", t.message.toString())
+                }
+            } )
+        }
+    }
+
+    fun onCursoSelected(curso: Curso) {
+        cursoDocente = curso
     }
 }

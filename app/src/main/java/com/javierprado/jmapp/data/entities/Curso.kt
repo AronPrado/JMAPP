@@ -1,8 +1,10 @@
 package com.javierprado.jmapp.data.entities
 
-data class Curso(
-    var cursoId: Int,
-    var nombre: String,
-    var nivelEducativo: Char,
-    var dia: String,
-)
+import java.io.Serializable
+
+class Curso() : Serializable {
+    var cursoId: Int? = null
+    var nombre: String? = null
+    var nivelEducativo: Char? = null
+    var dia: String? = null
+}

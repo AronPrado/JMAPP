@@ -14,7 +14,7 @@ import java.io.Serializable
 
     var itemsEstudiante: Set<Estudiante?>? = null
 
-     constructor() {}
+     constructor()
      constructor(
          nombres: String?,
          apellidos: String?,

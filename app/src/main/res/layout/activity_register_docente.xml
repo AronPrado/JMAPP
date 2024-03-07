@@ -494,8 +494,8 @@
                 <ListView
                     android:id="@+id/lv_lista_cursos"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:layout_height="200dp"
+                    android:visibility="visible"/>
 
             </LinearLayout>
 
