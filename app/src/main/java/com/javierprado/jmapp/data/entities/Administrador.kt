@@ -2,16 +2,16 @@ package com.javierprado.jmapp.data.entities
 
 import java.io.Serializable
 
-class Administrador (
-    val  administradorId: Int,
-    val  nombres: String,
-    val  apellidos: String,
+class Administrador: Serializable {
+    var  administradorId: Int = 0
+    var  nombres: String = ""
+    var  apellidos: String =""
 
-    val  correo: String,
-    val  telefono: Int,
+    var  correo: String = ""
+    var  telefono: Int = 0
 
-    val  usuario: Usuario ,
+    var  usuario: Usuario ? = null
 
-    val  noticias: Collection<Noticia>,
-    val  eventos: Collection<Evento>,
-)
+    var  noticias: Collection<Noticia>? = null
+    var  eventos: Collection<Evento>? = null
+}

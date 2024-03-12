@@ -9,6 +9,17 @@
         <item>Primaria</item>
         <item>Secundaria</item>
     </string-array>
+    <string-array name="tipos_noticias">
+        <item>Logros estudiantiles</item>
+        <item>Eventos escolares</item>
+        <item>Actualizaciones del personal</item>
+        <item>Políticas y procedimientos</item>
+        <item>Proyectos y programas educativos</item>
+        <item>Orientación y consejería</item>
+        <item>Actualizaciones de infraestructura</item>
+        <item>Eventos de recaudación de fondos</item>
+        <item>Noticias de la comunidad</item>
+    </string-array>
 
     <string name="NotiTitle">!Aviso!</string>
     <string name="notiDescription">¿El Alumno no se encuentra en el salon de clases?</string>

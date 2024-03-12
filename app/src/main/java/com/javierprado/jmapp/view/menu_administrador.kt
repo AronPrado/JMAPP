@@ -1,34 +1,53 @@
 package com.javierprado.jmapp.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.clases.NewsAdapter
+import com.javierprado.jmapp.data.entities.Noticia
+import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.view.agregar.RegisterApoderadoActivity
+import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.view.agregar.ControlNoticiaActivity
 import com.javierprado.jmapp.view.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.login.OptionLogin
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var btnMasRecientes: ImageView
+
     private lateinit var auth: FirebaseAuth
+    private lateinit var api : ColegioAPI
+
     val TOKEN = "token"
     var tokenAdmin = ""
+
+    private var extraFuns : ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_administrador)
 
+        btnMasRecientes = findViewById(R.id.btn_mas_reciente)
         //API Y BUNDLE
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
@@ -37,7 +56,13 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
             tokenAdmin=token
             retro.setBearerToken(tokenAdmin)
         }
-        val api = retro.getApi()
+        api = retro.getApi()
+        //Noticias
+        recyclerView = findViewById(R.id.recyclerViewNews)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        actualizarNoticias(retro.getBearerToken())
+        btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }
 
         auth = FirebaseAuth.getInstance()
 
@@ -71,7 +96,12 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
                 startActivity(intent)
             }
             R.id.nav_item_4 -> Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_5 -> Toast.makeText(this, "Editar Tablero de Noticias", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_5 -> {
+                val intent = Intent(this, ControlNoticiaActivity::class.java)
+                intent.putExtra(ControlNoticiaActivity().TOKEN, tokenAdmin)
+                startActivity(intent)
+                Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
+            }
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 ->  {
                 auth.signOut()
@@ -104,5 +134,9 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
             else -> super.onOptionsItemSelected(item)
         }
     }
-
+    fun actualizarNoticias(token: String){
+        val adapter = NewsAdapter(this@menu_administrador, ArrayList(), api, token, false)
+        recyclerView.adapter = adapter
+        extraFuns.listarNoticias(api, adapter, this@menu_administrador)
+    }
 }

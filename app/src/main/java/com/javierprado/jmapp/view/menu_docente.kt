@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -23,17 +24,27 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.javierprado.jmapp.data.entities.Noticia
+import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.data.util.ExtraFunctions
+
 class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var btnMasRecientes: ImageView
+
     private lateinit var auth: FirebaseAuth
+    private lateinit var api : ColegioAPI
     val TOKEN = "token"
+
+    private var extraFuns : ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_docente)
 
+        btnMasRecientes = findViewById(R.id.btn_mas_reciente)
         //API Y BUNDLE
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
@@ -41,37 +52,16 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val token = bundle.getString(TOKEN, "")
             retro.setBearerToken(token)
         }
-        val api = retro.getApi()
+        api = retro.getApi()
 
         auth = FirebaseAuth.getInstance()
 
         //Noticias
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewNews)
+        recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        var noticias : List<Noticia> = ArrayList()
-        val adapter = NewsAdapter(noticias)
-        var msg : String
-        api.obtenerNoticias()?.enqueue(object :
-            Callback<List<Noticia>> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<List<Noticia>>, response: Response<List<Noticia>>) {
-                if (response.isSuccessful) {
-                    noticias = response.body()!!
-                    adapter.setNoticias(noticias)
-                    adapter.notifyDataSetChanged()
-                }else{
-                    msg = response.errorBody()?.string().toString()
-                    Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
-                }
-            }
-            override fun onFailure(call: Call<List<Noticia>>, t: Throwable?) {
-                msg = "Error en el API"
-                Toast.makeText(this@menu_docente, msg, Toast.LENGTH_SHORT).show()
-            }
-        })
-        recyclerView.adapter = adapter
-
+        actualizarNoticias(retro.getBearerToken())
+        btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -127,5 +117,10 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    fun actualizarNoticias(token: String){
+        val adapter = NewsAdapter(this@menu_docente, ArrayList(), api, token, false)
+        recyclerView.adapter = adapter
+        extraFuns.listarNoticias(api, adapter, this@menu_docente)
     }
 }

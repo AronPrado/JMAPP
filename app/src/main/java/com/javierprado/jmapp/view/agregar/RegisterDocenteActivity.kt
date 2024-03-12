@@ -58,7 +58,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
         nombresEditText = findViewById(R.id.edtNombres)
         apellidosEditText = findViewById(R.id.edtApellidos)
         fechaNacimientoEditText = findViewById(R.id.edtFechaNacDocente)
-        generoEditText = findViewById(R.id.s_genero__ocente)
+        generoEditText = findViewById(R.id.s_genero__docente)
         correoEditText = findViewById(R.id.edtEmailDocente)
         telefonoEditText = findViewById(R.id.edtTelefono)
         direccionEditText = findViewById(R.id.edtDireccion)
