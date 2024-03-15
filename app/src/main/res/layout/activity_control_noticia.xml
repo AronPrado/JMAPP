@@ -44,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/librefranklin_mediumitalic"
                 android:textColor="@color/white"
-                android:textSize="28sp"
+                android:text="Registrar noticia"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="start|center_vertical"
@@ -59,219 +60,97 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/tb_add_noticia">
 
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:src="@drawable/news"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TableLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/bac_contact"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="1sp"
+                android:text="¿Cual será el titulo de la noticia?"
+                android:textColor="@color/plomo"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/txt_titulo_noticia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_marginRight="5dp"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:scrollbars="vertical"
+                android:paddingLeft="12dp"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
+            <TextView
+                android:id="@+id/txtContenido"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/bac_contact"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="16dp"
+                android:text="¿Cual será la descripción de la noticia?"
+                android:textColor="@color/plomo"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
+            <EditText
+                android:id="@+id/txt_contenido_noticia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:inputType="textMultiLine"
+                android:maxLines="6"
+                android:scrollbars="vertical"
+                android:paddingLeft="12dp"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-
-                    <TextView
-                        android:id="@+id/txtFechaNacDocente"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:background="@color/bac_contact"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingLeft="12dp"
-                        android:text="Título"
-                        android:textColor="@color/plomo"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-
-                    <EditText
-                        android:id="@+id/txt_titulo_noticia"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp"
-                        android:layout_column="0"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:inputType="text"
-                        android:paddingLeft="12dp"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-
-                    <TextView
-                        android:id="@+id/txtEmailDocente"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:background="@color/bac_contact"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingLeft="12dp"
-                        android:text="Contenido"
-                        android:textColor="@color/plomo"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-
-                    <EditText
-                        android:id="@+id/txt_contenido_noticia"
-                        android:layout_width="0dp"
-                        android:layout_height="100dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:inputType="none"
-                        android:paddingLeft="12dp"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/line_color" />
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="25dp"
-                        android:background="@color/line_color" />
-
-                    <TextView
-                        android:id="@+id/txtTelefono"
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:background="@color/bac_contact"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingLeft="12dp"
-                        android:text="Tipo"
-                        android:textColor="@color/plomo"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="25dp"
-                        android:background="@color/line_color" />
-
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-                <TableRow android:weightSum="1">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="30dp"
-                        android:background="@color/line_color" />
-
-                    <Spinner
-                        android:id="@+id/s_tipo_noticia"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp"
-                        android:layout_column="1"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:entries="@array/tipos_noticias"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="30dp"
-                        android:background="@color/line_color" />
-                </TableRow>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_color" />
-
-            </TableLayout>
+            <TextView
+                android:id="@+id/txtCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/bac_contact"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="16dp"
+                android:text="Elije una categoria"
+                android:textColor="@color/plomo"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
+            <Spinner
+                android:id="@+id/s_tipo_noticia"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:background="@android:color/transparent"
+                android:entries="@array/tipos_noticias"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
     <Button
@@ -280,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@color/md_theme_light_tertiary"
+        android:text="Publicar"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

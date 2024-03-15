@@ -21,10 +21,14 @@
             android:exported="true" />
         <activity
             android:name=".view.agregar.ControlNoticiaActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".view.agregar.RegisterDocenteActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".view.agregar.RegisterApoderadoActivity"
             android:exported="true" />

@@ -79,13 +79,13 @@
                             android:layout_width="0dp"
                             android:layout_height="32dp"
                             android:text="Datos del docente"
-                            android:textColor="@color/plomo"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:gravity="center"
-                            android:background="@color/md_theme_dark_secondary"/>
+                            android:background="@color/bac_doc"/>
                         <View
                             android:layout_width="1dp"
                             android:layout_height="32dp"
@@ -129,7 +129,7 @@
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
+                                android:background="@color/bac_do"/>
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="25dp"
@@ -185,7 +185,7 @@
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
+                                android:background="@color/bac_do"/>
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="25dp"
@@ -222,17 +222,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                             <TextView
                                 android:id="@+id/txtFechaNacDocente"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:text="Fecha de nacimiento:"
                                 android:textColor="@color/plomo"
                                 android:textSize="14sp"
@@ -240,35 +240,23 @@
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <TextView
-                                android:id="@+id/txtGeneroDocente"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:text="Género:"
-                                android:textColor="@color/plomo"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
+                                android:background="@color/bac_do"/>
+
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                             <EditText
                                 android:id="@+id/edtFechaNacDocente"
@@ -276,25 +264,16 @@
                                 android:layout_weight="1"
                                 android:layout_marginRight="5dp"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
                                 android:inputType="date" />
-                            <Spinner
-                                android:id="@+id/s_genero__docente"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="20dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:entries="@array/generos"
-                                android:background="@android:color/transparent" />
+
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
                         <View
@@ -304,14 +283,66 @@
                         <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtGeneroDocente"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Género:"
+                                android:textColor="@color/plomo"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_do"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                            <Spinner
+                                android:id="@+id/s_genero__docente"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:entries="@array/generos"
+                                android:background="@android:color/transparent" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                             <TextView
                                 android:id="@+id/txtEmailDocente"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:text="Correo electrónico"
                                 android:textColor="@color/plomo"
                                 android:textSize="14sp"
@@ -319,10 +350,10 @@
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
+                                android:background="@color/bac_do"/>
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="25dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
                         <View
@@ -333,14 +364,14 @@
                         <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                             <EditText
                                 android:id="@+id/edtEmailDocente"
                                 android:layout_column="0"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:paddingLeft="12dp"
@@ -348,7 +379,7 @@
                                 android:inputType="none" />
                             <View
                                 android:layout_width="1dp"
-                                android:layout_height="20dp"
+                                android:layout_height="30dp"
                                 android:background="@color/line_color"/>
                         </TableRow>
                         <View
@@ -356,7 +387,7 @@
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="25dp"
@@ -374,21 +405,8 @@
                                 android:paddingLeft="12dp"
                                 android:maxLines="1"
                                 android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
-                            <TextView
-                                android:id="@+id/txtDireccion"
-                                android:layout_column="1"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="25dp"
-                                android:text="Dirección:"
-                                android:textColor="@color/plomo"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:paddingLeft="12dp"
-                                android:maxLines="1"
-                                android:ellipsize="end"
-                                android:background="@color/bac_contact"/>
+                                android:background="@color/bac_do"/>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="25dp"
@@ -400,7 +418,7 @@
                             android:layout_height="1dp"
                             android:background="@color/line_color"/>
 
-                        <TableRow android:weightSum="2">
+                        <TableRow android:weightSum="1">
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="30dp"
@@ -417,6 +435,49 @@
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
                                 android:inputType="none" />
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                            <TextView
+                                android:id="@+id/txtDireccion"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:text="Dirección:"
+                                android:textColor="@color/plomo"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="12dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:background="@color/bac_do"/>
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:background="@color/line_color"/>
+                        </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/line_color"/>
+                        <TableRow android:weightSum="1">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="30dp"
+                                android:background="@color/line_color"/>
                             <EditText
                                 android:id="@+id/edtDireccion"
                                 android:layout_column="1"
@@ -482,8 +543,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingBottom="15dp"
-                android:gravity="center">
+                android:paddingBottom="60dp">
                 <Spinner
                     android:id="@+id/s_nivel_educativo_curso__docente"
                     android:layout_width="wrap_content"
@@ -496,14 +556,6 @@
                     android:id="@+id/lv_lista_cursos"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp"
-                    android:layout_gravity="end"
-                    android:visibility="gone"/>
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/pb_listar_cursos"
-                    android:layout_gravity="center"
-                    android:indeterminate="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:visibility="gone"/>
 
             </LinearLayout>

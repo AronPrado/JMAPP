@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="80dp"
+            android:paddingTop="100dp"
             android:textSize="20dp"
             android:text="Explore su rol en la plataforma"
             android:textStyle="bold"

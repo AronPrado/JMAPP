@@ -77,5 +77,7 @@
     <color name="nude">#f2e8e1</color>
     <color name="bac_contact">#DCE8FA</color>
     <color name="plomo">#515151</color>
+    <color name="bac_doc">#8FBC91</color>
+    <color name="bac_do">#D0F1D2</color>
 
 </resources>
