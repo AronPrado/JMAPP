@@ -13,6 +13,7 @@ import android.widget.ListView
 import android.widget.Spinner
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
@@ -47,7 +48,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
     private lateinit var api : ColegioAPI
     private lateinit var msg : String
 
-    private lateinit var cursoDocente : Curso
+    private var cursoDocente : Curso? = null
     val TOKEN = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,27 +86,31 @@ class RegisterDocenteActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val nivel = listaNivelEducativo.selectedItem.toString()[0].toString()
+
+                val progressBarListar: CircularProgressIndicator = findViewById(R.id.pb_listar_cursos)
+                progressBarListar.visibility = View.VISIBLE
+                listaCursos.visibility = View.GONE
+
                 api.obtenerCursos(null, nivel)?.enqueue(object : Callback<Collection<Curso>> {
                     override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
                         if (response.isSuccessful) {
                             cursos = response.body()!!
-                            if (!cursos.isEmpty()){
-                                listaCursos.adapter = CursoAdapter(this@RegisterDocenteActivity, cursos as MutableList<Curso>)
-                            } else {
+                            listaCursos.adapter = CursoAdapter(this@RegisterDocenteActivity, cursos as MutableList<Curso>)
+
+                            listaCursos.visibility = if (!cursos.isEmpty()) View.VISIBLE else View.GONE
+
+                            if (cursos.isEmpty()){
                                 msg="No se encontraron cursos en este nivel educativo."
                                 Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                             }
-                        } else {
-                            msg = response.errorBody()?.string().toString()
-                            Toast.makeText(this@RegisterDocenteActivity, "NOT RESPONSE", Toast.LENGTH_SHORT).show()
-                            Log.e("NOT RESPONSE", msg)
+                            progressBarListar.visibility= View.GONE
                         }
-                        listaCursos.visibility = if (response.isSuccessful) View.VISIBLE else View.GONE
                     }
                     override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("LISTAR CURSOS", t.message.toString())
+                        progressBarListar.visibility= View.GONE
                     }
                 } )
             }
@@ -120,10 +125,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
             val telefono = telefonoEditText.text.toString().trim()
             val direccion = direccionEditText.text.toString().trim()
             val curso = cursoDocente
-            
-            val prueba = "CURSO SELECCIONADO: ${curso.nombre} - ${curso.nivelEducativo} - ${curso.dia}"
-            
-            Log.e("SELCCION DE CURSO PARA EL DOCENTE", prueba)
+
             val docente = Docente(nombres, apellidos, fechaNac, genero, correo, telefono.toInt(), direccion,  curso)
             api.agregarDocente(docente).enqueue(object : Callback<Docente> {
                 override fun onResponse(call: Call<Docente>, response: Response<Docente>) {
@@ -139,7 +141,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
                                     Toast.makeText(this@RegisterDocenteActivity, "Error al Agregar al docente en Firebase.", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                    } else{ Log.e("AGREGAR DOCENTE", msg ?:"") }
+                    } else{ Log.e("AGREGAR DOCENTE", msg) }
                     Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                 }
                 override fun onFailure(call: Call<Docente>, t: Throwable) {

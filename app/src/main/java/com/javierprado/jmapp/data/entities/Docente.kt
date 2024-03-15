@@ -21,6 +21,7 @@ class Docente : Serializable {
     var usuario: Usuario? = null
 
     //    var mensajes : Collection<Mensaje>? = null
+    constructor()
     constructor(
         nombres: String?,
         apellidos: String?,

@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.menu_docente">
-
-    <ImageView
-        android:id="@+id/btn_mas_reciente"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="10dp"
-        android:layout_gravity="end"
-        android:src="@drawable/mas_reciente"/>
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +49,21 @@
         android:id="@+id/recyclerViewNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/pb_listar_noticias"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/btn_mas_reciente"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="end"
+        android:src="@drawable/mas_reciente"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

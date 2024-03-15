@@ -9,6 +9,15 @@
         <item>Primaria</item>
         <item>Secundaria</item>
     </string-array>
+    <string-array name="grados">
+        <item>1°</item><item>2°</item><item>3°</item>
+        <item>4°</item><item>5°</item><item>6°</item>
+    </string-array>
+    <string-array name="secciones">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
     <string-array name="tipos_noticias">
         <item>Logros estudiantiles</item>
         <item>Eventos escolares</item>

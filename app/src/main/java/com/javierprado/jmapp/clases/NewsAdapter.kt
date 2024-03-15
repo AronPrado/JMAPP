@@ -24,13 +24,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class NewsAdapter(private val context: Context, private var noticias: List<Noticia>, private val api: ColegioAPI, private val token: String,
-    private var forDA: Boolean) :
+    private val forDA: Boolean) :
     RecyclerView.Adapter<NewsAdapter.NoticiaViewHolder>() {
-    override fun getItemCount(): Int {
-        return noticias.size
-    }
     fun setNoticias(noticias : List<Noticia> ){
         this.noticias = noticias
+    }
+    override fun getItemCount(): Int {
+        return noticias.size
     }
     inner class NoticiaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Aquí puedes encontrar las vistas en el layout de cada elemento de la lista

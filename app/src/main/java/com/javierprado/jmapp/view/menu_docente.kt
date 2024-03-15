@@ -119,8 +119,8 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@menu_docente, ArrayList(), api, token, false)
-        recyclerView.adapter = adapter
+        val adapter = NewsAdapter(this@menu_docente, ArrayList(), api, token, true)
         extraFuns.listarNoticias(api, adapter, this@menu_docente)
+        recyclerView.adapter = adapter
     }
 }

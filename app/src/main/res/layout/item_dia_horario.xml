@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_horario"
+    android:layout_width="71dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:layout_marginHorizontal="2dp"
+    android:paddingVertical="3dp">
+
+
+    <TextView
+        android:id="@+id/curso_horario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/librefranklin_extrabold"
+        android:textAlignment="center"
+        android:maxLines="2"
+        android:textSize="11sp"
+        android:text="Matemáticas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/horas_horario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:fontFamily="@font/librefranklin_extrabold"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        android:text="00:00\n-\n00:00"
+        app:layout_constraintBottom_toTopOf="@+id/docente_horario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/curso_horario" />
+
+    <TextView
+        android:id="@+id/docente_horario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/librefranklin_extrabold"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        android:maxLines="3"
+        android:text="Nombres y Apellidos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

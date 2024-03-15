@@ -126,8 +126,8 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@menu_apoderado, ArrayList(), api, token, false)
-        recyclerView.adapter = adapter
+        val adapter = NewsAdapter(this@menu_apoderado, ArrayList(), api, token, true)
         extraFuns.listarNoticias(api, adapter, this@menu_apoderado)
+        recyclerView.adapter = adapter
     }
 }

@@ -3,24 +3,24 @@ package com.javierprado.jmapp.data.entities
 import java.io.Serializable
 import java.time.LocalDate
 
-data class Estudiante(
-    var estudianteId: Int,
-    var nombres: String,
-    var apellidos: String,
-    var fechaNacimiento: String,
+class Estudiante: Serializable{
+    var estudianteId: Int = 0
+    var nombres: String?= null
+    var apellidos: String?= null
+    var fechaNacimiento: String?= null
 
-    var genero: String,
-    var dni: Int,
+    var genero: String?= null
+    var dni: Int = 0
 
-    var grado: Int,
-    var seccion: String,
-    var nivelEducativo: String,
-    var fechaInscripcion: String,
+    var grado: Int?= null
+    var seccion: String?= null
+    var nivelEducativo: String?= null
+    var fechaInscripcion: String?= null
 
-    var estado: String,
+    var estado: String?= null
 
-//    var itemsCurso: Set<Curso>,
-//        var calificaciones : Collection<Calificacion>,
-//    var itemsAsistencia : Set<Asistencia>,
-//    var itemsApoderado: Set<Apoderado>,
-)
+    var itemsCurso: Set<Curso> = HashSet()
+//        var calificaciones : Collection<Calificacion>?= null
+//    var itemsAsistencia : Set<Asistencia>?= null
+//    var itemsApoderado: Set<Apoderado>?= null
+}

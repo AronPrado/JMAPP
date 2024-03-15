@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.entities.Usuario
@@ -138,6 +140,8 @@ class ControlNoticiaActivity : AppCompatActivity() {
             manejarNoticia(toAdd)
         }
         if(!toAdd){
+            val progressBarListar: CircularProgressIndicator = findViewById(R.id.pb_control_noticia)
+            progressBarListar.visibility = View.VISIBLE
             noticiaId?.let {
                 api.obtenerNoticiaPorId(it).enqueue(object : Callback<Noticia> {
                     override fun onResponse(call: Call<Noticia>, response: Response<Noticia>) {
@@ -154,10 +158,11 @@ class ControlNoticiaActivity : AppCompatActivity() {
 
                         } else{ Log.e("NR NOTICIA", msg) }
                         Toast.makeText(this@ControlNoticiaActivity, msg, Toast.LENGTH_SHORT).show()
+                        progressBarListar.visibility=View.GONE
                     }
 
                     override fun onFailure(call: Call<Noticia>, t: Throwable) {
-                        msg = "Error en la API: ${t.message}"
+                        msg = "Error en la API"
                         Toast.makeText(this@ControlNoticiaActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("BUSCAR NOTICIA", t.message.toString())
                     }

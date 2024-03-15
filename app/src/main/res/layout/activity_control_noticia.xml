@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.agregar.ControlNoticiaActivity">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/pb_control_noticia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ly_control_noticia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ly_control_noticia"
+        app:layout_constraintTop_toBottomOf="@+id/tb_add_noticia" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_add_noticia"
         android:layout_width="match_parent"

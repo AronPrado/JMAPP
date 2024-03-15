@@ -63,7 +63,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
         btnRegistrar = findViewById(R.id.btnRegistrar)
         buscarEstudiante = findViewById(R.id.edtDniEstudiantes)
 
-        progressBar = findViewById(R.id.pb_registerapoderado)
+        progressBar = findViewById(R.id.pb_listar_estudiantes)
 
         listaEstudiantes = findViewById(R.id.listEstudiantes)
         msg = ""
@@ -128,11 +128,12 @@ class RegisterApoderadoActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             listaEstudiantes.visibility = if (estudiantes.size > 0) View.VISIBLE else View.GONE
-            progressBar.visibility = View.VISIBLE
+
             val text  = buscarEstudiante.text.toString().trim()
             if (text.isNotEmpty() && text.count() == 8){
                 var dni = text.toInt()
                 //ACTIVAR CIRCULAR
+                progressBar.visibility = View.VISIBLE
                 api.buscarEstudiantePorDNI(0, dni)?.enqueue(object : Callback<Estudiante>{
                     override fun onResponse(call: Call<Estudiante>, response: Response<Estudiante>) {
                         if (response.isSuccessful) {
@@ -145,17 +146,16 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                             listaEstudiantes.visibility=View.VISIBLE
                             buscarEstudiante.setText("")
                         } else{
-                            msg= "ALUMNO NO ENCONTRADO CON EL DNI: $dni"
-                            Log.e("BUSQUEDA POR DNI:", msg ?: "")
+                            msg= "ALUMNO NO ENCONTRADO"
+                            Log.e("BUSQUEDA POR DNI:", "${msg} CON EL DNI: ${dni}" )
                             Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         }
-                        Toast.makeText(this@RegisterApoderadoActivity, "Estudiantes: ${estudiantes.size}", Toast.LENGTH_SHORT).show()
-                        progressBar.visibility =View.GONE
                     }
                     override fun onFailure(call: Call<Estudiante>, t: Throwable) {
                         Log.e("BUSCAR ESTUDIANTES ERROR", t.message.toString())
                     }
                 })
+                progressBar.visibility =View.GONE
             }else if(text.count()>9){
                 buscarEstudiante.setText("")
             }

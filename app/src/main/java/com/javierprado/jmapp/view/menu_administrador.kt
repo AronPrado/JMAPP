@@ -21,7 +21,9 @@ import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.view.agregar.ControlHorarioActivity
 import com.javierprado.jmapp.view.agregar.ControlNoticiaActivity
+import com.javierprado.jmapp.view.agregar.RegisterApoderadoActivity
 import com.javierprado.jmapp.view.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.login.OptionLogin
 import retrofit2.Call
@@ -86,8 +88,8 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
             R.id.nav_item_2 -> {
-                val intent = Intent(this, RegisterDocenteActivity::class.java)
-                intent.putExtra(RegisterDocenteActivity().TOKEN, tokenAdmin)
+                val intent = Intent(this, RegisterApoderadoActivity::class.java)
+                intent.putExtra(RegisterApoderadoActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
             }
             R.id.nav_item_3 -> {
@@ -95,7 +97,12 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val intent = Intent(this, NotiEventosEsco::class.java)
                 startActivity(intent)
             }
-            R.id.nav_item_4 -> Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_4 -> {
+                val intent = Intent(this, ControlHorarioActivity::class.java)
+                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
+                startActivity(intent)
+                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
+            }
             R.id.nav_item_5 -> {
                 val intent = Intent(this, ControlNoticiaActivity::class.java)
                 intent.putExtra(ControlNoticiaActivity().TOKEN, tokenAdmin)
@@ -136,7 +143,7 @@ class menu_administrador : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
     fun actualizarNoticias(token: String){
         val adapter = NewsAdapter(this@menu_administrador, ArrayList(), api, token, false)
-        recyclerView.adapter = adapter
         extraFuns.listarNoticias(api, adapter, this@menu_administrador)
+        recyclerView.adapter = adapter
     }
 }

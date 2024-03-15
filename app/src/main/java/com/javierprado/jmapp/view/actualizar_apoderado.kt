@@ -5,11 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -33,6 +35,8 @@ class actualizar_apoderado : AppCompatActivity() {
     private lateinit var direccionEditText: EditText
     private lateinit var btnActualizar: Button
 
+    private lateinit var progressBar: CircularProgressIndicator
+
     private lateinit var auth: FirebaseAuth
     val TOKEN = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +49,8 @@ class actualizar_apoderado : AppCompatActivity() {
         telefonoEditText = findViewById(R.id.edtTelefono)
         direccionEditText = findViewById(R.id.edtDireccion)
         btnActualizar = findViewById(R.id.btnActualizar)
+
+        progressBar = findViewById(R.id.pb_info_apoderado)
 
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
@@ -67,20 +73,25 @@ class actualizar_apoderado : AppCompatActivity() {
             startActivity(intent)
         }
         var msg : String? = ""
-        api.obtenerSesion(RoleType.APOD.name)?.enqueue(object : Callback<Usuario> {
+
+        progressBar.visibility= View.VISIBLE
+        api.obtenerSesion(RoleType.APOD.name).enqueue(object : Callback<Usuario> {
             override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                 if (response.isSuccessful) {
                     val user : Usuario = response.body()!!
-                    correoEditText.setText(user.email.toString())
+                    correoEditText.setText(user.email)
                     telefonoEditText.setText(user.telefono.toString())
                     direccionEditText.setText(user.apoderado.direccion.toString())
                 }else{
-                    msg = response.errorBody()?.string().toString()
+                    msg = response.headers()["message"] ?: ""
+                    Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
+                progressBar.visibility= View.GONE
             }
+
             override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                msg = "Error en el API"
+                msg = "Servidor desconectado"
+                Log.e(msg, t.message.toString())
                 Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
             }
         })

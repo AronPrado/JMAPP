@@ -5,6 +5,7 @@ import com.javierprado.jmapp.data.entities.AuthResponse
 import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.entities.Usuario
 import retrofit2.Call
@@ -44,10 +45,12 @@ interface ColegioAPI {
     fun actualizarInfoDocente(@Body docente: Docente): Call<Void>? // TAMBIEN ACTUALIZA INFO DE CUENTA
     @PUT("/api/apoderados")
     fun actualizarInfoApoderado(@Body apoderado : Apoderado): Call<Void>? // TAMBIEN ACTUALIZA INFO DE CUENTA
-
+    // ADMINISTRADO Y APODERADO
+    @POST("/api/horarios") // OBTENER HORARIOS
+    fun obtenerHorarios(@Query("fecha") fechaClase : String, @Body cursoIds : Collection<Int>): Call<Collection<Horario>>
     // ESTUDIANTES
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES
-    fun obtenerEstudiantes(@Query("curso") cursoId : Int?, @Query("grado") grado : Int?, @Query("seccion") seccion : String?): Call<Collection<Estudiante>>?
+    fun obtenerEstudiantes(@Query("curso") cursoId : Int?, @Query("nivel") nivel : String?, @Query("grado") grado : Int?, @Query("seccion") seccion : String?): Call<Collection<Estudiante>>
     @GET("/api/estudiantes/{id}") // OBTENER ESTUDIANTES
     fun buscarEstudiantePorDNI(@Path("id")  estudianteId: Int, @Query("dni") dni : Int?): Call<Estudiante>?
 
@@ -60,6 +63,4 @@ interface ColegioAPI {
     fun obtenerNoticias(): Call<List<Noticia>>?
     @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID NEW
     fun obtenerNoticiaPorId(@Path("id")  noticiaId: Int): Call<Noticia>
-
-
 }

@@ -52,7 +52,13 @@
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/pb_listar_noticias"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <ImageView
         android:id="@+id/btn_mas_reciente"
         android:layout_width="30dp"

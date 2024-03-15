@@ -482,7 +482,8 @@
                 android:orientation="horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingBottom="15dp">
+                android:paddingBottom="15dp"
+                android:gravity="center">
                 <Spinner
                     android:id="@+id/s_nivel_educativo_curso__docente"
                     android:layout_width="wrap_content"
@@ -495,6 +496,14 @@
                     android:id="@+id/lv_lista_cursos"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp"
+                    android:layout_gravity="end"
+                    android:visibility="gone"/>
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/pb_listar_cursos"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:visibility="gone"/>
 
             </LinearLayout>
