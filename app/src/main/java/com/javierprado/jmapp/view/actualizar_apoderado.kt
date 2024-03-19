@@ -1,6 +1,5 @@
 package com.javierprado.jmapp.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,25 +8,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import com.google.gson.stream.JsonReader
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Apoderado
-import com.javierprado.jmapp.data.entities.Estudiante
-import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.view.menus.menu_apoderado
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.StringReader
 
 class actualizar_apoderado : AppCompatActivity() {
     private lateinit var correoEditText: EditText

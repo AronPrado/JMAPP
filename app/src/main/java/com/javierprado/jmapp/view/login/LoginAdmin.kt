@@ -13,7 +13,7 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.ResetPasswordActivity
-import com.javierprado.jmapp.view.menu_administrador
+import com.javierprado.jmapp.view.menus.menu_administrador
 
 class LoginAdmin : AppCompatActivity() {
 

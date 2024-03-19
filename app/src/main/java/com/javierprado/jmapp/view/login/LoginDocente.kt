@@ -13,7 +13,7 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.ResetPasswordActivity
-import com.javierprado.jmapp.view.menu_docente
+import com.javierprado.jmapp.view.menus.menu_docente
 
 class LoginDocente : AppCompatActivity() {
     private lateinit var emailEditText: EditText

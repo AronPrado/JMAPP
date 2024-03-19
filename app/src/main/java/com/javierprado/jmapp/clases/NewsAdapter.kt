@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
-import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.agregar.ControlNoticiaActivity
-import com.javierprado.jmapp.view.menu_administrador
+import com.javierprado.jmapp.view.menus.menu_administrador
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

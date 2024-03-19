@@ -23,7 +23,7 @@ import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.adapters.HorarioAdapter
-import com.javierprado.jmapp.view.menu_administrador
+import com.javierprado.jmapp.view.menus.menu_administrador
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

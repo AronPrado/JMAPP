@@ -48,16 +48,16 @@
             android:name=".view.login.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".view.menu_administrador"
+            android:name=".view.menus.menu_administrador"
             android:exported="true" />
         <activity
             android:name=".view.NotiEventosEsco"
             android:exported="true" />
         <activity
-            android:name=".view.menu_docente"
+            android:name=".view.menus.menu_docente"
             android:exported="true" />
         <activity
-            android:name=".view.menu_apoderado"
+            android:name=".view.menus.menu_apoderado"
             android:exported="true" />
         <activity
             android:name=".view.Seleccion_Sesion_Activity"

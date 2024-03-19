@@ -13,7 +13,6 @@ import android.widget.ListView
 import android.widget.Spinner
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
@@ -23,7 +22,7 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.adapters.CursoAdapter
-import com.javierprado.jmapp.view.menu_administrador
+import com.javierprado.jmapp.view.menus.menu_administrador
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,9 +86,9 @@ class RegisterDocenteActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val nivel = listaNivelEducativo.selectedItem.toString()[0].toString()
 
-                val progressBarListar: CircularProgressIndicator = findViewById(R.id.pb_listar_cursos)
+                /*val progressBarListar: CircularProgressIndicator = findViewById(R.id.pb_listar_cursos)
                 progressBarListar.visibility = View.VISIBLE
-                listaCursos.visibility = View.GONE
+                listaCursos.visibility = View.GONE*/
 
                 api.obtenerCursos(null, nivel)?.enqueue(object : Callback<Collection<Curso>> {
                     override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
@@ -103,14 +102,14 @@ class RegisterDocenteActivity : AppCompatActivity() {
                                 msg="No se encontraron cursos en este nivel educativo."
                                 Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                             }
-                            progressBarListar.visibility= View.GONE
+                            //progressBarListar.visibility= View.GONE
                         }
                     }
                     override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("LISTAR CURSOS", t.message.toString())
-                        progressBarListar.visibility= View.GONE
+                        //progressBarListar.visibility= View.GONE
                     }
                 } )
             }
