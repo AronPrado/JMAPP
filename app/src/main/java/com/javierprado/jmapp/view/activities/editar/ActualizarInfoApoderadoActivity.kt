@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view
+package com.javierprado.jmapp.view.activities.editar
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +16,12 @@ import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.RoleType
-import com.javierprado.jmapp.view.menus.menu_apoderado
+import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class actualizar_apoderado : AppCompatActivity() {
+class ActualizarInfoApoderadoActivity : AppCompatActivity() {
     private lateinit var correoEditText: EditText
     private lateinit var telefonoEditText: EditText
     private lateinit var direccionEditText: EditText
@@ -33,7 +33,7 @@ class actualizar_apoderado : AppCompatActivity() {
     val TOKEN = "token"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_actualizar_apoderado)
+        setContentView(R.layout.activity_actualizar_info_apoderado)
 
         auth = FirebaseAuth.getInstance()
 
@@ -54,13 +54,13 @@ class actualizar_apoderado : AppCompatActivity() {
 
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
-            val intent = Intent(this@actualizar_apoderado, menu_apoderado::class.java)
+            val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
         val btnCancelar: Button = findViewById(R.id.btnCancelar)
         btnCancelar.setOnClickListener {
-            val intent = Intent(this@actualizar_apoderado, menu_apoderado::class.java)
+            val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
@@ -76,7 +76,7 @@ class actualizar_apoderado : AppCompatActivity() {
                     direccionEditText.setText(user.apoderado.direccion.toString())
                 }else{
                     msg = response.headers()["message"] ?: ""
-                    Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                 }
                 progressBar.visibility= View.GONE
             }
@@ -84,7 +84,7 @@ class actualizar_apoderado : AppCompatActivity() {
             override fun onFailure(call: Call<Usuario>, t: Throwable) {
                 msg = "Servidor desconectado"
                 Log.e(msg, t.message.toString())
-                Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
             }
         })
         btnActualizar.setOnClickListener{
@@ -97,17 +97,17 @@ class actualizar_apoderado : AppCompatActivity() {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers().get("message")
                     if (response.isSuccessful) {
-                        val intent = Intent(this@actualizar_apoderado, menu_apoderado::class.java)
+                        val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         startActivity(intent)
                     }else{
                         Log.e("ERROR AL ACTUALIZAR", msg ?: "")
                     }
-                    Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"
-                    Toast.makeText(this@actualizar_apoderado, msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("ERROR AL ACTUALIZAR", t.message.toString())
                 }
             })

@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
-import com.javierprado.jmapp.view.ResetPasswordActivity
-import com.javierprado.jmapp.view.menus.menu_apoderado
+import com.javierprado.jmapp.view.activities.editar.ResetPasswordActivity
+import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this, "Ingresar los datos", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this, menu_apoderado())
+                authFunctions.loginUser(emailUser, passUser, RoleType.APOD.name, this, MenuApoderadoActivity())
             }
         }
 

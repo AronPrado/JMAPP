@@ -12,8 +12,8 @@ import android.widget.Toast
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
-import com.javierprado.jmapp.view.ResetPasswordActivity
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.editar.ResetPasswordActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 
 class LoginAdmin : AppCompatActivity() {
 
@@ -44,7 +44,7 @@ class LoginAdmin : AppCompatActivity() {
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this, "Por favor, ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.ADMIN.name, this, menu_administrador())
+                authFunctions.loginUser(emailUser, passUser, RoleType.ADMIN.name, this, MenuAdministradorActivity())
             }
         }
 

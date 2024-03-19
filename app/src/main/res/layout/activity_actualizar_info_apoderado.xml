@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/nude"
-    tools:context=".view.actualizar_apoderado">
+    tools:context=".view.activities.editar.ActualizarInfoApoderadoActivity">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pb_info_apoderado"

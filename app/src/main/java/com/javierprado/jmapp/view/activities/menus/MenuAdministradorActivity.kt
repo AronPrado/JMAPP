@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view.menus
+package com.javierprado.jmapp.view.activities.menus
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,14 +16,22 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.clases.NewsAdapter
+import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
-import com.javierprado.jmapp.view.actualizar_apoderado
+import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.view.NotiEventosEsco
+import com.javierprado.jmapp.view.activities.agregar.RegisterApoderadoActivity
+import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
+import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
+import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
 import com.javierprado.jmapp.view.login.OptionLogin
+import java.io.Serializable
 
-class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var drawer:DrawerLayout
+class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
     private lateinit var recyclerView: RecyclerView
@@ -32,12 +40,13 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private lateinit var auth: FirebaseAuth
     private lateinit var api : ColegioAPI
 
-    private var extraFuns : ExtraFunctions = ExtraFunctions()
-
     val TOKEN = "token"
+    var tokenAdmin = ""
+
+    private var extraFuns : ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_apoderado)
+        setContentView(R.layout.activity_menu_administrador)
 
         btnMasRecientes = findViewById(R.id.btn_mas_reciente)
         //API Y BUNDLE
@@ -45,18 +54,18 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val bundle = intent.extras
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
-            retro.setBearerToken(token)
+            tokenAdmin=token
+            retro.setBearerToken(tokenAdmin)
         }
         api = retro.getApi()
-
-        auth = FirebaseAuth.getInstance()
-
         //Noticias
         recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         actualizarNoticias(retro.getBearerToken())
         btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }
+
+        auth = FirebaseAuth.getInstance()
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -70,19 +79,45 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navigationView: NavigationView = findViewById(R.id.nav_view_apoderado)
+        val navigationView: NavigationView = findViewById(R.id.nav_view_administrador)
         navigationView.setNavigationItemSelectedListener(this)
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> Toast.makeText(this, "Trabajos", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_3 -> Toast.makeText(this, "Recursos", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_4 -> Toast.makeText(this, "Horario", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_7 -> Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_8 -> {
+            R.id.nav_item_2 -> {
+                val intent = Intent(this, RegisterApoderadoActivity::class.java)
+                intent.putExtra(RegisterApoderadoActivity().TOKEN, tokenAdmin)
+                startActivity(intent)
+            }
+            R.id.nav_item_3 -> {
+                val intent = Intent(this, RegisterDocenteActivity::class.java)
+                intent.putExtra(RegisterDocenteActivity().TOKEN, tokenAdmin)
+                startActivity(intent)
+            }
+            R.id.nav_item_4 -> {
+                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, NotiEventosEsco::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_item_5 -> {
+                val intent = Intent(this, ControlHorarioActivity::class.java)
+                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
+                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.ADMIN)
+                val estudiantes : List<Estudiante> = ArrayList()
+                intent.putExtra(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
+                startActivity(intent)
+                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
+            }
+            R.id.nav_item_6 -> {
+                val intent = Intent(this, ControlNoticiaActivity::class.java)
+                intent.putExtra(ControlNoticiaActivity().TOKEN, tokenAdmin)
+                startActivity(intent)
+                Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
+            }
+            R.id.nav_item_7 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_8 ->  {
                 auth.signOut()
                 val intent = Intent(this, OptionLogin::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -94,6 +129,7 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         return true
     }
 
+    //Iconos del Toolbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.perfil_noti_main, menu)
         return true
@@ -102,21 +138,19 @@ class menu_apoderado : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_perfil -> {
-                val intent = Intent(this, actualizar_apoderado::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
+
                 true
             }
             R.id.action_notificaciones -> {
-                // Maneja la acción de Búsqueda
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@menu_apoderado, ArrayList(), api, token, true)
-        extraFuns.listarNoticias(api, adapter, this@menu_apoderado)
+        val adapter = NewsAdapter(this@MenuAdministradorActivity, ArrayList(), api, token, false)
+        extraFuns.listarNoticias(api, adapter, this@MenuAdministradorActivity)
         recyclerView.adapter = adapter
     }
 }

@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view.agregar
+package com.javierprado.jmapp.view.activities.agregar
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +22,7 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.adapters.CursoAdapter
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,7 +77,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
         // Botón regresar
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
-            val intent = Intent(this@RegisterDocenteActivity, menu_administrador::class.java)
+            val intent = Intent(this@RegisterDocenteActivity, MenuAdministradorActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
@@ -135,7 +135,8 @@ class RegisterDocenteActivity : AppCompatActivity() {
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
-                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
+//                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
+                                    Toast.makeText(this@RegisterDocenteActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(this@RegisterDocenteActivity, "Error al Agregar al docente en Firebase.", Toast.LENGTH_SHORT).show()
                                 }

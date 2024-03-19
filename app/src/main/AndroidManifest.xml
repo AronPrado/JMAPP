@@ -17,23 +17,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.agregar.ControlHorarioActivity"
+            android:name=".view.activities.editar.ActualizarInfoApoderadoActivity"
             android:exported="true" />
         <activity
-            android:name=".view.agregar.ControlNoticiaActivity"
-            android:exported="true" >
-
-        </activity>
-        <activity
-            android:name=".view.agregar.RegisterDocenteActivity"
-            android:exported="true" >
-
-        </activity>
-        <activity
-            android:name=".view.agregar.RegisterApoderadoActivity"
+            android:name=".view.activities.control.ControlHorarioActivity"
             android:exported="true" />
         <activity
-            android:name=".view.actualizar_apoderado"
+            android:name=".view.activities.control.ControlNoticiaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.agregar.RegisterDocenteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.agregar.RegisterApoderadoActivity"
             android:exported="true" />
         <activity
             android:name=".view.activity_noticias"
@@ -48,16 +44,16 @@
             android:name=".view.login.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".view.menus.menu_administrador"
+            android:name=".view.activities.menus.MenuAdministradorActivity"
             android:exported="true" />
         <activity
             android:name=".view.NotiEventosEsco"
             android:exported="true" />
         <activity
-            android:name=".view.menus.menu_docente"
+            android:name=".view.activities.menus.MenuDocenteActivity"
             android:exported="true" />
         <activity
-            android:name=".view.menus.menu_apoderado"
+            android:name=".view.activities.menus.MenuApoderadoActivity"
             android:exported="true" />
         <activity
             android:name=".view.Seleccion_Sesion_Activity"
@@ -69,7 +65,7 @@
             android:name=".view.login.OptionLogin"
             android:exported="true" />
         <activity
-            android:name=".view.ResetPasswordActivity"
+            android:name=".view.activities.editar.ResetPasswordActivity"
             android:exported="true" />
         <activity
             android:name=".view.MenuPrincipalApoderadoActivity"

@@ -45,9 +45,15 @@ interface ColegioAPI {
     fun actualizarInfoDocente(@Body docente: Docente): Call<Void>? // TAMBIEN ACTUALIZA INFO DE CUENTA
     @PUT("/api/apoderados")
     fun actualizarInfoApoderado(@Body apoderado : Apoderado): Call<Void>? // TAMBIEN ACTUALIZA INFO DE CUENTA
-    // ADMINISTRADO Y APODERADO
+
+    // ADMINISTRADOR Y APODERADO
     @POST("/api/horarios") // OBTENER HORARIOS
     fun obtenerHorarios(@Query("fecha") fechaClase : String, @Body cursoIds : Collection<Int>): Call<Collection<Horario>>
+    @GET("/api/horarios/{id}") // BUSCAR POR ID
+    fun buscarHorario(@Path("id")  horarioId: Int): Call<Horario>
+    @PUT("/api/horarios") // ACTUALIZAR POR ID--------------------------------------------
+    fun actualizarHorario(@Body horario: Horario): Call<Void>
+
     // ESTUDIANTES
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES
     fun obtenerEstudiantes(@Query("curso") cursoId : Int?, @Query("nivel") nivel : String?, @Query("grado") grado : Int?, @Query("seccion") seccion : String?): Call<Collection<Estudiante>>
@@ -63,4 +69,8 @@ interface ColegioAPI {
     fun obtenerNoticias(): Call<List<Noticia>>?
     @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID NEW
     fun obtenerNoticiaPorId(@Path("id")  noticiaId: Int): Call<Noticia>
+
+    // DOCENTES
+    @GET("/api/docentes") // OBTENER DOCENTES
+    fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 }

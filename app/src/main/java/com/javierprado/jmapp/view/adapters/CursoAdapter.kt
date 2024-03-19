@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Curso
-import com.javierprado.jmapp.view.agregar.RegisterDocenteActivity
+import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
 
 class CursoAdapter(private val context: Context, private val cursos: MutableList<Curso>) :
     BaseAdapter() {

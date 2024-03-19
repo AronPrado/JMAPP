@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
-import com.javierprado.jmapp.view.agregar.ControlNoticiaActivity
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -96,7 +97,7 @@ class NewsAdapter(private val context: Context, private var noticias: List<Notic
                                 @SuppressLint("NotifyDataSetChanged")
                                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                     msg = response.headers()["message"] ?: ""
-                                    val principal = context as menu_administrador
+                                    val principal = context as MenuAdministradorActivity
                                     principal.actualizarNoticias(token)
                                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                                 }

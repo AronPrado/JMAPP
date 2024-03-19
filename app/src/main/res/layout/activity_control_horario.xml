@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constrainedHeight="true"
-    tools:context=".view.agregar.ControlHorarioActivity">
+    tools:context=".view.activities.control.ControlHorarioActivity">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pb_control_horario"
@@ -17,247 +17,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_control_horario"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:elevation="24dp"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="@color/toolbar"
-        tools:ignore="MissingConstraints">
+        android:elevation="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:src="@drawable/baseline_arrow_back_24"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                android:src="@drawable/baseline_arrow_back_24" />
 
             <TextView
                 android:id="@+id/tv_title_control_noticia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Horario Escolar"
+                android:layout_weight="1"
                 android:fontFamily="@font/librefranklin_mediumitalic"
+                android:gravity="start|center_vertical"
+                android:paddingStart="4dp"
+                android:text="Horario Escolar"
                 android:textColor="@color/white"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:gravity="start|center_vertical"
-                android:paddingStart="4dp" />
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/ly_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:orientation="vertical"
-        android:padding="15dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcv_horario_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_control_horario">
+        app:layout_constraintTop_toBottomOf="@+id/tb_control_horario"/>
 
-        <LinearLayout
-            android:id="@+id/ly_spinners_horario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/s_nivel_educativo_horario"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:entries="@array/niveles_educativos"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-
-            <Spinner
-                android:id="@+id/s_grado_horario"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:background="@android:color/transparent"
-                android:entries="@array/grados"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-
-            <Spinner
-                android:id="@+id/s_seccion_horario"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:entries="@array/secciones"
-                android:textSize="12sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txt_mes_horario"
-            android:text="Abril"
-            android:textSize="40sp"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/dia_lunes"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:textAlignment="center"
-                android:maxLines="2"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Lunes"
-                app:layout_constraintBottom_toBottomOf="@+id/dia_martes"
-                app:layout_constraintEnd_toStartOf="@+id/dia_martes"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/dia_martes"
-                android:layout_width="71dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:textAlignment="center"
-                android:maxLines="2"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Martes"
-                app:layout_constraintEnd_toStartOf="@+id/dia_miercoles"/>
-
-            <TextView
-                android:id="@+id/dia_miercoles"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="1dp"
-                android:gravity="center"
-                android:maxLines="2"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="Miércoles"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/dia_jueves"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:textAlignment="center"
-                android:maxLines="2"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Jueves"
-                app:layout_constraintStart_toEndOf="@+id/dia_miercoles"/>
-
-            <TextView
-                android:id="@+id/dia_viernes"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:textAlignment="center"
-                android:maxLines="2"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="Viernes"
-                app:layout_constraintStart_toEndOf="@+id/dia_jueves"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_horarios_lun"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                app:layout_constrainedHeight="true"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recycler_horarios_mar"
-                app:layout_constraintTop_toBottomOf="@+id/dia_lunes" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_horarios_mar"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recycler_horarios_mie"
-                app:layout_constraintTop_toBottomOf="@id/dia_martes" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_horarios_mie"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dia_miercoles" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_horarios_jue"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/recycler_horarios_mie"
-                app:layout_constraintTop_toBottomOf="@id/dia_jueves" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_horarios_vie"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/recycler_horarios_jue"
-                app:layout_constraintTop_toBottomOf="@id/dia_viernes" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_back_horario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:backgroundTint="@color/md_theme_light_primary"
-                android:text="Back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_next_horario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:backgroundTint="@color/md_theme_light_primary"
-                android:text="Next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

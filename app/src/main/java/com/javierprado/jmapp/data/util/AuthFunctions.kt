@@ -11,7 +11,7 @@ import com.javierprado.jmapp.data.entities.AuthResponse
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +37,7 @@ class AuthFunctions {
                             if (response.isSuccessful) {
                                 msg = response.body()?.tokenDeAcceso.toString()
                                 val intent = Intent(interfaceActual, nextMenu::class.java)
-                                intent.putExtra(menu_administrador().TOKEN, msg)
+                                intent.putExtra(MenuAdministradorActivity().TOKEN, msg)
 
                                 interfaceActual.startActivity(intent)
                                 interfaceActual.finish()
@@ -67,8 +67,8 @@ class AuthFunctions {
         val properties = Properties().apply {
             put("mail.smtp.auth", "true")
             put("mail.smtp.starttls.enable", "true")
-            put("mail.smtp.host", "smtp-mail.outlook.com") // Cambia esto por el servidor SMTP que estés utilizando
-            put("mail.smtp.port", "587") // Puerto del servidor SMTP
+            put("mail.smtp.host", "smtp-mail.outlook.com")
+            put("mail.smtp.port", "587")
             put("mail.smtp.user", correo);
             put("mail.smtp.pwd", contrasena);
         }
@@ -96,8 +96,9 @@ class AuthFunctions {
             Toast.makeText(interfaceActual, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
 
         } catch (e: MessagingException) {
-//            e.printStackTrace()
+            e.printStackTrace()
             Toast.makeText(interfaceActual, "Error al enviar el correo", Toast.LENGTH_SHORT).show()
+            Log.e("CORREO", e.message.toString())
         }
     }
 }

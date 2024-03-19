@@ -10,8 +10,12 @@
         <item>Secundaria</item>
     </string-array>
     <string-array name="grados">
-        <item>1°</item><item>2°</item><item>3°</item>
-        <item>4°</item><item>5°</item><item>6°</item>
+        <item>1°</item>
+        <item>2°</item>
+        <item>3°</item>
+        <item>4°</item>
+        <item>5°</item>
+        <item>6°</item>
     </string-array>
     <string-array name="secciones">
         <item>A</item>
@@ -57,5 +61,7 @@
     <!-- menuApoderado -->
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

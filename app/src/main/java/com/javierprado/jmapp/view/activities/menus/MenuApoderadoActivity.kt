@@ -1,8 +1,9 @@
-package com.javierprado.jmapp.view.menus
+package com.javierprado.jmapp.view.activities.menus
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -16,14 +17,21 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.clases.NewsAdapter
-import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.view.login.OptionLogin
+import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
+import com.javierprado.jmapp.view.activities.editar.ActualizarInfoApoderadoActivity
+import com.javierprado.jmapp.view.login.OptionLogin
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.Serializable
 
-class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private lateinit var drawer: DrawerLayout
+class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var drawer:DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
     private lateinit var recyclerView: RecyclerView
@@ -31,19 +39,21 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var auth: FirebaseAuth
     private lateinit var api : ColegioAPI
-    val TOKEN = "token"
 
     private var extraFuns : ExtraFunctions = ExtraFunctions()
+
+    val TOKEN = "token"
+    var tokenAdmin = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_docente)
-
+        setContentView(R.layout.activity_menu_apoderado)
         btnMasRecientes = findViewById(R.id.btn_mas_reciente)
         //API Y BUNDLE
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
+            tokenAdmin=token
             retro.setBearerToken(token)
         }
         api = retro.getApi()
@@ -69,18 +79,45 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val navigationView: NavigationView = findViewById(R.id.nav_view_docente)
+        val navigationView: NavigationView = findViewById(R.id.nav_view_apoderado)
         navigationView.setNavigationItemSelectedListener(this)
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_3 -> Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_4 -> Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_5 -> Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_6 -> Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_7 -> Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_2 -> Toast.makeText(this, "Trabajos", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_3 -> Toast.makeText(this, "Recursos", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_4 -> {
+                val intent = Intent(this, ControlHorarioActivity::class.java)
+                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
+                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.APOD)
+                var msg = ""
+                api.obtenerSesion(RoleType.ADMIN.name).enqueue(object : Callback<Usuario> {
+                    override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                        msg = "Usuario no encontrado."
+                        if (response.isSuccessful) {
+                            val usuario = response.body()!!
+                            val apoderado = usuario.apoderado
+                            val estudiantes = apoderado.itemsEstudiante!!.toList()
+                            intent.putExtra(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
+                            startActivity(intent)
+                            Toast.makeText(this@MenuApoderadoActivity, "Horario", Toast.LENGTH_SHORT).show()
+                        } else{
+                            Log.e("NR SESSION", msg)
+                            Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                        msg = "Error en la API: ${t.message}"
+                        Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("BUSCAR SESSION", t.message.toString())
+                    }
+                } )
+
+            }
+            R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_7 -> Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 -> {
                 auth.signOut()
                 val intent = Intent(this, OptionLogin::class.java)
@@ -93,7 +130,6 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    //Iconos del Toolbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.perfil_noti_main, menu)
         return true
@@ -102,7 +138,9 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_perfil -> {
-                // Maneja la acción de Configuración
+                val intent = Intent(this, ActualizarInfoApoderadoActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
                 true
             }
             R.id.action_notificaciones -> {
@@ -113,8 +151,8 @@ class menu_docente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@menu_docente, ArrayList(), api, token, true)
-        extraFuns.listarNoticias(api, adapter, this@menu_docente)
+        val adapter = NewsAdapter(this@MenuApoderadoActivity, ArrayList(), api, token, true)
+        extraFuns.listarNoticias(api, adapter, this@MenuApoderadoActivity)
         recyclerView.adapter = adapter
     }
 }

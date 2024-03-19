@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.agregar.ControlNoticiaActivity">
+    tools:context=".view.activities.control.ControlNoticiaActivity">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pb_control_noticia"

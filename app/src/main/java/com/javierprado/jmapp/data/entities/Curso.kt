@@ -7,4 +7,6 @@ class Curso() : Serializable {
     var nombre: String? = null
     var nivelEducativo: Char? = null
     var dia: String? = null
+
+    var docentes: Collection<Docente> = ArrayList()
 }

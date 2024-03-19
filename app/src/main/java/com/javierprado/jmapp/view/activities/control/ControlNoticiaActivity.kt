@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view.agregar
+package com.javierprado.jmapp.view.activities.control
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +18,7 @@ import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.RoleType
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +63,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
         // Botón regresar
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
-            val intent = Intent(this@ControlNoticiaActivity, menu_administrador::class.java)
+            val intent = Intent(this@ControlNoticiaActivity, MenuAdministradorActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
@@ -100,7 +100,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
                             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                 msg = response.headers()["message"] ?: ""
                                 Toast.makeText(this@ControlNoticiaActivity, msg, Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this@ControlNoticiaActivity, menu_administrador::class.java)
+                                val intent = Intent(this@ControlNoticiaActivity, MenuAdministradorActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }

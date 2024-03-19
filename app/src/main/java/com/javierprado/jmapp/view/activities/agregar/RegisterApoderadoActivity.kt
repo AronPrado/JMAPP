@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.view.agregar
+package com.javierprado.jmapp.view.activities.agregar
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,7 +23,7 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.adapters.EstudianteAdapter
-import com.javierprado.jmapp.view.menus.menu_administrador
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,7 +77,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
         // Botón regresar
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
-            val intent = Intent(this@RegisterApoderadoActivity, menu_administrador::class.java)
+            val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
         }
@@ -93,30 +93,36 @@ class RegisterApoderadoActivity : AppCompatActivity() {
 
             val estudiantesApoderado = HashSet<Estudiante?>()
             estudiantesApoderado.addAll(estudiantes)
-            Toast.makeText(this@RegisterApoderadoActivity, estudiantesApoderado.size.toString(), Toast.LENGTH_SHORT).show()
-            val apoderado = Apoderado(nombres, apellidos, correo, telefono.toInt(), direccion, estudiantesApoderado)
-            api.agregarApoderado(apoderado).enqueue(object : Callback<Int> {
-                override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                    msg = response.headers()["message"] ?: ""
-                    if (response.isSuccessful) {
-                        msg = response.body().toString()
-                        auth.createUserWithEmailAndPassword(correo, telefono)
-                            .addOnCompleteListener { task: Task<AuthResult?> ->
-                                if (task.isSuccessful) {
-                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
-                                } else {
-                                    Toast.makeText(this@RegisterApoderadoActivity, "Error al Agregar al apoderado en Firebase.", Toast.LENGTH_SHORT).show()
+            if(telefono.isNotEmpty()){
+                val apoderado = Apoderado(nombres, apellidos, correo, telefono.toInt(), direccion, estudiantesApoderado)
+                api.agregarApoderado(apoderado).enqueue(object : Callback<Int> {
+                    override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                        msg = response.headers()["message"] ?: ""
+                        if (response.isSuccessful) {
+                            msg = response.body().toString()
+                            auth.createUserWithEmailAndPassword(correo, telefono)
+                                .addOnCompleteListener { task: Task<AuthResult?> ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(this@RegisterApoderadoActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
+//                                        authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
+                                    } else {
+                                        Toast.makeText(this@RegisterApoderadoActivity, "Error al Agregar en Firebase.", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
-                    } else{ Log.e("AGREGAR APODERADO", msg ?:"") }
-                    Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
-                }
-                override fun onFailure(call: Call<Int>, t: Throwable) {
-                    msg = "Error en la API: ${t.message}"
-                    Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
-                    Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())
-                }
-            } )
+                        } else{ Log.e("AGREGAR APODERADO", msg) }
+                        Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                    }
+                    override fun onFailure(call: Call<Int>, t: Throwable) {
+                        msg = "Error en la API: ${t.message}"
+                        Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())
+                    }
+                } )
+            }else{
+                Toast.makeText(this@RegisterApoderadoActivity, "Completar el campo de teléfono.", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
     }
     private val textWatcher = object : TextWatcher {
