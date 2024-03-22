@@ -1,0 +1,12 @@
+package com.javierprado.jmapp.data.util
+
+enum class NavigationWindows {
+    MAIN, COMUNICACION, HORARIO, NOTICIAS, NOTIFICACIONES,
+    // DOCENTE
+    SELECT, NOTAS, ASISTENCIA, TAREAS, EVALUACIONES,
+    // ADMIN
+    REG_A, REG_D, REG_NOTI,
+    // APODERADO
+    EVENTOS, DOCENTES, RECURSOS, REPORTE_ACAD
+
+}

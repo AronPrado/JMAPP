@@ -92,7 +92,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
                 intent.putExtra(ControlHorarioActivity().ROLE, RoleType.APOD)
                 var msg = ""
-                api.obtenerSesion(RoleType.ADMIN.name).enqueue(object : Callback<Usuario> {
+                api.obtenerSesion(RoleType.APOD.name).enqueue(object : Callback<Usuario> {
                     override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                         msg = "Usuario no encontrado."
                         if (response.isSuccessful) {
@@ -101,7 +101,6 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                             val estudiantes = apoderado.itemsEstudiante!!.toList()
                             intent.putExtra(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
                             startActivity(intent)
-                            Toast.makeText(this@MenuApoderadoActivity, "Horario", Toast.LENGTH_SHORT).show()
                         } else{
                             Log.e("NR SESSION", msg)
                             Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
@@ -113,6 +112,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                         Log.e("BUSCAR SESSION", t.message.toString())
                     }
                 } )
+                Toast.makeText(this@MenuApoderadoActivity, "Horario", Toast.LENGTH_SHORT).show()
 
             }
             R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()

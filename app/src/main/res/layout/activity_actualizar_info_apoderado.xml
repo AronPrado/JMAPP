@@ -150,7 +150,7 @@
                                     android:layout_column="0"
                                     android:layout_weight="1"
                                     android:background="@color/white"
-                                    android:inputType="none"
+                                    android:inputType="textEmailAddress"
                                     android:paddingLeft="12dp"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
@@ -215,7 +215,7 @@
                                     android:layout_column="0"
                                     android:layout_weight="1"
                                     android:background="@color/white"
-                                    android:inputType="none"
+                                    android:inputType="number"
                                     android:paddingLeft="12dp"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
@@ -279,7 +279,7 @@
                                     android:layout_column="0"
                                     android:layout_weight="1"
                                     android:background="@color/white"
-                                    android:inputType="none"
+                                    android:inputType="text"
                                     android:paddingLeft="12dp"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />

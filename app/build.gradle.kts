@@ -55,6 +55,7 @@ dependencies {
     //kapt ("androidx.room:room-compiler:2.3.0")
     implementation ("androidx.room:room-ktx:2.3.0")
     implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation ("androidx.room: room-testing:2.2.5")
 
     //RETROFIT (API)

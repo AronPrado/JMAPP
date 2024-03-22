@@ -102,13 +102,11 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
                 startActivity(intent)
             }
             R.id.nav_item_5 -> {
+                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ControlHorarioActivity::class.java)
                 intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
-                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.ADMIN)
-                val estudiantes : List<Estudiante> = ArrayList()
-                intent.putExtra(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
+                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.ADMIN.name)
                 startActivity(intent)
-                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_item_6 -> {
                 val intent = Intent(this, ControlNoticiaActivity::class.java)

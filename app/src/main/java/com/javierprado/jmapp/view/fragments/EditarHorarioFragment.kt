@@ -59,7 +59,6 @@ class EditarHorarioFragment : DialogFragment() {
         txtHFin = view.findViewById(R.id.txt_hfin_horario)
         txtFecha = view.findViewById(R.id.fg_date_horario)
         txtCurso = view.findViewById(R.id.fg_curso_horario)
-        txtDocente = view.findViewById(R.id.fg_docente_horario)
         btnEdit = view.findViewById(R.id.fg_btn_editarh)
         return view
     }
@@ -123,9 +122,6 @@ class EditarHorarioFragment : DialogFragment() {
                     Log.e("ACTuALIZAR HORARIO", t.message.toString())
                 }
             } )
-
-            // Close the modal
-//            dialog?.dismiss()
         }
     }
     companion object {

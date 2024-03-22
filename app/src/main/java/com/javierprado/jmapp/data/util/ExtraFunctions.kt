@@ -6,15 +6,20 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBindings
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.clases.NewsAdapter
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.view.fragments.AsignarTareasFragment
+import com.javierprado.jmapp.view.fragments.RegistroAsistenciaFragment
+import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 class ExtraFunctions {
     fun listarNoticias(api: ColegioAPI, adapter: NewsAdapter, context: Context){
@@ -45,5 +50,15 @@ class ExtraFunctions {
                 progressBarListar.visibility= View.GONE
             }
         })
+    }
+
+    fun obtenerFragment(nav: String, token: String, lista: Serializable ): Fragment{
+        var fragment = Fragment()
+        when(nav){
+            NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav) }
+            NavigationWindows.ASISTENCIA.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista) }
+            NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment() }
+        }
+        return fragment
     }
 }

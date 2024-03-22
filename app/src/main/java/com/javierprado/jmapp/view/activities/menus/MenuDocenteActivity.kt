@@ -20,6 +20,9 @@ import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.login.OptionLogin
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.data.util.NavigationWindows
+import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
+import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
 
 class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,7 +35,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     private lateinit var auth: FirebaseAuth
     private lateinit var api : ColegioAPI
     val TOKEN = "token"
-
+    var tokenDoc = ""
     private var extraFuns : ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         val bundle = intent.extras
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
+            tokenDoc=token
             retro.setBearerToken(token)
         }
         api = retro.getApi()
@@ -73,21 +77,50 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         navigationView.setNavigationItemSelectedListener(this)
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        var clase: AppCompatActivity? = null
+        val intent: Intent
+        var transport = NavigationWindows.NOTICIAS.name
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_3 -> Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_4 -> Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_5 -> Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_6 -> Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_7 -> Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_2 -> {
+                Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.SELECT.name
+            }
+            R.id.nav_item_3 -> {
+                Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.NOTAS.name
+            }
+            R.id.nav_item_4 -> {
+                Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.ASISTENCIA.name
+            }
+            R.id.nav_item_5 -> {
+                Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.EVALUACIONES.name
+            }
+            R.id.nav_item_6 -> {
+                Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.TAREAS.name
+            }
+            R.id.nav_item_7 -> {
+                Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
+                transport = NavigationWindows.COMUNICACION.name
+            }
             R.id.nav_item_8 -> {
                 auth.signOut()
-                val intent = Intent(this, OptionLogin::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
+                clase = OptionLogin()
             }
         }
+        val isNull = clase == null
+        clase = if (isNull) ControlSeleccionActivity() else clase
+        intent = Intent(this, clase!!::class.java)
+        if (!isNull){
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }else{
+            intent.putExtra(ControlSeleccionActivity().TOKEN, tokenDoc)
+            intent.putExtra(SeleccionarAulaFragment().DIRECT, transport)
+        }
+        startActivity(intent)
 
         drawer.closeDrawer(GravityCompat.START)
         return true

@@ -16,6 +16,7 @@ class Usuario : Serializable {
     var estado: String? = null
 
     lateinit var apoderado: Apoderado
+    lateinit var docente: Docente
     lateinit var administrador: Administrador
     constructor() {}
 

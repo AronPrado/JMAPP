@@ -1,6 +1,7 @@
 package com.javierprado.jmapp.data.retrofit
 
 import com.javierprado.jmapp.data.entities.Apoderado
+import com.javierprado.jmapp.data.entities.Asistencia
 import com.javierprado.jmapp.data.entities.AuthResponse
 import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
@@ -51,7 +52,7 @@ interface ColegioAPI {
     fun obtenerHorarios(@Query("fecha") fechaClase : String, @Body cursoIds : Collection<Int>): Call<Collection<Horario>>
     @GET("/api/horarios/{id}") // BUSCAR POR ID
     fun buscarHorario(@Path("id")  horarioId: Int): Call<Horario>
-    @PUT("/api/horarios") // ACTUALIZAR POR ID--------------------------------------------
+    @PUT("/api/horarios") // ACTUALIZAR POR ID
     fun actualizarHorario(@Body horario: Horario): Call<Void>
 
     // ESTUDIANTES
@@ -70,6 +71,9 @@ interface ColegioAPI {
     @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID NEW
     fun obtenerNoticiaPorId(@Path("id")  noticiaId: Int): Call<Noticia>
 
+    // NOTICIAS
+    @POST("/api/asistencias") // OBTENER ESTUDIANTES
+    fun obtenerAsistencias(@Query("fecha") fecha : String?,  @Body estudiantes: Collection<Estudiante>): Call<Collection<Asistencia>>
     // DOCENTES
     @GET("/api/docentes") // OBTENER DOCENTES
     fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>

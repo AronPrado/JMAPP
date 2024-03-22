@@ -22,10 +22,8 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
-import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.adapters.HorarioAdapter
 import com.javierprado.jmapp.view.clicks.HorarioClick
@@ -151,7 +149,6 @@ class HorarioFragment : Fragment() {
                     if(!estudiantes.isEmpty()){
                         val estudiante = (estudiantes as MutableList)[0]
                         cursos = estudiante.itemsCurso.toList()
-
                         for (i in 0..<rangoFechas.size){
                             val fecha = rangoFechas[i].toString()
                             val diaNum = dias[i] + "\n" + fecha.substring(8)
@@ -176,14 +173,15 @@ class HorarioFragment : Fragment() {
                         progressC.visibility = View.GONE
                     }
                 }else{
-                    msg = "FAIL$msg"
-                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    msg = "FAIL $msg"
+                    Log.e("ERROR:", msg)
                 }
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
             }
             override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                Log.e("FILTRAR CURSOS", t.message.toString())
+                Log.e("OBTENER ESTUDIANTES", t.message.toString())
             }
         } )
     }

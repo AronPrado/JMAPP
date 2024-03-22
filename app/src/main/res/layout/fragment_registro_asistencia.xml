@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    tools:context=".view.fragments.RegistroAsistenciaFragment">
+
+    <TextView
+        android:id="@+id/fecha_asistencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="@font/librefranklin_extrabold"
+        android:text="Fecha"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_registrar_asistencia"
+        android:layout_below="@+id/fecha_asistencia"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constrainedHeight="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_asistencias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/material_dynamic_neutral_variant70"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pb_registrar_asistencias"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_registrar_asistencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:text="Registrar asistencias"
+        app:layout_constrainedHeight="true" />
+</RelativeLayout>
