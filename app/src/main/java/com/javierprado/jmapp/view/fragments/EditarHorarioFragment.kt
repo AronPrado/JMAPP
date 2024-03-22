@@ -16,7 +16,6 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import retrofit2.Call
 import retrofit2.Callback

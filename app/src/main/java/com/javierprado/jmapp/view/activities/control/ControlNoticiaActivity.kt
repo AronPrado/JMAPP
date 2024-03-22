@@ -36,6 +36,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
     val TOKEN = "token"
     val NOTID = "noticiaId"
     var noticiaId : Int? = null
+    var tokenAdmin = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control_noticia)
@@ -53,6 +54,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
             noticiaId = bundle.getInt(NOTID, 0)
+            tokenAdmin=token
             toAdd = noticiaId == 0
             retro.setBearerToken(token)
         }
@@ -101,6 +103,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
                                 msg = response.headers()["message"] ?: ""
                                 Toast.makeText(this@ControlNoticiaActivity, msg, Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@ControlNoticiaActivity, MenuAdministradorActivity::class.java)
+                                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
                                 startActivity(intent)
                                 finish()
                             }

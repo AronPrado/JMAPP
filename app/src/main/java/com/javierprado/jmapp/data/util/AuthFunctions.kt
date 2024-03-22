@@ -37,7 +37,6 @@ class AuthFunctions {
                                 msg = response.body()?.tokenDeAcceso.toString()
                                 val intent = Intent(interfaceActual, nextMenu::class.java)
                                 intent.putExtra(MenuAdministradorActivity().TOKEN, msg)
-
                                 interfaceActual.startActivity(intent)
                                 interfaceActual.finish()
                             }else{

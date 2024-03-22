@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.data.retrofit
 
+import Calificacion
 import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Asistencia
 import com.javierprado.jmapp.data.entities.AuthResponse
@@ -77,4 +78,15 @@ interface ColegioAPI {
     // DOCENTES
     @GET("/api/docentes") // OBTENER DOCENTES
     fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
+
+    //CALIFICACIONES
+    @POST("/api/calificaciones")
+    fun ingresarCalificaciones(@Body calificacion: Calificacion): Call<Void>
+    @GET("/api/calificaciones")
+    fun obtenerCalificacionesPorAlumnoYCurso(
+        @Query("alumno") alumnoId: Int,
+        @Query("curso") cursoId: Int
+    ): Call<List<Calificacion>>?
+    @PUT("/api/calificaciones/editar")
+    fun editarCalificacion(@Body calificacion: Calificacion): Call<Void>?
 }
