@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.HorarioFragment">
+    tools:context=".view.fragments.HorarioFragment"
+    android:background="@color/nude">
 
     <LinearLayout
         android:id="@+id/ly_container"
@@ -191,21 +192,23 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_back_horario"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:backgroundTint="@color/md_theme_light_primary"
+                android:backgroundTint="@color/md_theme_light_outline"
                 android:text="Back"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_next_horario"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:backgroundTint="@color/md_theme_light_primary"
+                android:backgroundTint="@color/md_theme_light_outline"
                 android:text="Next"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

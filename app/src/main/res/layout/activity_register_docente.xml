@@ -47,7 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tbRegister"
-        android:layout_above="@+id/lybuttons"
         android:padding="30dp"
         tools:ignore="NotSibling">
 
@@ -503,72 +502,67 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:orientation="horizontal">
-                <TableRow android:weightSum="2">
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingLeft="50dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:text="Elegir nivel educativo:"
                         android:maxLines="2"
                         android:textStyle="bold"
                         android:paddingLeft="12dp"
-                        android:background="@android:color/transparent"
-                        android:inputType="number"/>
+                        android:fontFamily="@font/librefranklin_bolditalic"
+                        android:background="@android:color/transparent"/>
+                    <Spinner
+                        android:id="@+id/s_nivel_educativo_curso__docente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:entries="@array/niveles_educativos"
+                        android:paddingLeft="40dp"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp">
                     <TextView
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:text="Seleccionar curso:"
                         android:maxLines="2"
                         android:textStyle="bold"
                         android:paddingLeft="12dp"
                         android:background="@android:color/transparent"
-                        android:inputType="number"/>
-                </TableRow>
-
-            </TableLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="60dp">
-                <Spinner
-                    android:id="@+id/s_nivel_educativo_curso__docente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:entries="@array/niveles_educativos"
-                    android:background="@android:color/transparent" />
-                <ListView
-                    android:id="@+id/lv_lista_cursos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:visibility="gone"/>
+                        android:fontFamily="@font/librefranklin_bolditalic"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp">
+                    <ListView
+                        android:id="@+id/lv_lista_cursos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:visibility="gone"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingBottom="60dp"/>
+                </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lybuttons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:gravity="center"
-                android:layout_alignParentBottom="true">
-
 
                 <Button
                     android:id="@+id/btnRegistrar"
@@ -577,11 +571,9 @@
                     android:text="Registrar Docente"
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"/>
             </LinearLayout>
-
-
-        </LinearLayout>
 
     </ScrollView>
 
