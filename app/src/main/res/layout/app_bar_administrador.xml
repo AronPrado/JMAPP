@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.activities.menu.MenuAdministradorActivity">
+    tools:context=".view.activities.menus.MenuAdministradorActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,10 +24,10 @@
 
                 <ImageView
                     android:id="@+id/imageView_logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/menu_desp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
 
