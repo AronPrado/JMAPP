@@ -536,7 +536,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="20dp">
+                    android:paddingTop="10dp">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -551,15 +551,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp">
+                    android:paddingTop="4dp">
                     <ListView
                         android:id="@+id/lv_lista_cursos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:visibility="gone"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="60dp"/>
+                        android:paddingBottom="20dp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -572,7 +570,7 @@
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="16dp"/>
             </LinearLayout>
 
     </ScrollView>
