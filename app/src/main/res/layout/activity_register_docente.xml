@@ -47,7 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tbRegister"
-        android:padding="30dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="30dp"
         tools:ignore="NotSibling">
 
         <LinearLayout
@@ -59,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp">
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -555,7 +557,7 @@
                     <ListView
                         android:id="@+id/lv_lista_cursos"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="300dp"
                         android:visibility="gone"
                         android:paddingBottom="20dp"/>
                 </LinearLayout>
