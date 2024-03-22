@@ -16,14 +16,16 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:text="a"
+            android:textSize="24sp"
             android:maxLines="2"
-            android:layout_gravity="center" />
+            android:gravity="center" />
         <TextView
             android:id="@+id/txt_fecha_noticia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:text="12-02-2004"
             android:layout_gravity="center"/>
     </LinearLayout>
     <LinearLayout
@@ -35,10 +37,12 @@
         <ImageView
             android:id="@+id/img_noticia"
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:layout_marginEnd="15dp"/>
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,10 +54,11 @@
             <TextView
                 android:id="@+id/txt_contenido_noticia"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="130dp"
                 android:paddingBottom="4dp"
-                android:autoSizeTextType="uniform"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:text="Hola"
+                android:maxLines="5"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
