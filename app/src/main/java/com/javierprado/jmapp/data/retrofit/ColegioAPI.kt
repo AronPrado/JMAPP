@@ -84,9 +84,9 @@ interface ColegioAPI {
     fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 
     //CALIFICACIONES
-    @POST("/api/calificaciones")
+    @PUT("/api/calificaciones")
     fun ingresarCalificaciones(@Body calificacion: Calificacion): Call<Void>
-    @GET("/api/calificaciones")
+    @POST("/api/calificaciones")
     fun obtenerCalificaciones(@Query("estudiante") estudianteId: Int, @Query("curso") cursoId: Int): Call<Calificacion>
     @PUT("/api/calificaciones/editar")
     fun editarCalificacion(@Body calificacion: Calificacion): Call<Void>

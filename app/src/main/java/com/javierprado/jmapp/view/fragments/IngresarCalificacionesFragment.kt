@@ -3,6 +3,7 @@ package com.javierprado.jmapp.view.fragments
 import Calificacion
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,21 +55,29 @@ class IngresarCalificacionesFragment : DialogFragment() {
         btnGuardarCalificaciones = view.findViewById(R.id.fg_guardar_cambios)
         return view
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
 
+
+        Log.e("SE BUSCA", "E: ${estudianteId}, C: ${cursoId}")
         api.obtenerCalificaciones(estudianteId, cursoId).enqueue(object : Callback<Calificacion> {
             override fun onResponse(call: Call<Calificacion>, response: Response<Calificacion>) {
                 if (response.isSuccessful) {
-                    val calficaciones = response.body()
-//                    val nota1 =
+                    val calificaciones = response.body()
+                    val nota1 = calificaciones!!.calificacion1.toString()
+                    val nota2 = calificaciones.calificacion1.toString()
+                    val nota3 = calificaciones.calificacion1.toString()
+                    val nota4 = calificaciones.calificacion1.toString()
+                    val notaF = calificaciones.calificacionFinal.toString()
+
+                    txtPrimeraNota.setText(nota1) ; txtSegundaNota.setText(nota2)
+                    txtTerceraNota.setText(nota3) ; txtCuartaNota.setText(nota4) ;
+                    txtNotaFinal.setText(notaF)
                 } else {
-                    showToast("Error al ingresar calificaciones.")
+                    showToast("No se encontraron calificaciones.")
                 }
             }
-
             override fun onFailure(call: Call<Calificacion>, t: Throwable) {
                 showToast("Error de red: ${t.message}")
             }

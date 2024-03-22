@@ -16,6 +16,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Asistencia
 import com.javierprado.jmapp.data.entities.Aula
+import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Usuario
@@ -42,7 +43,8 @@ class EstudiantesConFuncionesFragment : Fragment() {
 
     private lateinit var progressC: CircularProgressIndicator
 
-    private lateinit var adapter : EstudianteFuncsAdapter
+    private lateinit var docente : Docente
+    private var adapter : EstudianteFuncsAdapter = EstudianteFuncsAdapter()
     private var estudiantes: Collection<Estudiante> = ArrayList()
     private lateinit var msg : String
 
@@ -68,10 +70,32 @@ class EstudiantesConFuncionesFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val api = retro.getApi()
 
-        adapter = EstudianteFuncsAdapter(estudiantes.toList(), retro.getBearerToken(), activity)
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = adapter
+        fun obtenerDocente(){
+            api.obtenerSesion(RoleType.DOC.name).enqueue(object : Callback<Usuario> {
+                override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                    msg = "Usuario no encontrado."
+                    if (response.isSuccessful) {
+                        docente = response.body()!!.docente
+                        adapter = EstudianteFuncsAdapter(estudiantes.toList(), retro.getBearerToken(), docente,  activity)
+                        recycler.layoutManager = LinearLayoutManager(context)
+                        recycler.adapter = adapter
+                        Log.e("DOCENTE OBTENIDO", docente.nombres!!)
+                    } else{
+                        Log.e("NR SESSION", msg)
+                        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+                override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                    msg = "Error en la API: ${t.message}"
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("BUSCAR SESSION", t.message.toString())
+                }
+            } )
+        }
+        obtenerDocente()
     }
     companion object {
         @JvmStatic
