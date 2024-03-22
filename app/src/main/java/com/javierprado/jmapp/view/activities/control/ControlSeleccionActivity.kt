@@ -3,18 +3,11 @@ package com.javierprado.jmapp.view.activities.control
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.NavigationWindows
-import com.javierprado.jmapp.data.util.RoleType
-import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
-import com.javierprado.jmapp.view.fragments.HorarioFragment
 import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
 
 class ControlSeleccionActivity : AppCompatActivity() {
@@ -29,7 +22,7 @@ class ControlSeleccionActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             token = bundle.getString(TOKEN, "")
-            direct = bundle.getString(SeleccionarAulaFragment().DIRECT, NavigationWindows.NOTICIAS.name)
+            direct = bundle.getString(SeleccionarAulaFragment().DIRECT, NavigationWindows.FUNCIONES.name)
 
         }
         // Botón regresar

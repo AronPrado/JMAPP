@@ -20,12 +20,15 @@ import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.Secciones
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import com.javierprado.jmapp.view.adapters.AulaAdapter
+import com.javierprado.jmapp.view.adapters.EstudianteFuncsAdapter
 import com.javierprado.jmapp.view.clicks.AulaClick
+import com.javierprado.jmapp.view.clicks.EstudianteFClick
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -76,7 +79,6 @@ class SeleccionarAulaFragment : Fragment() {
         adapter = AulaAdapter(ArrayList(), object : AulaClick {
             override fun onAulaClicker(aula: Aula?) {
                 val fragment = extraF.obtenerFragment(direct, retro.getBearerToken(), aula!!.estudiantes as Serializable )
-//                                .newInstance(horario!!, retro.getBearerToken())
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.fcv_docente_main, fragment).addToBackStack(TAG).commit()
             }

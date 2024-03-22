@@ -1,46 +1,63 @@
 package com.javierprado.jmapp.view.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.javierprado.jmapp.data.entities.Aula
-import com.javierprado.jmapp.data.entities.Horario
-import com.javierprado.jmapp.data.retrofit.ColegioAPI
-import com.javierprado.jmapp.databinding.ItemDetallesAulaBinding
-import com.javierprado.jmapp.view.clicks.AulaClick
-import com.javierprado.jmapp.view.clicks.HorarioClick
+import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.data.util.NavigationWindows
+import com.javierprado.jmapp.databinding.ItemEstudianteConFuncionesBinding
+import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
+import com.javierprado.jmapp.view.clicks.EstudianteFClick
+import java.io.Serializable
 
-class EstudianteFuncsAdapter(): RecyclerView.Adapter<EstudianteFuncsAdapter.VHAula>() {
-    private lateinit var aulaClick : AulaClick
-    private lateinit var aulas : List<Aula>
+class EstudianteFuncsAdapter(): RecyclerView.Adapter<EstudianteFuncsAdapter.VHEstudiante>() {
+    private lateinit var token : String
+    private lateinit var estudiantes : List<Estudiante>
+    private lateinit var activity : AppCompatActivity
 
-    constructor(aulas : List<Aula>, aulaClick : AulaClick): this() {
-        this.aulas = aulas
-        this.aulaClick = aulaClick
+    constructor(estudiantes : List<Estudiante>, token: String, activity: AppCompatActivity): this() {
+        this.estudiantes = estudiantes
+        this.token = token
+        this.activity = activity
     }
-    fun setAulas(aulas: List<Aula>){ this.aulas = aulas }
-    class VHAula(binding: ItemDetallesAulaBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val binding: ItemDetallesAulaBinding
+    fun setEstudiantes(estudiantes: List<Estudiante>){ this.estudiantes = estudiantes }
+    class VHEstudiante(binding: ItemEstudianteConFuncionesBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val binding: ItemEstudianteConFuncionesBinding
         init { this.binding = binding }
-        fun bind(aula: Aula) {
-            val estudianteId = aula.estudiantes.toList()[0].estudianteId
-            val grado = aula.obtenerGrado(estudianteId)
-            val seccion = aula.obtenerSeccion(estudianteId)
-            binding.gradoSeccionAula.text =  "${grado}° '${seccion}'"
-            binding.totalAula.text = aula.totalEstudiantes().toString() + " estudiantes"
+        fun bind(estudiante: Estudiante, token: String, activity: AppCompatActivity) {
+            val extraF = ExtraFunctions()
+//            val grado = estudiante.obtenerGrado(estudianteId)
+//            val seccion = estudiante.obtenerSeccion(estudianteId)
+            binding.nombreEstudiante.text = estudiante.nombres + " " + estudiante.apellidos
+
+            val lista: List<Estudiante> = ArrayList()
+            binding.btnOtraFuncion.setOnClickListener {
+                Log.e("PRESIONADO", "VAS A OTRA FUNCION POR ALUMNO")
+            }
+            binding.btnCalificacionFuncion.setOnClickListener {
+                Log.e("PRESIONADO", "VAS A PONER NOTA POR ALUMNO")
+                val fragment = extraF.obtenerFragment(NavigationWindows.NOTAS.name, token, lista as Serializable)
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcv_docente_main, fragment).addToBackStack("NOTAS").commit()
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHAula {
-        val binding = ItemDetallesAulaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VHAula(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHEstudiante {
+        val binding = ItemEstudianteConFuncionesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return VHEstudiante(binding)
     }
 
-    override fun getItemCount(): Int = aulas.size
+    override fun getItemCount(): Int = estudiantes.size
 
-    override fun onBindViewHolder(holder: VHAula, position: Int) {
-        val aula = aulas[position]
-        holder.bind(aula)
-        holder.itemView.setOnClickListener { aulaClick.onAulaClicker(aula) }
+    override fun onBindViewHolder(holder: VHEstudiante, position: Int) {
+        val estudiante = estudiantes[position]
+        holder.bind(estudiante, token, activity)
+//        holder.itemView.setOnClickListener { estudianteClick.onEstudianteFClicker(estudiante) }
     }
 }

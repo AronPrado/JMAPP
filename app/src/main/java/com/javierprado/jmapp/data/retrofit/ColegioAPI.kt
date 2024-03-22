@@ -9,6 +9,7 @@ import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.entities.Noticia
+import com.javierprado.jmapp.data.entities.Tarea
 import com.javierprado.jmapp.data.entities.Usuario
 import retrofit2.Call
 import retrofit2.http.Body
@@ -39,6 +40,8 @@ interface ColegioAPI {
     fun agregarNoticia(@Body noticia : Noticia) : Call<Noticia>
     @PUT("/api/noticias") // EDITAR NOTICIA NEW
     fun editarNoticiaPorId(@Body noticia : Noticia) : Call<Void>
+    @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID NEW
+    fun obtenerNoticiaPorId(@Path("id")  noticiaId: Int): Call<Noticia>
     @DELETE("/api/noticias/{id}") // ELIMINAR NOTICIA NEW
     fun eliminarNoticiaPorId(@Path("id")  noticiaId: Int): Call<Void>
 
@@ -69,13 +72,14 @@ interface ColegioAPI {
     // NOTICIAS
     @GET("/api/noticias") // OBTENER NOTICIAS
     fun obtenerNoticias(): Call<List<Noticia>>?
-    @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID NEW
-    fun obtenerNoticiaPorId(@Path("id")  noticiaId: Int): Call<Noticia>
 
-    // NOTICIAS
+    // ASISTENCIAS
     @POST("/api/asistencias") // OBTENER ESTUDIANTES
     fun obtenerAsistencias(@Query("fecha") fecha : String?,  @Body estudiantes: Collection<Estudiante>): Call<Collection<Asistencia>>
+
     // DOCENTES
+    @POST("/api/tareas") // AGREGAR TAREA
+    fun agregarTareas(@Body tarea : Tarea) : Call<Void>
     @GET("/api/docentes") // OBTENER DOCENTES
     fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 
@@ -83,10 +87,7 @@ interface ColegioAPI {
     @POST("/api/calificaciones")
     fun ingresarCalificaciones(@Body calificacion: Calificacion): Call<Void>
     @GET("/api/calificaciones")
-    fun obtenerCalificacionesPorAlumnoYCurso(
-        @Query("alumno") alumnoId: Int,
-        @Query("curso") cursoId: Int
-    ): Call<List<Calificacion>>?
+    fun obtenerCalificaciones(@Query("estudiante") estudianteId: Int, @Query("curso") cursoId: Int): Call<Calificacion>
     @PUT("/api/calificaciones/editar")
-    fun editarCalificacion(@Body calificacion: Calificacion): Call<Void>?
+    fun editarCalificacion(@Body calificacion: Calificacion): Call<Void>
 }

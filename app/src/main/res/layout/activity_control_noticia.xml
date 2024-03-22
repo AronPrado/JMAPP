@@ -131,7 +131,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingLeft="16dp"
-                android:text="Elije una categoria"
+                android:text="Elige una categoria"
                 android:textColor="@color/plomo"
                 android:textSize="16sp"
                 android:textStyle="bold"

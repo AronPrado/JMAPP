@@ -14,6 +14,7 @@ import com.javierprado.jmapp.clases.NewsAdapter
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.view.fragments.AsignarTareasFragment
+import com.javierprado.jmapp.view.fragments.EstudiantesConFuncionesFragment
 import com.javierprado.jmapp.view.fragments.RegistroAsistenciaFragment
 import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
 import retrofit2.Call
@@ -56,8 +57,11 @@ class ExtraFunctions {
         var fragment = Fragment()
         when(nav){
             NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav) }
-            NavigationWindows.ASISTENCIA.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista) }
-            NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment() }
+            NavigationWindows.FUNCIONES.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista) }
+            NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista) }
+//            NavigationWindows.NOTAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, estudianteId) }
+            NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista) }
+
         }
         return fragment
     }

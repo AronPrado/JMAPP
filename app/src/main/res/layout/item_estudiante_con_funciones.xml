@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardBackgroundColor="@color/material_dynamic_neutral_variant70"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:contentPadding="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/nombre_estudiante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/librefranklin_extrabold"
+            android:text="Nombres y Apellidos"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nombre_estudiante"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:gravity="right">
+
+            <ImageButton
+                android:id="@+id/btn_otra_funcion"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/color1"/>
+            <ImageButton
+                android:id="@+id/btn_calificacion_funcion"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/color2"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
