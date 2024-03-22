@@ -104,7 +104,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                                 .addOnCompleteListener { task: Task<AuthResult?> ->
                                     if (task.isSuccessful) {
                                         Toast.makeText(this@RegisterApoderadoActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
-//                                        authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
+                                        authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
                                     } else {
                                         Toast.makeText(this@RegisterApoderadoActivity, "Error al Agregar en Firebase.", Toast.LENGTH_SHORT).show()
                                     }

@@ -28,36 +28,33 @@ class AuthFunctions {
         val usuario = Usuario(emailUser, passUser)
         val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
         var msg : String
-        api.login(usuario, rol)?.enqueue(object : Callback<AuthResponse?> {
-            override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
-                if (response.isSuccessful) {
-                    msg = response.body()?.tokenDeAcceso.toString()
-                    val intent = Intent(interfaceActual, nextMenu::class.java)
-                    intent.putExtra(MenuAdministradorActivity().TOKEN, msg)
+        mAuth.signInWithEmailAndPassword(emailUser, passUser)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    api.login(usuario, rol)?.enqueue(object : Callback<AuthResponse?> {
+                        override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
+                            if (response.isSuccessful) {
+                                msg = response.body()?.tokenDeAcceso.toString()
+                                val intent = Intent(interfaceActual, nextMenu::class.java)
+                                intent.putExtra(MenuAdministradorActivity().TOKEN, msg)
 
-                    interfaceActual.startActivity(intent)
-                    interfaceActual.finish()
-                }else{
-                    msg = "No tiene permisos para ingresar."
-                    Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                                interfaceActual.startActivity(intent)
+                                interfaceActual.finish()
+                            }else{
+                                msg = "No tiene permisos para ingresar."
+                                Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
+                            msg = "Error en el API y no en el Firebase."
+                            Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                            Log.e("API ERROR:", t.message.toString())
+                        }
+                    })
                 }
+            }.addOnFailureListener { e ->
+                Toast.makeText(interfaceActual, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
             }
-
-            override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
-                msg = "Error en el API y no en el Firebase."
-                Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
-                Log.e("API ERROR:", t.message.toString())
-            }
-        })
-//        mAuth.signInWithEmailAndPassword(emailUser, passUser)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//
-//                    
-//                }
-//            }.addOnFailureListener { e ->
-//                Toast.makeText(interfaceActual, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
-//            }
     }
     fun enviarCredenciales(correoC : String, contrasenaC : String, interfaceActual : AppCompatActivity){
         val correo : String = BuildConfig.CORREO_JMA;

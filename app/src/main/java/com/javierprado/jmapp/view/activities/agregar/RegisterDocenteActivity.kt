@@ -135,7 +135,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
-//                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
+                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
                                     Toast.makeText(this@RegisterDocenteActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
                                 } else {
                                     Toast.makeText(this@RegisterDocenteActivity, "Error al Agregar al docente en Firebase.", Toast.LENGTH_SHORT).show()
