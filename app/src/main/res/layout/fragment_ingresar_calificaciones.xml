@@ -22,7 +22,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_detail_comic"
+        android:id="@+id/cv_nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
@@ -191,6 +191,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_detail_comic" />
+        app:layout_constraintTop_toBottomOf="@+id/cv_nombre" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

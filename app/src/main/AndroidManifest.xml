@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.activities.comunicacion.ChatApoderadoDocenteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.comunicacion.ChatDocenteApoderadoActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activities.control.ControlSeleccionActivity"
             android:exported="true" />
         <activity

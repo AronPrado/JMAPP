@@ -32,6 +32,7 @@ class IngresarCalificacionesFragment : DialogFragment() {
     private val retro = RetrofitHelper.getInstanceStatic()
     private var estudianteId: Int = 0
     private var cursoId: Int = 0
+    private lateinit var msg : String
     private lateinit var activity: AppCompatActivity
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -106,16 +107,12 @@ class IngresarCalificacionesFragment : DialogFragment() {
             }
 
             // Realiza la llamada al método de la API para ingresar las calificaciones
-            api.ingresarCalificaciones(calificacion).enqueue(object : Callback<Void> {
+            api.editarCalificacion(calificacion).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        // Calificaciones ingresadas exitosamente
-                        showToast("Calificaciones ingresadas exitosamente.")
-                    } else {
-                        showToast("Error al ingresar calificaciones.")
-                    }
+                    msg = response.headers()["message"] ?: ""
+                    if (response.isSuccessful) { showToast("Cambios guardados.") }
+                    else { showToast(msg) }
                 }
-
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     showToast("Error de red: ${t.message}")
                 }

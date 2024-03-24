@@ -22,7 +22,7 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_detail_comic"
+        android:id="@+id/cv_nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
@@ -72,7 +72,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
-                    android:id="@+id/txt_hinicio_horario"
+                    android:id="@+id/txt_CAMBIARTEXT"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:layout_gravity="left"
@@ -110,7 +110,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/fg_curso_horario"
+                android:id="@+id/fg_CAMBIARTXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Matemática"
@@ -119,7 +119,7 @@
                 android:ellipsize="end"
                 android:layout_marginTop="8dp"/>
             <ImageView
-                android:id="@+id/fg_img_horario"
+                android:id="@+id/fg_img_CAMBIAR"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginStart="16dp"
@@ -130,7 +130,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/fg_btn_editarh"
+        android:id="@+id/fg_btn_funcion"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -145,6 +145,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_detail_comic" />
+        app:layout_constraintTop_toBottomOf="@+id/cv_nombre" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

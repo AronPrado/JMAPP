@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Horario
-import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import retrofit2.Call
@@ -54,11 +53,11 @@ class EditarHorarioFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_editar_horario, container, false)
 
-        txtHInicio = view.findViewById(R.id.txt_hinicio_horario)
+        txtHInicio = view.findViewById(R.id.txt_CAMBIARTEXT)
         txtHFin = view.findViewById(R.id.txt_hfin_horario)
         txtFecha = view.findViewById(R.id.fg_date_horario)
-        txtCurso = view.findViewById(R.id.fg_curso_horario)
-        btnEdit = view.findViewById(R.id.fg_btn_editarh)
+        txtCurso = view.findViewById(R.id.fg_CAMBIARTXT)
+        btnEdit = view.findViewById(R.id.fg_btn_funcion)
         return view
     }
 
