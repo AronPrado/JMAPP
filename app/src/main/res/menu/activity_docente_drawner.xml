@@ -35,7 +35,7 @@
                 <item
                     android:id="@+id/nav_item_7"
                     android:title="Comunicarse con el apoderado"
-                    android:icon="@drawable/ic_communicate"/>
+                    android:icon="@drawable/ic_mess"/>
             </menu>
         </item>
         <item
