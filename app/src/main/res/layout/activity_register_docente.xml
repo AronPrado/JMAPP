@@ -508,8 +508,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="12dp"
-                android:paddingLeft="50dp">
+                android:paddingTop="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -521,9 +520,14 @@
                         android:text="Elegir nivel educativo:"
                         android:maxLines="2"
                         android:textStyle="bold"
-                        android:paddingLeft="12dp"
+                        android:gravity="center"
                         android:fontFamily="@font/librefranklin_bolditalic"
                         android:background="@android:color/transparent"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
                     <Spinner
                         android:id="@+id/s_nivel_educativo_curso__docente"
                         android:layout_width="wrap_content"
@@ -531,7 +535,6 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:entries="@array/niveles_educativos"
-                        android:paddingLeft="40dp"
                         android:background="@android:color/transparent" />
                 </LinearLayout>
                 <LinearLayout
@@ -545,6 +548,7 @@
                         android:textSize="15sp"
                         android:text="Seleccionar curso:"
                         android:maxLines="2"
+                        android:gravity="center"
                         android:textStyle="bold"
                         android:paddingLeft="12dp"
                         android:background="@android:color/transparent"

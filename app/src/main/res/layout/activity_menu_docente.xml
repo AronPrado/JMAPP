@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:context=".view.activities.menu.MenuDocenteActivity"
+    tools:context=".view.activities.menus.MenuDocenteActivity"
     tools:openDrawer="start">
 
     <include

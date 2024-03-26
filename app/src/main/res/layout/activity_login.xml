@@ -48,6 +48,8 @@
                     android:textSize="16dp"
                     android:paddingTop="16dp"
                     android:paddingLeft="10dp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
                     android:fontFamily="@font/librefranklin_lightitalic"/>
             </LinearLayout>
 
