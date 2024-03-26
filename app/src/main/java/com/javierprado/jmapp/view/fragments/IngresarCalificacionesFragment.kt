@@ -3,6 +3,8 @@ package com.javierprado.jmapp.view.fragments
 import Calificacion
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +13,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.set
 import androidx.fragment.app.DialogFragment
+import androidx.room.util.getColumnIndex
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
@@ -55,7 +59,44 @@ class IngresarCalificacionesFragment : DialogFragment() {
         txtCuartaNota = view.findViewById(R.id.txt_cuarta_nota)
         txtNotaFinal = view.findViewById(R.id.txt_nota_final)
         btnGuardarCalificaciones = view.findViewById(R.id.fg_guardar_cambios)
+
+        txtPrimeraNota.addTextChangedListener(textWatcher)
+        txtSegundaNota.addTextChangedListener(textWatcher)
+        txtTerceraNota.addTextChangedListener(textWatcher)
+        txtCuartaNota.addTextChangedListener(textWatcher)
+
         return view
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            fun validarNum(num: Int?): Boolean{
+                return (num==null) or (num!!>20)
+            }
+            fun calcularPromedio(): Double{
+                try{
+                    val n1 = txtPrimeraNota.text.toString().toIntOrNull() ; val n2 = txtSegundaNota.text.toString().toIntOrNull()
+                    val n3 = txtTerceraNota.text.toString().toIntOrNull() ; val n4 = txtCuartaNota.text.toString().toIntOrNull()
+
+                    return (n1!!+n2!!+n3!!+n4!!) / 4.0
+                }
+                catch(ex: NullPointerException){
+                    return 0.0
+                }
+            }
+
+            txtNotaFinal.setText("")
+            if(!s.isNullOrEmpty() && !validarNum(s.toString().toIntOrNull())){
+                val txts: List<EditText> = listOf(txtPrimeraNota, txtSegundaNota, txtTerceraNota, txtCuartaNota)
+                val values_txts: List<String> = txts.map { it.text.toString() }
+                txts.mapIndexed { index, editText -> if(values_txts[index].isEmpty()) txts[index].setText("0") }
+                val promedio = calcularPromedio()
+                txtNotaFinal.setText(promedio.toString())
+            }
+            btnGuardarCalificaciones.isEnabled = txtNotaFinal.text.toString().isNotEmpty()
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,9 +108,9 @@ class IngresarCalificacionesFragment : DialogFragment() {
                     val calificaciones = response.body()
                     calificacion = calificaciones!!
                     val nota1 = calificacion.calificacion1.toString()
-                    val nota2 = calificacion.calificacion1.toString()
-                    val nota3 = calificacion.calificacion1.toString()
-                    val nota4 = calificacion.calificacion1.toString()
+                    val nota2 = calificacion.calificacion2.toString()
+                    val nota3 = calificacion.calificacion3.toString()
+                    val nota4 = calificacion.calificacion4.toString()
                     val notaF = calificacion.calificacionFinal.toString()
 
                     txtPrimeraNota.setText(nota1) ; txtSegundaNota.setText(nota2)

@@ -1,11 +1,19 @@
 package com.javierprado.jmapp.data.util
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
@@ -22,6 +30,9 @@ import retrofit2.Response
 import java.io.Serializable
 
 class ExtraFunctions {
+    val canalNombre = "dev.xcheko51x"
+    val canalId = "canalId"
+    val notificacionId = 0
     fun listarNoticias(api: ColegioAPI, adapter: NewsAdapter, context: Context){
         var noticias : List<Noticia>
         var msg : String
@@ -63,5 +74,28 @@ class ExtraFunctions {
 
         }
         return fragment
+    }
+    fun crearCanalNoti(activity: AppCompatActivity){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val canalImportancia = NotificationManager.IMPORTANCE_HIGH
+            val canal = NotificationChannel(canalId, canalNombre, canalImportancia)
+
+            val manager = activity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(canal)
+        }
+    }
+    fun crearNoti(msg: String, titulo: String, context: Context){
+        val notificacion = NotificationCompat.Builder(context, canalId).also{
+            it.setContentTitle(titulo)
+            it.setContentText(msg)
+            it.setSmallIcon(R.drawable.ic_home)
+            it.priority = NotificationCompat.PRIORITY_HIGH
+        }.build()
+        val notificationManager = NotificationManagerCompat.from(context)
+        if(ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED){
+            return
+        }
+        notificationManager.notify(notificacionId, notificacion )
     }
 }

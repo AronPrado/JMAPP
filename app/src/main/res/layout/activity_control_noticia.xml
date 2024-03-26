@@ -19,7 +19,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_add_noticia"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="?android:attr/actionBarSize"
         android:elevation="24dp"
         android:background="@color/toolbar"
         tools:ignore="MissingConstraints">
