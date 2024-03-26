@@ -98,11 +98,8 @@ class AsignarTareasFragment : Fragment() {
 //            val estudiantes: Collection<Estudiante> = ArrayList()
             api.agregarTareas(tarea).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    msg = response.headers()["message"] ?: ""
-                    if (response.isSuccessful) {
-                        msg = "Tarea creada"
-                    }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    if (response.isSuccessful) { activity.supportFragmentManager.popBackStackImmediate() }
+                    else{ Toast.makeText(context, response.headers()["message"] ?: "", Toast.LENGTH_SHORT).show() }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"

@@ -1,10 +1,9 @@
-package com.javierprado.jmapp.clases
+package com.javierprado.jmapp.model
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.clases.NewsAdapter
-import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.model.NewsAdapter
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
@@ -27,7 +26,6 @@ import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
 import com.javierprado.jmapp.view.login.OptionLogin
-import java.io.Serializable
 
 class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 

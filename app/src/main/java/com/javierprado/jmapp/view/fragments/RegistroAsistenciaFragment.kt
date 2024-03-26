@@ -41,7 +41,7 @@ class RegistroAsistenciaFragment : Fragment() {
 
     private lateinit var adapter : AsistenciaAdapter
     private var estudiantes: Collection<Estudiante> = ArrayList()
-    private var asistencias: List<Asistencia> = ArrayList()
+    private var asistencias: MutableList<Asistencia> = ArrayList()
     private lateinit var msg : String
 
     val ESTUDIANTES = "estudiantes"
@@ -95,12 +95,11 @@ class RegistroAsistenciaFragment : Fragment() {
             override fun onResponse(call: Call<Collection<Asistencia>>, response: Response<Collection<Asistencia>>) {
                 if (response.isSuccessful) {
                     msg = "Las asistencias no están para todos los estudiantes."
-                    val asistenciasR = response.body()!!.toList()
-                    if(estudiantes.size == asistenciasR.size){
+                    asistencias = response.body()!!.toList() as MutableList<Asistencia>
+                    if(estudiantes.size == asistencias.size){
                         msg = "Asistencias obtenidas correctamente"
-                        adapter.setAsistencias(asistenciasR)
+                        adapter.setAsistencias(asistencias)
                         adapter.notifyDataSetChanged()
-                        asistencias = asistenciasR
                         progressC.visibility = View.GONE
                     }else{
                         Log.e("TOTALES", "Estudiantes: ${estudiantes.size} - Asistencias: ${asistencias.size}")
@@ -114,6 +113,30 @@ class RegistroAsistenciaFragment : Fragment() {
                 Log.e("OBTENER ASISTENCIAS", t.message.toString())
             }
         } )
+        btnRegistrar.setOnClickListener {
+            msg = "INFO: "
+            if (asistencias.isNotEmpty()){
+                val alumno = asistencias[0].itemsEstudiante.toList()[0].nombres
+                val estado = asistencias[0].estado
+                msg +=  "A:${alumno} - E: $estado"
+                api.editarAsistencias(asistencias).enqueue(object : Callback<List<Asistencia>> {
+                    override fun onResponse(call: Call<List<Asistencia>>, response: Response<List<Asistencia>>) {
+                        msg = response.headers()["message"] ?: ""
+                        if (response.isSuccessful) {
+                            activity.supportFragmentManager.popBackStackImmediate()
+                        }else{
+
+                        }
+                        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+                    }
+                    override fun onFailure(call: Call<List<Asistencia>>, t: Throwable) {
+                        msg = "Error en la API: ${t.message}"
+                        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("EDITAR ASISTENCIAS", t.message.toString())
+                    }
+                } )
+            }
+        }
     }
     companion object {
         @JvmStatic

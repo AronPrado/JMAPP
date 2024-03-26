@@ -13,22 +13,23 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
+import kotlin.collections.ArrayList
 
 private const val TOKEN = "token"
 private const val HORARIO_ID = "ID"
 class EditarHorarioFragment : DialogFragment() {
-
     private lateinit var txtHInicio: EditText
     private lateinit var txtHFin: EditText
     private lateinit var txtCurso: TextView
     private lateinit var txtFecha: TextView
-    private lateinit var txtDocente: TextView
     private lateinit var btnEdit: Button
 
     private lateinit var horarioUpd: Horario
@@ -73,7 +74,6 @@ class EditarHorarioFragment : DialogFragment() {
                     txtHFin.setText(horario.horaFin)
                     txtCurso.text = horario.curso.nombre.toString()
                     txtFecha.text = horario.fechaClase.toString()
-                    txtDocente.text="Prueba Docente"
 
                 }else{
                     Log.e("NR BUSCAR HORARIO", msg)
@@ -105,19 +105,19 @@ class EditarHorarioFragment : DialogFragment() {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers().get("message").toString()
                     if (response.isSuccessful) {
-                        val fragment = HorarioFragment.newInstance(retro.getBearerToken(), true, ArrayList())
-                        activity.supportFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_horario_main, fragment).commit()
-                    }else{
-                        Log.e("NR ACTUALIZAR HORARIO", msg)
+                        activity.supportFragmentManager.popBackStackImmediate()
+//                        val fragment = HorarioFragment.newInstance(retro.getBearerToken(), true, ArrayList())
+//                        activity.supportFragmentManager.beginTransaction()
+//                            .replace(R.id.fcv_horario_main, fragment).commit()
+                    } else{
+                        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
 
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"
                     Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-                    Log.e("ACTuALIZAR HORARIO", t.message.toString())
+                    Log.e("ACTUALIZAR HORARIO", t.message.toString())
                 }
             } )
         }

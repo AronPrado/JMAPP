@@ -31,6 +31,7 @@ class IngresarCalificacionesFragment : DialogFragment() {
 
     private val retro = RetrofitHelper.getInstanceStatic()
     private var estudianteId: Int = 0
+    private lateinit var calificacion: Calificacion
     private var cursoId: Int = 0
     private lateinit var msg : String
     private lateinit var activity: AppCompatActivity
@@ -60,17 +61,16 @@ class IngresarCalificacionesFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
 
-
-        Log.e("SE BUSCA", "E: ${estudianteId}, C: ${cursoId}")
         api.obtenerCalificaciones(estudianteId, cursoId).enqueue(object : Callback<Calificacion> {
             override fun onResponse(call: Call<Calificacion>, response: Response<Calificacion>) {
                 if (response.isSuccessful) {
                     val calificaciones = response.body()
-                    val nota1 = calificaciones!!.calificacion1.toString()
-                    val nota2 = calificaciones.calificacion1.toString()
-                    val nota3 = calificaciones.calificacion1.toString()
-                    val nota4 = calificaciones.calificacion1.toString()
-                    val notaF = calificaciones.calificacionFinal.toString()
+                    calificacion = calificaciones!!
+                    val nota1 = calificacion.calificacion1.toString()
+                    val nota2 = calificacion.calificacion1.toString()
+                    val nota3 = calificacion.calificacion1.toString()
+                    val nota4 = calificacion.calificacion1.toString()
+                    val notaF = calificacion.calificacionFinal.toString()
 
                     txtPrimeraNota.setText(nota1) ; txtSegundaNota.setText(nota2)
                     txtTerceraNota.setText(nota3) ; txtCuartaNota.setText(nota4) ;
@@ -98,19 +98,18 @@ class IngresarCalificacionesFragment : DialogFragment() {
             }
 
             // Crea una instancia de Calificacion con las notas ingresadas
-            val calificacion = Calificacion().apply {
-                calificacion1 = primeraNota
-                calificacion2 = segundaNota
-                calificacion3 = terceraNota
-                calificacion4 = cuartaNota
-                calificacionFinal = notaFinal
-            }
+
+            calificacion.calificacion1 = primeraNota
+            calificacion.calificacion2 = segundaNota
+            calificacion.calificacion3 = terceraNota
+            calificacion.calificacion4 = cuartaNota
+            calificacion.calificacionFinal = notaFinal
 
             // Realiza la llamada al método de la API para ingresar las calificaciones
             api.editarCalificacion(calificacion).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
-                    if (response.isSuccessful) { showToast("Cambios guardados.") }
+                    if (response.isSuccessful) { activity.supportFragmentManager.popBackStackImmediate() }
                     else { showToast(msg) }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {

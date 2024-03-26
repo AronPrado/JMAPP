@@ -67,7 +67,7 @@ interface ColegioAPI {
 
     // CURSOS
     @GET("/api/cursos") // OBTENER CURSOS
-    fun obtenerCursos(@Query("estudiante") estudianteId : Int?, @Query("nivel") nivel : String?): Call<Collection<Curso>>?
+    fun obtenerCursos(@Query("estudiante") estudianteId : Int?, @Query("nivel") nivel : String?): Call<Collection<Curso>>
 
     // NOTICIAS
     @GET("/api/noticias") // OBTENER NOTICIAS
@@ -80,6 +80,8 @@ interface ColegioAPI {
     // DOCENTES
     @POST("/api/tareas") // AGREGAR TAREA
     fun agregarTareas(@Body tarea : Tarea) : Call<Void>
+    @PUT("/api/asistencias") // OBTENER ESTUDIANTES
+    fun editarAsistencias(@Body estudiantes: List<Asistencia>): Call<List<Asistencia>>
     @GET("/api/docentes") // OBTENER DOCENTES
     fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 

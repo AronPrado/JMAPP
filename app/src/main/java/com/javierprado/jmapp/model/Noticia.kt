@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.clases
+package com.javierprado.jmapp.model
 
 data class Noticia(
     val titulo: String,

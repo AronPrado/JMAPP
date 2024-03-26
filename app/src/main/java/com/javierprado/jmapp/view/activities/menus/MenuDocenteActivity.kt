@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.clases.NewsAdapter
+import com.javierprado.jmapp.model.NewsAdapter
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.login.OptionLogin
 import com.javierprado.jmapp.data.retrofit.ColegioAPI

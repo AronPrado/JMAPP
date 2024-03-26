@@ -86,6 +86,7 @@ class SeleccionarAulaFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
         fun obtenerAulas(){
+            aulas = ArrayList()
             val grados = if(nivel.equals("P")) 6 else 5
             val secciones = Secciones.entries.toTypedArray()
             for (i in 1 .. grados){

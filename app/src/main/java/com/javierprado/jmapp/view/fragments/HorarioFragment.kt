@@ -79,7 +79,7 @@ class HorarioFragment : Fragment() {
         arguments?.let {
             retro.setBearerToken(it.getString(TOKEN, ""))
             paraAdmin = it.getBoolean(PARAADMIN, false)
-            estudiantes = it.getSerializable(ESTUDIANTES) as List<Estudiante>?
+            estudiantes = it.getSerializable(ESTUDIANTES) as List<Estudiante>
         }
     }
 
@@ -147,36 +147,46 @@ class HorarioFragment : Fragment() {
                 if (response.isSuccessful) {
                     val estudiantes = response.body()!!
                     if(!estudiantes.isEmpty()){
-                        val estudiante = (estudiantes as MutableList)[0]
-                        cursos = estudiante.itemsCurso.toList()
-                        for (i in 0..<rangoFechas.size){
-                            val fecha = rangoFechas[i].toString()
-                            val diaNum = dias[i] + "\n" + fecha.substring(8)
-                            textViewsDias[i].text = diaNum
-                            val idsCursoDia = obtenerCursosXDia(i, cursos)
-                            api.obtenerHorarios(fecha, idsCursoDia).enqueue(object :
-                                Callback<Collection<Horario>> {
-                                override fun onResponse(call: Call<Collection<Horario>>, response: Response<Collection<Horario>>) {
-                                    if (response.isSuccessful) {
-                                        val horarios = response.body()!!.toList()
-                                        adapters[i].setHorarios(horarios)
-                                        adapters[i].notifyDataSetChanged()
+                        val estudiante = (estudiantes as MutableList)[0].estudianteId
+                        api.obtenerCursos(estudiante, null).enqueue(object : Callback<Collection<Curso>> {
+                            override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
+                                if (response.isSuccessful) {
+                                    for (i in 0..<rangoFechas.size){
+                                        val fecha = rangoFechas[i].toString()
+                                        val diaNum = dias[i] + "\n" + fecha.substring(8)
+                                        textViewsDias[i].text = diaNum
+                                        val idsCursoDia = obtenerCursosXDia(i, response.body()!!.toList())
+                                        api.obtenerHorarios(fecha, idsCursoDia).enqueue(object :
+                                            Callback<Collection<Horario>> {
+                                            override fun onResponse(call: Call<Collection<Horario>>, response: Response<Collection<Horario>>) {
+                                                if (response.isSuccessful) {
+                                                    val horarios = response.body()!!.toList()
+                                                    adapters[i].setHorarios(horarios)
+                                                    adapters[i].notifyDataSetChanged()
+                                                }
+                                            }
+                                            override fun onFailure(call: Call<Collection<Horario>>, t: Throwable) {
+                                                msg = "Error en la API: ${t.message}"
+                                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                                                Log.e("LISTAR HORARIOS", t.message.toString())
+                                            }
+                                        } )
                                     }
+                                    progressC.visibility = View.GONE
                                 }
-                                override fun onFailure(call: Call<Collection<Horario>>, t: Throwable) {
-                                    msg = "Error en la API: ${t.message}"
-                                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                                    Log.e("LISTAR HORARIOS", t.message.toString())
-                                }
-                            } )
-                        }
-                        progressC.visibility = View.GONE
+                            }
+                            override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
+                                msg = "Error en la API: ${t.message}"
+                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                                Log.e("LISTAR CURSOS", t.message.toString())
+                            }
+                        } )
+
                     }
                 }else{
                     msg = "FAIL $msg"
                     Log.e("ERROR:", msg)
                 }
-                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
             }
             override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
@@ -237,7 +247,7 @@ class HorarioFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(token: String, paraAdmin: Boolean, estudiantes: List<Estudiante>?) =
+        fun newInstance(token: String, paraAdmin: Boolean, estudiantes: List<Estudiante>) =
             HorarioFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(TOKEN, token)
