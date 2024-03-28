@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.AuthFunctions
+import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.view.activities.editar.ResetPasswordActivity
 import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var btnLogin: Button
+    private var extraF: ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -38,6 +40,9 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val emailUser = emailEditText.text.toString().trim()
             val passUser = passwordEditText.text.toString().trim()
+
+            extraF.crearCanalNoti(this)
+            extraF.crearNoti("PRUEBA CUERPO", "TITULO GRANDE", this)
 
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this, "Ingresar los datos", Toast.LENGTH_SHORT).show()
