@@ -65,6 +65,12 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    //Firebase Cloud Messaging
+    implementation ("com.google.firebase:firebase-messaging-ktx:23.4.1")
+
+    //Firebase Storage
+    implementation ("com.google.firebase:firebase-storage-ktx:20.3.0")
+
     //EMAIL
     implementation("com.sun.mail:android-mail:1.6.7")
     implementation("com.sun.mail:android-activation:1.6.7")
