@@ -22,5 +22,5 @@ class Estudiante: Serializable{
     var itemsCurso: Set<Curso> = HashSet()
 //        var calificaciones : Collection<Calificacion>?= null
 //    var itemsAsistencia : Set<Asistencia>?= null
-//    var itemsApoderado: Set<Apoderado>?= null
+    var itemsApoderado: Set<Apoderado>?= null
 }

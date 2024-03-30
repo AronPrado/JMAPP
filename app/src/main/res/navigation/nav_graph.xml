@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/seleccionarUsuarioFragment">
+
+    <fragment
+        android:id="@+id/seleccionarUsuarioFragment"
+        android:name="com.javierprado.jmapp.view.fragments.SeleccionarUsuarioFragment"
+        android:label="fragment_seleccionar_usuario"
+        tools:layout="@layout/fragment_seleccionar_usuario" >
+        <action
+            android:id="@+id/action_seleccionarUsuarioFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_seleccionarUsuarioFragment_to_chatfromHome"
+            app:destination="@id/chatfromHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.javierprado.jmapp.view.fragments.ChatFragment"
+        android:label="fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_seleccionarUsuarioFragment4"
+            app:destination="@id/seleccionarUsuarioFragment" />
+        <argument
+            android:name="users"
+            app:argType="com.javierprado.jmapp.modal.Users" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatfromHome"
+        android:name="com.javierprado.jmapp.view.fragments.ChatfromHome"
+        android:label="ChatfromHome" >
+        <action
+            android:id="@+id/action_chatfromHome_to_seleccionarUsuarioFragment"
+            app:destination="@id/seleccionarUsuarioFragment"/>
+        <argument
+            android:name="recentchats"
+            app:argType="com.javierprado.jmapp.modal.RecentChats" />
+    </fragment>
+</navigation>

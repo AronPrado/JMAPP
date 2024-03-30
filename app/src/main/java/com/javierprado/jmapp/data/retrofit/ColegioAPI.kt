@@ -3,6 +3,7 @@ package com.javierprado.jmapp.data.retrofit
 import Calificacion
 import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Asistencia
+import com.javierprado.jmapp.data.entities.Aula
 import com.javierprado.jmapp.data.entities.AuthResponse
 import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
@@ -58,10 +59,14 @@ interface ColegioAPI {
     fun buscarHorario(@Path("id")  horarioId: Int): Call<Horario>
     @PUT("/api/horarios") // ACTUALIZAR POR ID
     fun actualizarHorario(@Body horario: Horario): Call<Void>
+    @GET("/api/apoderados/{id}") // OBTENER APODERADO
+    fun obtenerApoderado(@Path("id")  apoderadoId: Int): Call<Apoderado>
 
     // ESTUDIANTES
     @GET("/api/estudiantes") // OBTENER ESTUDIANTES
     fun obtenerEstudiantes(@Query("curso") cursoId : Int?, @Query("nivel") nivel : String?, @Query("grado") grado : Int?, @Query("seccion") seccion : String?): Call<Collection<Estudiante>>
+    @GET("/api/estudiantes/aulas") // OBTENER AULAS
+    fun obtenerAulas(@Query("docente") docenteId : Int?): Call<Collection<Aula>>
     @GET("/api/estudiantes/{id}") // OBTENER ESTUDIANTES
     fun buscarEstudiantePorDNI(@Path("id")  estudianteId: Int, @Query("dni") dni : Int?): Call<Estudiante>?
 
@@ -83,7 +88,7 @@ interface ColegioAPI {
     @PUT("/api/asistencias") // OBTENER ESTUDIANTES
     fun editarAsistencias(@Body estudiantes: List<Asistencia>): Call<List<Asistencia>>
     @GET("/api/docentes") // OBTENER DOCENTES
-    fun obtenerDocentes(@Query("curso") nivel : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
+    fun obtenerDocentes(@Query("curso") cursoId : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 
     //CALIFICACIONES
     @POST("/api/calificaciones")

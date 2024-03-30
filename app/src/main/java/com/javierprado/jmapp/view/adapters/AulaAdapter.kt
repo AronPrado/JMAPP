@@ -18,14 +18,17 @@ class AulaAdapter(): RecyclerView.Adapter<AulaAdapter.VHAula>() {
         this.aulas = aulas
         this.aulaClick = aulaClick
     }
-    fun setAulas(aulas: List<Aula>){ this.aulas = aulas }
+    fun setAulas(aulas: List<Aula>){
+        this.aulas = aulas
+        notifyDataSetChanged()
+    }
     class VHAula(binding: ItemDetallesAulaBinding) : RecyclerView.ViewHolder(binding.root) {
         private val binding: ItemDetallesAulaBinding
         init { this.binding = binding }
         fun bind(aula: Aula) {
             val estudianteId = aula.estudiantes.toList()[0].estudianteId
-            val grado = aula.obtenerGrado(estudianteId)
-            val seccion = aula.obtenerSeccion(estudianteId)
+            val grado = aula.grado
+            val seccion = aula.seccion
             binding.gradoSeccionAula.text =  "${grado}° '${seccion}'"
             binding.totalAula.text = aula.totalEstudiantes().toString() + " estudiantes"
         }

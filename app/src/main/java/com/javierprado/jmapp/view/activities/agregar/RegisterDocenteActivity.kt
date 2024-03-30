@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
@@ -44,6 +45,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
 
     private val authFunctions = AuthFunctions()
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore : FirebaseFirestore
     private lateinit var api : ColegioAPI
     private lateinit var msg : String
 
@@ -54,6 +56,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register_docente)
         
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         nombresEditText = findViewById(R.id.edtNombres)
         apellidosEditText = findViewById(R.id.edtApellidos)
@@ -132,9 +135,17 @@ class RegisterDocenteActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val docenteRegistrado = response.body()
                         msg = "Docente nuevo ID: ${docenteRegistrado?.docenteId}"
+                        Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
+                                    // GUARDAR USUARIO EN FireStpre
+                                    val user = auth.currentUser!!
+                                    val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "DOC",
+                                        "tipoid" to docenteRegistrado!!.docenteId.toString(), "token" to "" )
+                                    firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
+                                        task -> Log.e("ERROR FSTORE", task.exception.toString()) }
+
                                     authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
                                     Toast.makeText(this@RegisterDocenteActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
                                 } else {

@@ -41,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
             val emailUser = emailEditText.text.toString().trim()
             val passUser = passwordEditText.text.toString().trim()
 
-            extraF.crearCanalNoti(this)
-            extraF.crearNoti("PRUEBA CUERPO", "TITULO GRANDE", this)
+//            extraF.crearCanalNoti(this)
+//            extraF.crearNoti("PRUEBA CUERPO", "TITULO GRANDE", this)
 
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this, "Ingresar los datos", Toast.LENGTH_SHORT).show()

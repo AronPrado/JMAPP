@@ -86,38 +86,25 @@ class SeleccionarAulaFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
         fun obtenerAulas(){
-            aulas = ArrayList()
-            val grados = if(nivel.equals("P")) 6 else 5
-            val secciones = Secciones.entries.toTypedArray()
-            for (i in 1 .. grados){
-                for(s in secciones){
-                    api.obtenerEstudiantes(cursoId, null, i, s.name).enqueue(object :
-                        Callback<Collection<Estudiante>> {
-                        override fun onResponse(call: Call<Collection<Estudiante>>, response: Response<Collection<Estudiante>>) {
-                            msg = response.headers()["message"] ?: ""
-                            if (response.isSuccessful) {
-                                var aula = Aula()
-                                val estudiantes = response.body()!!
-                                if(estudiantes.size > 0){
-                                    aula.estudiantes = estudiantes
-                                    aulas.add(aula)
-                                    adapter.setAulas(aulas)
-                                    adapter.notifyDataSetChanged()
-                                }
-                            }else{
-                                msg = "FAIL $msg"
-                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                                Log.e("ERROR:", msg)
-                            }
-                        }
-                        override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable) {
-                            msg = "Error en la API: ${t.message}"
-                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                            Log.e("OBTENER ESTUDIANTES", t.message.toString())
-                        }
-                    } )
+            api.obtenerAulas(docente.docenteId).enqueue(object : Callback<Collection<Aula>> {
+                override fun onResponse(call: Call<Collection<Aula>>, response: Response<Collection<Aula>>) {
+                    msg = response.headers()["message"] ?: ""
+                    if (response.isSuccessful) {
+                        aulas = response.body()!! as MutableList<Aula>
+                        adapter.setAulas(aulas)
+                        adapter.notifyDataSetChanged()
+                    }else{
+                        msg = "FAIL $msg"
+                        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("ERROR:", msg)
+                    }
                 }
-            }
+                override fun onFailure(call: Call<Collection<Aula>>, t: Throwable) {
+                    msg = "Error en la API: ${t.message}"
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("OBTENER ESTUDIANTES", t.message.toString())
+                }
+            } )
         }
 
         api.obtenerSesion(RoleType.DOC.name).enqueue(object : Callback<Usuario> {

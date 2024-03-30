@@ -15,13 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.model.NewsAdapter
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.editar.ActualizarInfoApoderadoActivity
 import com.javierprado.jmapp.view.login.OptionLogin
@@ -31,6 +34,9 @@ import retrofit2.Response
 import java.io.Serializable
 
 class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    companion object{
+        lateinit var instance : MenuApoderadoActivity
+    }
     private lateinit var drawer:DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
@@ -38,28 +44,37 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     private lateinit var btnMasRecientes: ImageView
 
     private lateinit var auth: FirebaseAuth
+    lateinit var firestore: FirebaseFirestore
     private lateinit var api : ColegioAPI
 
     private var extraFuns : ExtraFunctions = ExtraFunctions()
 
     val TOKEN = "token"
-    var tokenAdmin = ""
+    var tokenApod = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_apoderado)
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         btnMasRecientes = findViewById(R.id.btn_mas_reciente)
         //API Y BUNDLE
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
         if (bundle != null) {
             val token = bundle.getString(TOKEN, "")
-            tokenAdmin=token
+            tokenApod=token
             retro.setBearerToken(token)
         }
         api = retro.getApi()
-
-        auth = FirebaseAuth.getInstance()
-
+        //BORRAR
+//        val user = auth.currentUser
+//        if(user!=null){
+//            val dataHashMap = hashMapOf("userid" to user.uid, "info" to "Benjamín Carlos Apaza Enriquez", "correo" to "bnhcks22@gmail.com", "estado" to "default", "tipo" to "APOD", "tipoid" to "6", "token" to "")
+//            firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
+//                    task -> Log.e("ERROR FSTORE", task.exception.toString()) }
+//        }
         //Noticias
         recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -89,7 +104,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             R.id.nav_item_3 -> Toast.makeText(this, "Recursos", Toast.LENGTH_SHORT).show()
             R.id.nav_item_4 -> {
                 val intent = Intent(this, ControlHorarioActivity::class.java)
-                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
+                intent.putExtra(ControlHorarioActivity().TOKEN, tokenApod)
                 intent.putExtra(ControlHorarioActivity().ROLE, RoleType.APOD)
                 var msg = ""
                 api.obtenerSesion(RoleType.APOD.name).enqueue(object : Callback<Usuario> {
@@ -117,7 +132,12 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
             R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_7 -> Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_7 -> {
+                Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ChatDocenteApoderadoActivity::class.java)
+                firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("token", tokenApod)
+                startActivity(intent)
+            }
             R.id.nav_item_8 -> {
                 auth.signOut()
                 val intent = Intent(this, OptionLogin::class.java)
