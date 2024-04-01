@@ -117,8 +117,6 @@ class ChatAppViewModel : ViewModel() {
             // showToast(e.message.toString())
         }
     }
-
-
     fun getCurrentUser() = viewModelScope.launch(Dispatchers.IO) {
         val context = MyApplication.instance.applicationContext
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn())

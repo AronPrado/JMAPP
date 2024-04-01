@@ -236,7 +236,7 @@
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="20dp"
-                                android:text="Correo electronico"
+                                android:text="Correo electrónico"
                                 android:textColor="@color/plomo"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
@@ -291,7 +291,7 @@
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="25dp"
-                                android:text="Telefono:"
+                                android:text="Teléfono:"
                                 android:textColor="@color/plomo"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
@@ -323,9 +323,10 @@
                                 android:layout_height="30dp"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
+                                android:maxLength="9"
                                 android:paddingLeft="12dp"
                                 android:background="@android:color/transparent"
-                                android:inputType="none" />
+                                android:inputType="number" />
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="30dp"
@@ -346,7 +347,7 @@
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
                                 android:layout_height="25dp"
-                                android:text="Direccion:"
+                                android:text="Dirección:"
                                 android:textColor="@color/plomo"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
@@ -413,33 +414,24 @@
                     android:inputType="number" />
             </TableLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="20dp">
-                <FrameLayout
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/pb_listar_estudiantes"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/pb_listar_estudiantes"
-                        android:layout_gravity="center"
-                        android:indeterminate="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"/>
-                    <ListView
-                        android:id="@+id/listEstudiantes"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-
-                        android:visibility="gone"/>
-                </FrameLayout>
-
-            </LinearLayout>
+                    android:visibility="gone"/>
+                <ListView
+                    android:id="@+id/listEstudiantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/lybuttons"
@@ -455,7 +447,7 @@
                     android:id="@+id/btnRegistrar"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:text="Registrar Apoderado"
+                    android:text="Registrar"
                     android:textSize="20sp"
                     android:backgroundTint="@color/md_theme_light_tertiary"
                     android:layout_gravity="center"/>

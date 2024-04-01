@@ -20,6 +20,7 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
     }
     fun setAsistencias(asistencias: MutableList<Asistencia>){
         this.asistencias = asistencias
+        notifyDataSetChanged()
     }
     class VHAsistencia(binding: ItemAsistenciaAlumnoBinding) : RecyclerView.ViewHolder(binding.root) {
         private val binding: ItemAsistenciaAlumnoBinding

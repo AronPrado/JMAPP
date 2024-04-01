@@ -49,22 +49,16 @@ class FirebaseService: FirebaseMessagingService() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
         var intent = Intent()
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject(Users::class.java)!!
                 val tipo = user.tipo
-                if(tipo == RoleType.DOC.name){
-                    intent = Intent(this, ChatDocenteApoderadoActivity::class.java)
-                }else if(tipo == RoleType.APOD.name){
-                    intent = Intent(this, ChatApoderadoDocenteActivity::class.java)
-                }
+                if(tipo == RoleType.DOC.name){ intent = Intent(this, ChatDocenteApoderadoActivity::class.java) }
+                else if(tipo == RoleType.APOD.name){ intent = Intent(this, ChatApoderadoDocenteActivity::class.java) }
             }
         }
-
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
@@ -72,24 +66,19 @@ class FirebaseService: FirebaseMessagingService() {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-
         // for replies on notification
         val remoteInput = RemoteInput.Builder(KEY_REPLY_TEXT)
             .setLabel("Reply")
             .build()
-
         // Create a PendingIntent for the reply action
         val replyIntent = Intent(this, NotificationReply::class.java)
-
         val replyPendingIntent = PendingIntent.getBroadcast(this, 0, replyIntent, PendingIntent.FLAG_MUTABLE)
-
         // Create a NotificationCompat.Action object for the reply action
         val replyAction = NotificationCompat.Action.Builder(
             R.drawable.reply,
             "Reply",
             replyPendingIntent
         ).addRemoteInput(remoteInput).build()
-
         val sharedCustomPref = SharedPrefs(applicationContext)
         sharedCustomPref.setIntValue("values", notificationID)
 
@@ -101,7 +90,6 @@ class FirebaseService: FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .addAction(replyAction)
             .build()
-
         notificationManager.notify(notificationID, notification)
     }
     private fun createNotificationChannel(notificationManager: NotificationManager) {

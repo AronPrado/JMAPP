@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Estudiante
@@ -42,6 +43,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
     private lateinit var btnRegistrar: Button
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore : FirebaseFirestore
     private var estudiantes : Collection<Estudiante> = mutableListOf()
 
     private val authFunctions = AuthFunctions()
@@ -54,6 +56,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register_apoderado)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         nombresEditText = findViewById(R.id.edtNombres)
         apellidosEditText = findViewById(R.id.edtApellidos)
@@ -99,18 +102,28 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<Int>, response: Response<Int>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
+                            val id = response.body()
                             msg = response.body().toString()
                             auth.createUserWithEmailAndPassword(correo, telefono)
                                 .addOnCompleteListener { task: Task<AuthResult?> ->
                                     if (task.isSuccessful) {
-                                        Toast.makeText(this@RegisterApoderadoActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
+                                        // GUARDAR USUARIO EN FireStpre
+                                        val user = auth.currentUser!!
+                                        val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "APOD",
+                                            "tipoid" to id.toString(), "token" to "" )
+                                        firestore.collection("Users").document(user.uid).set(dataHashMap)
                                         authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
+                                        val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                        startActivity(intent)
                                     } else {
                                         Toast.makeText(this@RegisterApoderadoActivity, "Error al Agregar en Firebase.", Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                        } else{ Log.e("AGREGAR APODERADO", msg) }
-                        Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        } else{
+                            Log.e("AGREGAR APODERADO", msg)
+                            Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        }
                     }
                     override fun onFailure(call: Call<Int>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"

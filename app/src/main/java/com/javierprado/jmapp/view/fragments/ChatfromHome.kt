@@ -30,7 +30,6 @@ class ChatfromHome : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatfrom_home, container, false)
-//        val view = inflater.inflate(R.layout.fragment_editar_horario, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +46,6 @@ class ChatfromHome : Fragment() {
 
 //        Glide.with(view.getContext()).load(args.recentchats.friendsimage!!).placeholder(R.drawable.person).dontAnimate().into(circleImageView);
         textViewName.setText(args.recentchats.info)
-        //textViewStatus.setText(args.users.status)
 
         binding.chatBackBtn.setOnClickListener {
             view.findNavController().navigate(R.id.action_chatFragment_to_seleccionarUsuarioFragment4)

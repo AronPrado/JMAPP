@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.mvvm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.javierprado.jmapp.data.util.AnotherUtil
@@ -20,6 +21,7 @@ class UsersRepo {
             snapshot?.documents?.forEach { document ->
                 val user = document.toObject(Users::class.java)
                 if (user!!.userid != AnotherUtil.getUidLoggedIn() && emails.contains(user.correo)) {
+                    Log.e("LLEGA", user.correo!!)
                     user.let {
                         usersList.add(it)
                     }

@@ -7,14 +7,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.random.Random
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.SharedPrefs
 
 private const val CHANNEL_ID = "my_channel"
 class NotificationReply: BroadcastReceiver() {
-    val firestor = FirebaseFirestore.getInstance()
+    val firestore = FirebaseFirestore.getInstance()
     override fun onReceive(context: Context?, intent: Intent?) {
 
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -36,7 +35,7 @@ class NotificationReply: BroadcastReceiver() {
                 "receiver" to friendid!!,
                 "message" to repliedText!!)
 
-            firestor.collection("Messages").document(chatroomid!!)
+            firestore.collection("Messages").document(chatroomid!!)
                 .collection("chats").document(AnotherUtil.getTime()).set(hashMap).addOnCompleteListener {
 
                     if (it.isSuccessful){
@@ -54,13 +53,13 @@ class NotificationReply: BroadcastReceiver() {
                 "person" to "you",
             )
 
-            firestor.collection("Conversation${AnotherUtil.getUidLoggedIn()}").document(friendid)
+            firestore.collection("Conversation${AnotherUtil.getUidLoggedIn()}").document(friendid)
                 .set(setHashap)
 
             val updateHashMap =
                 hashMapOf<String, Any>("message" to repliedText, "time" to AnotherUtil.getTime(), "person" to friendname!!)
 
-            firestor.collection("Conversation${friendid}").document(AnotherUtil.getUidLoggedIn())
+            firestore.collection("Conversation${friendid}").document(AnotherUtil.getUidLoggedIn())
                 .update(updateHashMap)
 
             val sharedCustomPref = SharedPrefs(context)

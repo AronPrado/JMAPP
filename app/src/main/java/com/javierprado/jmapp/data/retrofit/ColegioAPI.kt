@@ -86,7 +86,7 @@ interface ColegioAPI {
     @POST("/api/tareas") // AGREGAR TAREA
     fun agregarTareas(@Body tarea : Tarea) : Call<Void>
     @PUT("/api/asistencias") // OBTENER ESTUDIANTES
-    fun editarAsistencias(@Body estudiantes: List<Asistencia>): Call<List<Asistencia>>
+    fun editarAsistencias(@Body estudiantes: List<Asistencia>): Call<List<String>>
     @GET("/api/docentes") // OBTENER DOCENTES
     fun obtenerDocentes(@Query("curso") cursoId : Int?, @Query("estudiante") estudianteId : Int?, ): Call<Collection<Docente>>
 

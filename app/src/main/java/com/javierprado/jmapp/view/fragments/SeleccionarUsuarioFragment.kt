@@ -87,11 +87,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
 //            })
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-//        val firebaseAuth = FirebaseAuth.getInstance()
-//        logoutimage.setOnClickListener {
-//            firebaseAuth.signOut()
-//            startActivity(Intent(requireContext(), SignInActivity::class.java))
-//        }
 
         rvUsers = view.findViewById(R.id.rvUsers)
         rvSeleccionarUsuarios = view.findViewById(R.id.rvSeleccionarUsuarios)
@@ -136,6 +131,7 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                                     rvUsers.adapter = adapter
                                     rvSeleccionarUsuarios.visibility=View.GONE
                                     rvUsers.visibility=View.VISIBLE
+
                                 }else {
                                     Toast.makeText(activity, "No hay docentes.", Toast.LENGTH_SHORT).show()
                                 }
@@ -151,7 +147,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                 } )
             }
         })
-        //PRUEBAAAAAAAAAAAAAAAAAAAAAAAAAA
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener{ value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject(Users::class.java)
@@ -197,17 +192,17 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                 }
             }
         }
+        adapter.setOnClickListener(this)
+        viewModel.getRecentUsers().observe(viewLifecycleOwner, Observer {
+            recentadapter.setList(it)
+            rvRecentChats.adapter = recentadapter
+        })
+        recentadapter.setOnChatClickListener(this)
 
 //        circleImageView.setOnClickListener {
 //            view.findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
 //        }
-        adapter.setOnClickListener(this)
-//        viewModel.getRecentUsers().observe(viewLifecycleOwner, Observer {
-//            recentadapter.setList(it)
-//            rvRecentChats.adapter = recentadapter
-//        })
 
-//        recentadapter.setOnChatClickListener(this)
     }
     @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {

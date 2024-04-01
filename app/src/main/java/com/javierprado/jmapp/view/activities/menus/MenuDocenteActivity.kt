@@ -105,10 +105,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         val navigationView: NavigationView = findViewById(R.id.nav_view_docente)
         navigationView.setNavigationItemSelectedListener(this)
-
     }
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var clase: AppCompatActivity? = null
         val intent: Intent

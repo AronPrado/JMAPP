@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,11 @@ import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
+import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import com.javierprado.jmapp.view.adapters.HorarioAdapter
 import com.javierprado.jmapp.view.clicks.HorarioClick
 import retrofit2.Call
@@ -255,5 +260,11 @@ class HorarioFragment : Fragment() {
                     putSerializable(ESTUDIANTES, estudiantes as Serializable)
                 }
             }
+    }
+    override fun onDestroy() {
+        val intent = ControlHorarioActivity().getActivityRol(context, paraAdmin)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        super.onDestroy()
     }
 }

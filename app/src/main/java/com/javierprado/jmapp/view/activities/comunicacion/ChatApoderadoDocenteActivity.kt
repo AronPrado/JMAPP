@@ -41,8 +41,7 @@ class ChatApoderadoDocenteActivity : AppCompatActivity() {
             FirebaseMessaging.getInstance().token.addOnSuccessListener { gettoken->
                 token = gettoken
                 val hasHamp = hashMapOf<String, Any>("token" to token)
-                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp).addOnSuccessListener {
-                }
+                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp)
             }
         }.addOnFailureListener {}
     }
@@ -58,17 +57,17 @@ class ChatApoderadoDocenteActivity : AppCompatActivity() {
             firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("estado", "En linea")
         }
     }
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            super.onBackPressed()
-        } else {
-            // If we are on the Home fragment, exit the app
-            if (navController.currentDestination?.id == R.id.seleccionarUsuarioFragment) {
-                moveTaskToBack(true)
-            } else {
-                super.onBackPressed()
-            }
-        }
-    }
+//    @Deprecated("Deprecated in Java")
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 0) {
+//            super.onBackPressed()
+//        } else {
+//            // If we are on the Home fragment, exit the app
+//            if (navController.currentDestination?.id == R.id.seleccionarUsuarioFragment) {
+//                moveTaskToBack(true)
+//            } else {
+//                super.onBackPressed()
+//            }
+//        }
+//    }
 }

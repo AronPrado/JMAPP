@@ -143,17 +143,20 @@ class RegisterDocenteActivity : AppCompatActivity() {
                                     val user = auth.currentUser!!
                                     val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "DOC",
                                         "tipoid" to docenteRegistrado!!.docenteId.toString(), "token" to "" )
-                                    firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
-                                        task -> Log.e("ERROR FSTORE", task.exception.toString()) }
+                                    firestore.collection("Users").document(user.uid).set(dataHashMap)
 
                                     authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
-                                    Toast.makeText(this@RegisterDocenteActivity, "Correo enviado correctamente", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this@RegisterDocenteActivity, MenuAdministradorActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                    startActivity(intent)
                                 } else {
                                     Toast.makeText(this@RegisterDocenteActivity, "Error al Agregar al docente en Firebase.", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                    } else{ Log.e("AGREGAR DOCENTE", msg) }
-                    Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
+                    } else{
+                        Log.e("AGREGAR DOCENTE", msg)
+                        Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 override fun onFailure(call: Call<Docente>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"

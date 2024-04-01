@@ -108,10 +108,10 @@ class EstudiantesConFuncionesFragment : Fragment() {
             }
     }
 
-    override fun onDestroy() {
-        val intent = Intent(context, MenuDocenteActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
-        super.onDestroy()
-    }
+//    override fun onDestroy() {
+//        val intent = Intent(context, MenuDocenteActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//        startActivity(intent)
+//        super.onDestroy()
+//    }
 }

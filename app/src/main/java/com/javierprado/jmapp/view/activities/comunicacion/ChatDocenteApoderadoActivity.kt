@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.view.activities.comunicacion
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.modal.Users
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 
 @Suppress("DEPRECATION")
 class ChatDocenteApoderadoActivity : AppCompatActivity() {
@@ -39,8 +42,7 @@ class ChatDocenteApoderadoActivity : AppCompatActivity() {
             FirebaseMessaging.getInstance().token.addOnSuccessListener { gettoken->
                 token = gettoken
                 val hasHamp = hashMapOf<String, Any>("token" to token)
-                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp).addOnSuccessListener {
-                }
+                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp)
             }
         }.addOnFailureListener {}
     }
@@ -56,17 +58,20 @@ class ChatDocenteApoderadoActivity : AppCompatActivity() {
             firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("estado", "En linea")
         }
     }
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            super.onBackPressed()
-        } else {
-            // If we are on the Home fragment, exit the app
-            if (navController.currentDestination?.id == R.id.seleccionarUsuarioFragment) {
-                moveTaskToBack(true)
-            } else {
-                super.onBackPressed()
-            }
-        }
-    }
+//    @Deprecated("Deprecated in Java")
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 0) {
+//            val intent = Intent(this@ChatDocenteApoderadoActivity, MenuDocenteActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//            startActivity(intent)
+//            super.onBackPressed()
+//        } else {
+//            // If we are on the Home fragment, exit the app
+//            if (navController.currentDestination?.id == R.id.seleccionarUsuarioFragment) {
+//                moveTaskToBack(true)
+//            } else {
+//                super.onBackPressed()
+//            }
+//        }
+//    }
 }

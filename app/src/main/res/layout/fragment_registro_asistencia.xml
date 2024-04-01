@@ -57,7 +57,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="0dp"
         android:backgroundTint="@color/md_theme_light_primary"
-        android:text="Registrar asistencias"
+        android:text="Guardar cambios"
         android:textSize="24sp"
         app:layout_constrainedHeight="true" />
 </RelativeLayout>
