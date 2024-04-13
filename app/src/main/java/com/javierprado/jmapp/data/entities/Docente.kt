@@ -6,31 +6,31 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 class Docente : Serializable {
-    var docenteId: Int? = null
-    var nombres: String? = null
-    var apellidos: String? = null
-    var fechaNacimiento: String? = null
+    var id: String = ""
+    var nombres: String = ""
+    var apellidos: String = ""
+    var genero: String = ""
 
-    var genero: String? = null
-    var correo: String? = null
-    var telefono: Int? = null
-    var direccion: String? = null
+    var correo: String = ""
+    var telefono: Int = 0
+    var direccion: String = ""
 
-    var fechaRegistro: String? = null
-    var curso: Curso? = null
-    var usuario: Usuario? = null
+    var fechaNacimiento: String = ""
+    var fechaRegistro: String = ""
+    var cursoId: String = ""
+    var usuarioId: String = ""
+    var reuniones: List<String> = ArrayList()
 
-    //    var mensajes : Collection<Mensaje>? = null
     constructor()
     constructor(
-        nombres: String?,
-        apellidos: String?,
-        fechaNacimiento: String?,
-        genero: String?,
-        correo: String?,
-        telefono: Int?,
-        direccion: String?,
-        curso: Curso?
+        nombres: String,
+        apellidos: String,
+        genero: String,
+        correo: String,
+        telefono: Int,
+        direccion: String,
+        fechaNacimiento: String,
+        cursoId: String
     ) {
         this.nombres = nombres
         this.apellidos = apellidos
@@ -39,6 +39,6 @@ class Docente : Serializable {
         this.correo = correo
         this.telefono = telefono
         this.direccion = direccion
-        this.curso = curso
+        this.cursoId = cursoId
     }
 }

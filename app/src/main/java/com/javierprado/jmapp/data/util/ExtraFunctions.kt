@@ -17,11 +17,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.model.NewsAdapter
+import com.javierprado.jmapp.view.adapters.NoticiaAdapter
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.view.fragments.AsignarTareasFragment
 import com.javierprado.jmapp.view.fragments.EstudiantesConFuncionesFragment
+import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 import com.javierprado.jmapp.view.fragments.RegistroAsistenciaFragment
 import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
 import retrofit2.Call
@@ -33,25 +34,24 @@ class ExtraFunctions {
     val canalNombre = "dev.xcheko51x"
     val canalId = "canalId"
     val notificacionId = 0
-    fun listarNoticias(api: ColegioAPI, adapter: NewsAdapter, context: Context){
+    fun listarNoticias(api: ColegioAPI, adapter: NoticiaAdapter, context: Context){
         var noticias : List<Noticia>
         var msg : String
 
         val progressBarListar: CircularProgressIndicator = (context as AppCompatActivity).findViewById(R.id.pb_listar_noticias)
 
         progressBarListar.visibility= View.VISIBLE
-        api.obtenerNoticias()?.enqueue(object : Callback<List<Noticia>> {
+        api.listarNoticias().enqueue(object : Callback<List<Noticia>> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<List<Noticia>>, response: Response<List<Noticia>>) {
+                msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
                     noticias = response.body()!!
                     adapter.setNoticias(noticias)
                     adapter.notifyDataSetChanged()
                     progressBarListar.visibility= View.GONE
-                    if(noticias.isEmpty()){
-                        msg = "No hay noticias."
-                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    }
+                }else{
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<List<Noticia>>, t: Throwable) {
@@ -63,15 +63,18 @@ class ExtraFunctions {
         })
     }
 
-    fun obtenerFragment(nav: String, token: String, lista: Serializable ): Fragment{
-        var fragment = Fragment()
+    fun obtenerFragment(nav: String, token: String, lista: Serializable, usuarioId: String, extraId: String  ): Fragment{
+        var fragment = Fragment()//usuario=doc,apod - extra = curso - aula
         when(nav){
-            NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav) }
+            //DOCENTE
+            NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav, usuarioId, extraId) }
             NavigationWindows.FUNCIONES.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista) }
             NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista) }
 //            NavigationWindows.NOTAS.name-> { fragment = IngresarCalificacionesFragment.newInstance(token, estudianteId) }
             NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista) }
-
+            //APODERADO
+            NavigationWindows.REUNIONES.name-> { fragment = ProgramarReunionFragment.newInstance(token, lista, usuarioId, extraId) }
+//            NavigationWindows.JUSTIFICACIONES.name-> { fragment = ProgramarReunionFragment.newInstance(token, lista, usuarioId, extraId) }
         }
         return fragment
     }

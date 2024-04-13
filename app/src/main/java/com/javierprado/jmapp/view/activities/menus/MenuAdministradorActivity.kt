@@ -3,6 +3,7 @@ package com.javierprado.jmapp.view.activities.menus
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.model.NewsAdapter
+import com.javierprado.jmapp.view.adapters.NoticiaAdapter
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
@@ -38,8 +39,8 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
     private lateinit var auth: FirebaseAuth
     private lateinit var api : ColegioAPI
 
-    val TOKEN = "token"
-    var tokenAdmin = ""
+    val TOKEN = "token"; val USUARIOID = "usuarioid"
+    var tokenAdmin = ""; var adminId = ""
 
     private var extraFuns : ExtraFunctions = ExtraFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +52,8 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
         if (bundle != null) {
-            val token = bundle.getString(TOKEN, "")
-            tokenAdmin=token
+            tokenAdmin=bundle.getString(TOKEN, "")
+            adminId=bundle.getString(USUARIOID, "")
             retro.setBearerToken(tokenAdmin)
         }
         api = retro.getApi()
@@ -64,6 +65,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
         btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }
 
         auth = FirebaseAuth.getInstance()
+
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
@@ -86,29 +88,34 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
             R.id.nav_item_2 -> {
                 val intent = Intent(this, RegisterApoderadoActivity::class.java)
+                intent.putExtra(USUARIOID, adminId)
                 intent.putExtra(RegisterApoderadoActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
             }
             R.id.nav_item_3 -> {
                 val intent = Intent(this, RegisterDocenteActivity::class.java)
+                intent.putExtra(USUARIOID, adminId)
                 intent.putExtra(RegisterDocenteActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
             }
             R.id.nav_item_4 -> {
                 Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, NotiEventosEsco::class.java)
+                intent.putExtra(USUARIOID, adminId)
                 startActivity(intent)
             }
             R.id.nav_item_5 -> {
                 Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ControlHorarioActivity::class.java)
-                intent.putExtra(ControlHorarioActivity().TOKEN, tokenAdmin)
+                intent.putExtra(MenuAdministradorActivity().USUARIOID, adminId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)
                 intent.putExtra(ControlHorarioActivity().ROLE, RoleType.ADMIN.name)
                 startActivity(intent)
             }
             R.id.nav_item_6 -> {
                 val intent = Intent(this, ControlNoticiaActivity::class.java)
-                intent.putExtra(ControlNoticiaActivity().TOKEN, tokenAdmin)
+                intent.putExtra(USUARIOID, adminId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
                 Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
             }
@@ -145,7 +152,8 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@MenuAdministradorActivity, ArrayList(), api, token, false)
+        val adapter = NoticiaAdapter(this@MenuAdministradorActivity, ArrayList(), api, token, false)
+        adapter.setAdminId(adminId)
         extraFuns.listarNoticias(api, adapter, this@MenuAdministradorActivity)
         recyclerView.adapter = adapter
     }

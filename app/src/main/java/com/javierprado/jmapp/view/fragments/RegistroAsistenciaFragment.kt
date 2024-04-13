@@ -11,28 +11,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Asistencia
-import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.AnotherUtil
-import com.javierprado.jmapp.modal.Users
-import com.javierprado.jmapp.mvvm.ChatAppViewModel
-import com.javierprado.jmapp.mvvm.UsersRepo
 import com.javierprado.jmapp.notificaciones.NotificacionesJMA
-import com.javierprado.jmapp.notificaciones.entities.NotificationData
-import com.javierprado.jmapp.notificaciones.entities.PushNotification
-import com.javierprado.jmapp.notificaciones.entities.Token
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import com.javierprado.jmapp.view.adapters.AsistenciaAdapter
 import com.javierprado.jmapp.view.clicks.AsistenciaClick
@@ -50,9 +35,8 @@ class RegistroAsistenciaFragment : Fragment() {
     private lateinit var progressC: CircularProgressIndicator
 
     private lateinit var adapter : AsistenciaAdapter
-    private var estudiantes: Collection<Estudiante> = ArrayList()
+    private lateinit var estudiantes: List<String>
     private var asistencias: MutableList<Asistencia> = ArrayList()
-    private lateinit var msg : String
 
     val ESTUDIANTES = "estudiantes"
     val TOKEN = "token"
@@ -60,7 +44,7 @@ class RegistroAsistenciaFragment : Fragment() {
     private val retro = RetrofitHelper.getInstanceStatic()
     private val notiFuncs = NotificacionesJMA()
     private lateinit var activity: AppCompatActivity
-
+    private lateinit var msg : String
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as ControlSeleccionActivity
@@ -70,7 +54,7 @@ class RegistroAsistenciaFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             retro.setBearerToken(it.getString(TOKEN, ""))
-            estudiantes = it.getSerializable(ESTUDIANTES) as Serializable as Collection<Estudiante>
+            estudiantes = it.getStringArrayList(ESTUDIANTES)?.toList() ?: ArrayList()
         }
     }
 
@@ -101,23 +85,17 @@ class RegistroAsistenciaFragment : Fragment() {
         recycler.adapter = adapter
 
         progressC.visibility = View.VISIBLE
-
-        api.obtenerAsistencias(fecha, estudiantes).enqueue(object : Callback<Collection<Asistencia>> {
-            override fun onResponse(call: Call<Collection<Asistencia>>, response: Response<Collection<Asistencia>>) {
+//        estudiantes, fecha, cursoId, docenteId
+        api.listarAsistencias(estudiantes, fecha, "", "" ).enqueue(object : Callback<List<Asistencia>> {
+            override fun onResponse(call: Call<List<Asistencia>>, response: Response<List<Asistencia>>) {
+                msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
-                    msg = "Las asistencias no están para todos los estudiantes."
                     asistencias = response.body()!!.toList() as MutableList<Asistencia>
-                    if(estudiantes.size == asistencias.size){
-                        msg = "Asistencias obtenidas correctamente"
-                        adapter.setAsistencias(asistencias)
-                        progressC.visibility = View.GONE
-                    }else{
-                        Log.e("TOTALES", "Estudiantes: ${estudiantes.size} - Asistencias: ${asistencias.size}")
-                        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
+                    adapter.setAsistencias(asistencias)
+                    progressC.visibility = View.GONE
+                }else{ Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show() }
             }
-            override fun onFailure(call: Call<Collection<Asistencia>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Asistencia>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
                 Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                 Log.e("OBTENER ASISTENCIAS", t.message.toString())

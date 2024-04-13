@@ -13,7 +13,7 @@ import java.io.IOException
 class RetrofitHelper private constructor() {
 //    private val BASE_URL = "https://colegio-api-jma-f0c7750337fe.herokuapp.com/"
 //    private val BASE_URL = "https://colegio-api.onrender.com/"
-    private val BASE_URL = "http://192.168.100.2:8090/"
+    private val BASE_URL = "http://api-firestore-colegio.sa-east-1.elasticbeanstalk.com/"
     private var api: ColegioAPI
     private var bearerToken = ""
     private val client = OkHttpClient.Builder()
@@ -60,7 +60,7 @@ class RetrofitHelper private constructor() {
 
             val requestBuilder: Request.Builder = originalRequest.newBuilder()
             if (bearerToken.isNotEmpty()) {
-                requestBuilder.header("Authorization", "Bearer $bearerToken")
+                requestBuilder.header("Authorization", bearerToken)
             }
 
             val newRequest: Request = requestBuilder.url(url).build()

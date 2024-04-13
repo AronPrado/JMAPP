@@ -3,21 +3,15 @@ package com.javierprado.jmapp.data.entities
 import java.io.Serializable
 
 
-class Aula(): Serializable {
-    var estudiantes: Collection<Estudiante> = ArrayList()
-    val grado: String? = null
-    val seccion: String? = null
+class Aula: Serializable {
+    var id: String = ""
+    val grado: String = ""
+    val nivelEducativo: String = ""
+    val seccion: String = ""
+    var estudiantes: List<String> = ArrayList()
+    var apoderados: List<String> = ArrayList()
+    var docentes: List<String> = ArrayList()
     val emailsApoderados: List<String> = ArrayList()
 
-    fun totalEstudiantes(): Int {
-        return estudiantes.size
-    }
-    fun obtenerPadres(estudianteId: Int): List<Apoderado>{
-        return estudiantes.find { it.estudianteId == estudianteId }?.itemsApoderado!!.toList()
-    }
-    fun obtenerEmailsPadresAula(): List<String>{
-        val apoderados: MutableList<Apoderado>  = ArrayList()
-        estudiantes.forEach { e->if(obtenerPadres(e.estudianteId).isNotEmpty()) apoderados.addAll(obtenerPadres(e.estudianteId)) }
-        return apoderados.map { it.correo!! }
-    }
+    fun totalEstudiantes(): Int { return estudiantes.size }
 }

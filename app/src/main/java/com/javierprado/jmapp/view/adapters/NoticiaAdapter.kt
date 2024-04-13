@@ -1,4 +1,4 @@
-package com.javierprado.jmapp.model
+package com.javierprado.jmapp.view.adapters
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -21,11 +21,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewsAdapter(private val context: Context, private var noticias: List<Noticia>, private val api: ColegioAPI, private val token: String,
-    private val forDA: Boolean) :
-    RecyclerView.Adapter<NewsAdapter.NoticiaViewHolder>() {
+class NoticiaAdapter(private val context: Context, private var noticias: List<Noticia>, private val api: ColegioAPI, private val token: String,
+                     private val forDA: Boolean) :
+    RecyclerView.Adapter<NoticiaAdapter.NoticiaViewHolder>() {
+        private lateinit var adminId : String
     fun setNoticias(noticias : List<Noticia> ){
         this.noticias = noticias
+    }
+    fun setAdminId(adminId : String ){
+        this.adminId = adminId
     }
     override fun getItemCount(): Int {
         return noticias.size
@@ -73,10 +77,11 @@ class NewsAdapter(private val context: Context, private var noticias: List<Notic
                     .setNegativeButton("No") { dialog, _ ->
                         dialog.dismiss()
                     }
-                    .setPositiveButton("Sí") { dialog, _ ->
+                    .setPositiveButton("Sí") { d, _ ->
                         val intent = Intent(context, ControlNoticiaActivity::class.java)
-                        intent.putExtra(ControlNoticiaActivity().TOKEN, token)
-                        intent.putExtra(ControlNoticiaActivity().NOTID, noticiaActual.noticiaId)
+                        intent.putExtra(MenuAdministradorActivity().TOKEN, token)
+                        intent.putExtra(MenuAdministradorActivity().USUARIOID, adminId)
+                        intent.putExtra(ControlNoticiaActivity().NOTID, noticiaActual.id)
                         context.startActivity(intent)
                     }
                 val alert = builder.create()
@@ -90,15 +95,18 @@ class NewsAdapter(private val context: Context, private var noticias: List<Notic
                         dialog.dismiss()
                     }
                     .setPositiveButton("Sí") { dialog, _ ->
-                        var msg = ""
-                        noticiaActual.noticiaId?.let { it1 ->
-                            api.eliminarNoticiaPorId(it1).enqueue(object : Callback<Void> {
+                        var msg: String
+                        noticiaActual.id.let { it1 ->
+                            api.eliminarNoticia(it1).enqueue(object : Callback<Void> {
                                 @SuppressLint("NotifyDataSetChanged")
                                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                     msg = response.headers()["message"] ?: ""
-                                    val principal = context as MenuAdministradorActivity
-                                    principal.actualizarNoticias(token)
-                                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                    if(response.isSuccessful){
+                                        val principal = context as MenuAdministradorActivity
+                                        principal.actualizarNoticias(token)
+                                    }else{
+                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                                 override fun onFailure(call: Call<Void>, t: Throwable) {
                                     msg = "Error en la API"

@@ -1,11 +1,11 @@
 package com.javierprado.jmapp.data.entities
 
 import java.io.Serializable
-import java.time.LocalDate
-class Asistencia(): Serializable {
-    var asistenciaId: Int? = null
+class Asistencia: Serializable {
+    var id: String = ""
     var estado: String = ""
     var fecha: String = ""
-    var justificacion: String = ""
-    var itemsEstudiante: Set<Estudiante>  = HashSet()
+    var estudianteId: String = ""
+    var cursoId: String = ""
+    var docenteId: String = ""
 }

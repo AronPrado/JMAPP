@@ -27,11 +27,11 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
         init { this.binding = binding }
         @SuppressLint("SetTextI18n")
         fun bind(asistencia: Asistencia, positionA: Int, asistencias: MutableList<Asistencia>) {
-            val estudiante = asistencia.itemsEstudiante.toList()[0]
-            binding.txtAlumno.text =  estudiante.nombres + " " + estudiante.apellidos
+            val estudiante = asistencia.estudianteId.split("-")[0]
+            binding.txtAlumno.text =  estudiante
             val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(asistencia.estado)
-            binding.sAsistencia.setSelection(indice)
 
+            binding.sAsistencia.setSelection(indice)
             binding.sAsistencia.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -1,10 +1,9 @@
-import androidx.room.Entity
-import com.javierprado.jmapp.data.entities.Curso
-import com.javierprado.jmapp.data.entities.Estudiante
+package com.javierprado.jmapp.data.entities
+
 import java.io.Serializable
 
 class Calificacion : Serializable {
-    var calificacionId: Int = 0
+    var id: String = ""
     var calificacion1: Int = 0
     var calificacion2: Int = 0
     var calificacion3: Int = 0
@@ -12,6 +11,6 @@ class Calificacion : Serializable {
 
     var calificacionFinal: Double = 0.0
 
-    lateinit var curso: Curso
-    lateinit var estudiante: Estudiante
+    var cursoId: String = ""
+    var estudianteId: String = ""
 }

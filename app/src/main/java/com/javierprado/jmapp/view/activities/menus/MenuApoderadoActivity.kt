@@ -17,14 +17,16 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.model.NewsAdapter
-import com.javierprado.jmapp.data.entities.Usuario
+import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.view.adapters.NoticiaAdapter
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.ExtraFunctions
+import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
+import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.editar.ActualizarInfoApoderadoActivity
 import com.javierprado.jmapp.view.login.OptionLogin
@@ -49,8 +51,9 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     private var extraFuns : ExtraFunctions = ExtraFunctions()
 
-    val TOKEN = "token"
-    var tokenApod = ""
+    val HIJOS = "hijos"
+    var tokenApod = ""; var apoderadoId = "" ; var hijos: List<Estudiante> = ArrayList()
+    private lateinit var msg : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_apoderado)
@@ -63,15 +66,15 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
         if (bundle != null) {
-            val token = bundle.getString(TOKEN, "")
-            tokenApod=token
-            retro.setBearerToken(token)
+            apoderadoId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
+            tokenApod = bundle.getString(MenuAdministradorActivity().TOKEN, "")
+            retro.setBearerToken(tokenApod)
         }
         api = retro.getApi()
         //BORRAR
 //        val user = auth.currentUser
 //        if(user!=null){
-//            val dataHashMap = hashMapOf("userid" to user.uid, "info" to "Benjamín Carlos Apaza Enriquez", "correo" to "bnhcks22@gmail.com", "estado" to "default", "tipo" to "APOD", "tipoid" to "6", "token" to "")
+//            val dataHashMap = hashMapOf("userid" to user.uid, "info" to "Marcos Juan Castro Granada", "correo" to "macebv22@gmail.com", "estado" to "Desconectado", "tipo" to "APOD", "tipoid" to "2", "token" to "")
 //            firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
 //                    task -> Log.e("ERROR FSTORE", task.exception.toString()) }
 //        }
@@ -80,6 +83,22 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         actualizarNoticias(retro.getBearerToken())
+        api.listarEstudiantes(apoderadoId, ArrayList()).enqueue(object : Callback<List<Estudiante>> {
+            override fun onResponse(call: Call<List<Estudiante>>, response: Response<List<Estudiante>>) {
+                msg = response.headers()["message"] ?: ""
+                if (response.isSuccessful) {
+                    hijos = response.body()!!
+                } else{
+                    Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("L ESTUDIANTES", "")
+                }
+            }
+            override fun onFailure(call: Call<List<Estudiante>>, t: Throwable) {
+                msg = "Error en la API: ${t.message}"
+                Log.e("ESTUDIANTES", t.message.toString())
+                Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+            }
+        } )
         btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }
 
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)
@@ -104,33 +123,23 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             R.id.nav_item_3 -> Toast.makeText(this, "Recursos", Toast.LENGTH_SHORT).show()
             R.id.nav_item_4 -> {
                 val intent = Intent(this, ControlHorarioActivity::class.java)
-                intent.putExtra(ControlHorarioActivity().TOKEN, tokenApod)
-                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.APOD)
-                var msg = ""
-                api.obtenerSesion(RoleType.APOD.name).enqueue(object : Callback<Usuario> {
-                    override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
-                        msg = "Usuario no encontrado."
-                        if (response.isSuccessful) {
-                            val usuario = response.body()!!
-                            val apoderado = usuario.apoderado
-                            val estudiantes = apoderado.itemsEstudiante!!.toList()
-                            intent.putExtra(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
-                            startActivity(intent)
-                        } else{
-                            Log.e("NR SESSION", msg)
-                            Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                        msg = "Error en la API: ${t.message}"
-                        Toast.makeText(this@MenuApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
-                        Log.e("BUSCAR SESSION", t.message.toString())
-                    }
-                } )
+                intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
+                intent.putExtra(ControlHorarioActivity().ESTUDIANTES, hijos as Serializable)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent) ; finish()
                 Toast.makeText(this@MenuApoderadoActivity, "Horario", Toast.LENGTH_SHORT).show()
 
             }
-            R.id.nav_item_5 -> Toast.makeText(this, "Eventos", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_5 -> {
+                val intent = Intent(this, ControlEstudianteActivity::class.java)
+                intent.putExtra(ControlEstudianteActivity().DIRECT, NavigationWindows.REUNIONES.name)
+                intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
+                intent.putExtra(HIJOS, hijos as Serializable)
+                startActivity(intent)
+                Toast.makeText(this, "Reuniones", Toast.LENGTH_SHORT).show()
+            }
             R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
             R.id.nav_item_7 -> {
                 Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
@@ -145,7 +154,6 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 startActivity(intent)
             }
         }
-
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
@@ -159,6 +167,8 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         return when (item.itemId) {
             R.id.action_perfil -> {
                 val intent = Intent(this, ActualizarInfoApoderadoActivity::class.java)
+                intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 true
@@ -171,7 +181,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NewsAdapter(this@MenuApoderadoActivity, ArrayList(), api, token, true)
+        val adapter = NoticiaAdapter(this@MenuApoderadoActivity, ArrayList(), api, token, true)
         extraFuns.listarNoticias(api, adapter, this@MenuApoderadoActivity)
         recyclerView.adapter = adapter
     }

@@ -1,27 +1,23 @@
 package com.javierprado.jmapp.data.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.io.Serializable
-import java.lang.reflect.Constructor
 
 class Usuario : Serializable {
-    var usuarioId: Int? = null
-    var email: String = ""
+    var id: String = ""
+    var correo: String = ""
     var contrasena: String = ""
     var telefono: Int = 0
-    var nombres: String? = null
-    var apellidos: String? = null
-    var estado: String? = null
+    var nombres: String = ""
+    var apellidos: String = ""
+    var estado: String = ""
+    var usuarioId: String = ""
+    var roles: List<String> = ArrayList()
+    var token: String = ""
 
-    lateinit var apoderado: Apoderado
-    lateinit var docente: Docente
-    lateinit var administrador: Administrador
-    constructor() {}
-
-    constructor(email: String, contrasena: String) : this() {
-        this.email = email
+    constructor()
+    constructor(correo: String, contrasena: String, token: String) : this() {
+        this.correo = correo
         this.contrasena = contrasena
+        this.token = token
     }
 }

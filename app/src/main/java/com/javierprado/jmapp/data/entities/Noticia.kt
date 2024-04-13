@@ -3,17 +3,17 @@ package com.javierprado.jmapp.data.entities
 import java.io.Serializable
 
 class Noticia(): Serializable {
-    var noticiaId: Int? = null
-    var titulo: String? = null
-    var contenido: String? = null
-    var fechaPublicacion: String? = null
-    var ubiImagen: String? = null
+    var id: String = ""
+    var titulo: String = ""
+    var contenido: String = ""
+    var fechaPublicacion: String = ""
+    var ubiImagen: String = ""
+    var administradorId: String = ""
 
-    lateinit var administrador: Administrador
-    constructor(titulo: String, contenido: String, ubiImagen: String, administrador: Administrador) :this(){
+    constructor(titulo: String, contenido: String, ubiImagen: String, administradorId: String) :this(){
         this.titulo=titulo
         this.contenido=contenido
         this.ubiImagen=ubiImagen
-        this.administrador=administrador
+        this.administradorId=administradorId
     }
 }

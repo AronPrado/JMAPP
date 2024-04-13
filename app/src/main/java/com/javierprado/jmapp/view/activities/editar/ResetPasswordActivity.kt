@@ -53,7 +53,7 @@ class ResetPasswordActivity : AppCompatActivity() {
             emailEditText.error = "Correo inválido"
             return
         }
-        api.existeCorreo(email)?.enqueue(object : Callback<Void> {
+        api.existeCorreo(email).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 msg = "EL CORREO NO EXISTE"
                 if (response.isSuccessful) {
@@ -62,7 +62,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                             if (task.isSuccessful ) {
                                 sendEmail(email)
                                 msg = "Correo para restablecer contraseña enviado."
-                                val usuario = Usuario(email, newPass)
+                                val usuario = Usuario(email, newPass, "")
                                 api.actualizarContrasena(usuario)?.enqueue(object : Callback<Void> {
                                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                     }

@@ -30,7 +30,10 @@ class HorarioAdapter() : RecyclerView.Adapter<HorarioAdapter.VHHorario>() {
         this.api = api
         this.horarioClick = horarioClick
     }
-    fun setHorarios(horarios : List<Horario> ){ this.horarios = horarios }
+    fun setHorarios(horarios : List<Horario> ){
+        this.horarios = horarios
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int = horarios.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHHorario {
@@ -41,6 +44,8 @@ class HorarioAdapter() : RecyclerView.Adapter<HorarioAdapter.VHHorario>() {
     override fun onBindViewHolder(holder: VHHorario, position: Int) {
         val horario = horarios[position]
 
+        horario.cursoId = horario.cursoId.split("-")[0] // NOMBRES
+        horario.docenteId = horario.docenteId.split("-")[0] // NOMBRES
         holder.bind(horario)
         holder.itemView.setOnClickListener { horarioClick.onHorarioClicker(horario) }
     }
@@ -49,8 +54,9 @@ class HorarioAdapter() : RecyclerView.Adapter<HorarioAdapter.VHHorario>() {
         private val binding: ItemDiaHorarioBinding
         init { this.binding = binding }
         fun bind(horario: Horario) {
-            binding.cursoHorario.text = horario.curso.nombre!!
-            val horas = horario.horaInicio?.subSequence(0, 5).toString() + "\n-\n" + horario.horaFin?.subSequence(0, 5).toString()
+            binding.cursoHorario.text = horario.cursoId
+            binding.docenteHorario.text = horario.docenteId
+            val horas = horario.horaInicio + "\n-\n" + horario.horaFin
             binding.horasHorario.text = horas
         }
     }

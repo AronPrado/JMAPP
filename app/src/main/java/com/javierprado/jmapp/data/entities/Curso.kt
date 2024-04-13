@@ -2,11 +2,11 @@ package com.javierprado.jmapp.data.entities
 
 import java.io.Serializable
 
-class Curso() : Serializable {
-    var cursoId: Int = 0
-    var nombre: String? = null
-    var nivelEducativo: Char? = null
-    var dia: String? = null
+class Curso : Serializable {
+    var id: String = ""
+    var nombre: String = ""
+    var nivelEducativo: String = ""
+    var dia: String = ""
 
-    var docentes: Collection<Docente> = ArrayList()
+    var docentes: List<String> = ArrayList()
 }

@@ -4,11 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.javierprado.jmapp.data.entities.Aula
-import com.javierprado.jmapp.data.entities.Horario
-import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.databinding.ItemDetallesAulaBinding
 import com.javierprado.jmapp.view.clicks.AulaClick
-import com.javierprado.jmapp.view.clicks.HorarioClick
 
 class AulaAdapter(): RecyclerView.Adapter<AulaAdapter.VHAula>() {
     private lateinit var aulaClick : AulaClick
@@ -26,11 +23,10 @@ class AulaAdapter(): RecyclerView.Adapter<AulaAdapter.VHAula>() {
         private val binding: ItemDetallesAulaBinding
         init { this.binding = binding }
         fun bind(aula: Aula) {
-            val estudianteId = aula.estudiantes.toList()[0].estudianteId
             val grado = aula.grado
             val seccion = aula.seccion
-            binding.gradoSeccionAula.text =  "${grado}° '${seccion}'"
-            binding.totalAula.text = aula.totalEstudiantes().toString() + " estudiantes"
+            binding.gradoSeccionAula.text = "$grado° '$seccion'"
+            binding.totalAula.text = aula.totalEstudiantes().toString() + " estudiantes."
         }
     }
 

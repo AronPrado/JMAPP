@@ -41,7 +41,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
     
     private lateinit var btnRegistrar: Button
 
-    private lateinit var cursos : Collection<Curso>
+    private lateinit var cursos : List<Curso>
 
     private val authFunctions = AuthFunctions()
     private lateinit var auth: FirebaseAuth
@@ -93,22 +93,19 @@ class RegisterDocenteActivity : AppCompatActivity() {
                 progressBarListar.visibility = View.VISIBLE
                 listaCursos.visibility = View.GONE*/
 
-                api.obtenerCursos(null, nivel)?.enqueue(object : Callback<Collection<Curso>> {
-                    override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
+                api.listarCursos("null", nivel).enqueue(object : Callback<List<Curso>> {
+                    override fun onResponse(call: Call<List<Curso>>, response: Response<List<Curso>>) {
+                        msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
                             cursos = response.body()!!
                             listaCursos.adapter = CursoAdapter(this@RegisterDocenteActivity, cursos as MutableList<Curso>)
-
                             listaCursos.visibility = if (!cursos.isEmpty()) View.VISIBLE else View.GONE
-
-                            if (cursos.isEmpty()){
-                                msg="No se encontraron cursos en este nivel educativo."
-                                Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
-                            }
                             //progressBarListar.visibility= View.GONE
+                        }else{
+                            Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                         }
                     }
-                    override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
+                    override fun onFailure(call: Call<List<Curso>>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("LISTAR CURSOS", t.message.toString())
@@ -126,23 +123,21 @@ class RegisterDocenteActivity : AppCompatActivity() {
             val correo = correoEditText.text.toString().trim()
             val telefono = telefonoEditText.text.toString().trim()
             val direccion = direccionEditText.text.toString().trim()
-            val curso = cursoDocente
+            val curso = cursoDocente!!
 
-            val docente = Docente(nombres, apellidos, fechaNac, genero, correo, telefono.toInt(), direccion,  curso)
-            api.agregarDocente(docente).enqueue(object : Callback<Docente> {
-                override fun onResponse(call: Call<Docente>, response: Response<Docente>) {
+            val docente = Docente(nombres, apellidos, genero, correo, telefono.toInt(), direccion, fechaNac, curso.id)
+            api.guardarDocente(docente, "null").enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) {
-                        val docenteRegistrado = response.body()
-                        msg = "Docente nuevo ID: ${docenteRegistrado?.docenteId}"
-                        Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
+                        val id = msg
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
                                     // GUARDAR USUARIO EN FireStpre
                                     val user = auth.currentUser!!
                                     val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "DOC",
-                                        "tipoid" to docenteRegistrado!!.docenteId.toString(), "token" to "" )
+                                        "tipoid" to id, "token" to "" )
                                     firestore.collection("Users").document(user.uid).set(dataHashMap)
 
                                     authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
@@ -158,7 +153,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                     }
                 }
-                override fun onFailure(call: Call<Docente>, t: Throwable) {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"
                     Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("ERROR AL AGREGAR DOCENTE", t.message.toString())

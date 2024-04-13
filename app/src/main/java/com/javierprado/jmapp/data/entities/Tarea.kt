@@ -3,15 +3,17 @@ package com.javierprado.jmapp.data.entities
 import java.io.Serializable
 
 class Tarea(): Serializable {
-    var tareaId: Int? = null
-    var descripcion: String? = null
-    var fechaEntrega: String? = null
-    var estado: String? = null
-    var itemsCurso: Set<Curso> = HashSet()
-    constructor(descripcion: String, estado: String, fechaEntrega: String, itemsCurso: Set<Curso>): this(){
+    var id: String = ""
+    var fechaEntrega: String = ""
+    var descripcion: String = ""
+    var estado: String = ""
+    var aulaId: String = ""
+    var docenteId: String = ""
+
+    constructor(descripcion: String, fechaEntrega: String, aulaId: String, docenteid: String): this(){
         this.descripcion=descripcion
-        this.estado=estado
         this.fechaEntrega=fechaEntrega
-        this.itemsCurso=itemsCurso
+        this.aulaId=aulaId
+        this.docenteId=docenteid
     }
 }

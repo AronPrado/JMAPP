@@ -13,9 +13,8 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Apoderado
-import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,7 +29,7 @@ class ActualizarInfoApoderadoActivity : AppCompatActivity() {
     private lateinit var progressBar: CircularProgressIndicator
 
     private lateinit var auth: FirebaseAuth
-    val TOKEN = "token"
+    var tokenApod = ""; var apoderadoId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actualizar_info_apoderado)
@@ -47,42 +46,37 @@ class ActualizarInfoApoderadoActivity : AppCompatActivity() {
         val retro = RetrofitHelper.getInstanceStatic()
         val bundle = intent.extras
         if (bundle != null) {
-            val token = bundle.getString(TOKEN, "")
-            retro.setBearerToken(token)
+            tokenApod = bundle.getString(MenuAdministradorActivity().TOKEN, "")
+            retro.setBearerToken(tokenApod)
+            apoderadoId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
         }
         val api = retro.getApi()
 
         val backImageView: ImageView = findViewById(R.id.back)
-        backImageView.setOnClickListener {
-            val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-        }
+        backImageView.setOnClickListener { regresar() }
         val btnCancelar: Button = findViewById(R.id.btnCancelar)
-        btnCancelar.setOnClickListener {
-            val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-        }
-        var msg : String? = ""
+        btnCancelar.setOnClickListener { regresar() }
 
+        var msg : String
         progressBar.visibility= View.VISIBLE
-        api.obtenerSesion(RoleType.APOD.name).enqueue(object : Callback<Usuario> {
-            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+        api.buscarApoderado(apoderadoId).enqueue(object : Callback<Apoderado> {
+            override fun onResponse(call: Call<Apoderado>, response: Response<Apoderado>) {
+                msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
-                    val user : Usuario = response.body()!!
-                    correoEditText.setText(user.email)
-                    telefonoEditText.setText(user.telefono.toString())
-                    direccionEditText.setText(user.apoderado.direccion.toString())
+                    val apoderado = response.body()!!
+                    correoEditText.setText(apoderado.correo)
+                    telefonoEditText.setText(apoderado.telefono.toString())
+                    direccionEditText.setText(apoderado.direccion)
                 }else{
-                    msg = response.headers()["message"] ?: ""
                     Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("ERROR AL BUSCAR", msg)
+                    regresar()
                 }
                 progressBar.visibility= View.GONE
             }
 
-            override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                msg = "Servidor desconectado"
+            override fun onFailure(call: Call<Apoderado>, t: Throwable) {
+                msg = "Servidor desconectado."
                 Log.e(msg, t.message.toString())
                 Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
             }
@@ -93,17 +87,14 @@ class ActualizarInfoApoderadoActivity : AppCompatActivity() {
             val nuevaDireccion = direccionEditText.text.toString()
 
             val apoderado = Apoderado(nuevoCorreo, nuevoTelefono, nuevaDireccion)
-            api.actualizarInfoApoderado(apoderado)?.enqueue(object : Callback<Void> {
+            api.guardarApoderado(apoderado, apoderadoId).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    msg = response.headers().get("message")
-                    if (response.isSuccessful) {
-                        val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        startActivity(intent)
-                    }else{
-                        Log.e("ERROR AL ACTUALIZAR", msg ?: "")
+                    msg = response.headers()["message"] ?: ""
+                    if (response.isSuccessful) { regresar() }
+                    else{
+                        Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("ERROR AL ACTUALIZAR", msg)
                     }
-                    Toast.makeText(this@ActualizarInfoApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"
@@ -112,5 +103,12 @@ class ActualizarInfoApoderadoActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+    private fun regresar(){
+        val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
+        intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+        intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent) ; finish()
     }
 }

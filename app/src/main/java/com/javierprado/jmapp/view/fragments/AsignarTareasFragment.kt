@@ -15,12 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.data.entities.Curso
-import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Tarea
-import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
-import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,16 +32,13 @@ class AsignarTareasFragment : Fragment() {
 
     private lateinit var progressC: CircularProgressIndicator
 
-    private lateinit var curso : Curso
-    private lateinit var estudiantes : Collection<Estudiante>
-    private lateinit var msg : String
-
-    val TOKEN = "token"
-    val ESTUDIANTES = "estudiantes"
+    private lateinit var estudiantes : List<String>
+    val TOKEN = "token" ; val ESTUDIANTES = "estudiantes"
+    private lateinit var aulaId : String ; private lateinit var docenteId : String
     private val TAG: String  = toString()
     private val retro = RetrofitHelper.getInstanceStatic()
     private lateinit var activity: AppCompatActivity
-
+    private lateinit var msg : String
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as ControlSeleccionActivity
@@ -54,7 +47,9 @@ class AsignarTareasFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             retro.setBearerToken(it.getString(TOKEN, ""))
-            estudiantes = it.getSerializable(ESTUDIANTES) as Serializable as Collection<Estudiante>
+            estudiantes = it.getStringArrayList(ESTUDIANTES)?.toList() ?: ArrayList()
+            aulaId = it.getString("AULAID", "")
+            docenteId = it.getString("DOCENTEID", "")
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -110,43 +105,21 @@ class AsignarTareasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
 
-        fun obtenerCurso(){
-            api.obtenerSesion(RoleType.DOC.name).enqueue(object : Callback<Usuario> {
-                override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
-                    msg = "Usuario no encontrado."
-                    if (response.isSuccessful) {
-                        curso = response.body()!!.docente.curso!!
-                        Log.e("CURSO OBTENIDO", curso.nombre!!)
-                    } else{
-                        Log.e("NR SESSION", msg)
-                        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                    }
 
-                }
-                override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                    msg = "Error en la API: ${t.message}"
-                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                    Log.e("BUSCAR SESSION", t.message.toString())
-                }
-            } )
-        }
-
-        obtenerCurso()
         btnAsignar.setOnClickListener{
             val descripcion = descripcionTarea.text.toString()
             val fecha = fechaEntrega.text.toString()
-            val estado = "ASIGNADA"
-            val cursos = HashSet<Curso>() ; cursos.add(curso)
 
-            val tarea = Tarea(descripcion, estado, fecha, cursos)
-//            val estudiantes: Collection<Estudiante> = ArrayList()
+            val tarea = Tarea(descripcion, fecha, aulaId, docenteId)
             progressC.visibility=View.VISIBLE
-            api.agregarTareas(tarea).enqueue(object : Callback<Void> {
+            api.agregarTarea(tarea).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) {
                         progressC.visibility=View.GONE
-                        activity.supportFragmentManager.popBackStackImmediate() }
-                    else{ Toast.makeText(context, response.headers()["message"] ?: "", Toast.LENGTH_SHORT).show() }
+                        activity.supportFragmentManager.popBackStackImmediate()
+                    }
+                    else{ Toast.makeText(context, msg, Toast.LENGTH_SHORT).show() }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     msg = "Error en la API: ${t.message}"

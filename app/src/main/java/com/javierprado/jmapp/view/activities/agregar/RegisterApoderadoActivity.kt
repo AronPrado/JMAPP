@@ -44,7 +44,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore : FirebaseFirestore
-    private var estudiantes : Collection<Estudiante> = mutableListOf()
+    private var estudiantes : List<Estudiante> = mutableListOf()
 
     private val authFunctions = AuthFunctions()
     private lateinit var api : ColegioAPI
@@ -80,9 +80,10 @@ class RegisterApoderadoActivity : AppCompatActivity() {
         // Botón regresar
         val backImageView: ImageView = findViewById(R.id.back)
         backImageView.setOnClickListener {
-            val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
+//            val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//            startActivity(intent)
+            finish()
         }
 
         buscarEstudiante.addTextChangedListener(textWatcher)
@@ -94,23 +95,22 @@ class RegisterApoderadoActivity : AppCompatActivity() {
             val telefono = telefonoEditText.text.toString().trim()
             val direccion = direccionEditText.text.toString().trim()
 
-            val estudiantesApoderado = HashSet<Estudiante?>()
-            estudiantesApoderado.addAll(estudiantes)
+            val estudiantesApoderado: List<String> = estudiantes.map { e->e.id }
             if(telefono.isNotEmpty()){
                 val apoderado = Apoderado(nombres, apellidos, correo, telefono.toInt(), direccion, estudiantesApoderado)
-                api.agregarApoderado(apoderado).enqueue(object : Callback<Int> {
-                    override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                Log.e("APODERADO", apoderado.toString())
+                api.guardarApoderado(apoderado, "null").enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
-                            val id = response.body()
-                            msg = response.body().toString()
+                            val id = msg
                             auth.createUserWithEmailAndPassword(correo, telefono)
                                 .addOnCompleteListener { task: Task<AuthResult?> ->
                                     if (task.isSuccessful) {
-                                        // GUARDAR USUARIO EN FireStpre
+                                        // GUARDAR USUARIO EN FIRESTORE (USERS)
                                         val user = auth.currentUser!!
                                         val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "APOD",
-                                            "tipoid" to id.toString(), "token" to "" )
+                                            "tipoid" to id, "token" to "" )
                                         firestore.collection("Users").document(user.uid).set(dataHashMap)
                                         authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
                                         val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
@@ -125,7 +125,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                             Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         }
                     }
-                    override fun onFailure(call: Call<Int>, t: Throwable) {
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())
@@ -153,8 +153,9 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                 var dni = text.toInt()
                 //ACTIVAR CIRCULAR
                 progressBar.visibility = View.VISIBLE
-                api.buscarEstudiantePorDNI(0, dni)?.enqueue(object : Callback<Estudiante>{
+                api.buscarEstudiante("null", dni).enqueue(object : Callback<Estudiante>{
                     override fun onResponse(call: Call<Estudiante>, response: Response<Estudiante>) {
+                        msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
                             val estudiante  = response.body()!!
                             val estudiantesMutable = estudiantes.toMutableList()
@@ -165,8 +166,6 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                             listaEstudiantes.visibility=View.VISIBLE
                             buscarEstudiante.setText("")
                         } else{
-                            msg= "ALUMNO NO ENCONTRADO"
-                            Log.e("BUSQUEDA POR DNI:", "${msg} CON EL DNI: ${dni}" )
                             Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         }
                     }

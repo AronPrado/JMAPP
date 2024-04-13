@@ -5,14 +5,13 @@ import android.os.StrictMode
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.BuildConfig
-import com.javierprado.jmapp.data.entities.AuthResponse
+import com.javierprado.jmapp.data.entities.UserAuth
 import com.javierprado.jmapp.data.entities.Usuario
-import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
-import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,37 +22,68 @@ import javax.mail.Session
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
+
 class AuthFunctions {
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance())
     fun loginUser(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity, nextMenu : AppCompatActivity) {
-        val usuario = Usuario(emailUser, passUser)
-        val api: ColegioAPI = RetrofitHelper.getInstanceStatic().getApi()
+         ; val userLog = UserAuth(emailUser, passUser)
         var msg : String
+        //INICIAR SESION
         mAuth.signInWithEmailAndPassword(emailUser, passUser)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    api.login(usuario, rol)?.enqueue(object : Callback<AuthResponse?> {
-                        override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
-                            if (response.isSuccessful) {
-                                msg = response.body()?.tokenDeAcceso.toString()
-                                val intent = Intent(interfaceActual, nextMenu::class.java)
-                                intent.putExtra(MenuAdministradorActivity().TOKEN, msg)
-                                interfaceActual.startActivity(intent)
-                                interfaceActual.finish()
-                            }else{
-                                msg = "No tiene permisos para ingresar."
-                                Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
-                            }
+                    val currentUser = mAuth.currentUser
+                    //OBTENER TOKEN
+                    currentUser?.getIdToken(true)?.addOnCompleteListener { idTokenTask ->
+                        if (idTokenTask.isSuccessful) {
+                            val idToken = idTokenTask.result?.token!!
+                            Log.e("TOKEN", idToken)
+                            val usuario = Usuario(emailUser, passUser, idToken)
+                            RetrofitHelper.getInstanceStatic().getApi().login(usuario, rol).enqueue(object : Callback<Usuario> {
+                                override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                                    msg = response.headers()["message"] ?: ""
+                                    if (response.isSuccessful) {
+                                        val user = response.body()!!
+                                        val intent = Intent(interfaceActual, nextMenu::class.java)
+                                        intent.putExtra(MenuAdministradorActivity().USUARIOID, user.usuarioId)
+                                        intent.putExtra(MenuAdministradorActivity().TOKEN, usuario.token)
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                        interfaceActual.startActivity(intent); interfaceActual.finish()
+                                    }else{
+                                        Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                                        Log.e("FIRESTORE", msg)
+                                    }
+                                }
+                                override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                                    msg = "Firestore"
+                                    Log.e("FIRESTORE", t.message.toString())
+                                    Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                                }
+                            })
                         }
-                        override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
-                            msg = "Error en el API y no en el Firebase."
-                            Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
-                            Log.e("API ERROR:", t.message.toString())
-                        }
-                    })
+                    }
+//                    RetroAuth.api.postLoginIdToken(userLog).enqueue(object : Callback<UserValid> {
+//                        override fun onResponse(call: Call<UserValid>, response: Response<UserValid>) {
+//                            if (response.isSuccessful) {
+//                                usuario.token= response.body()!!.idToken
+//                                Log.e("GENERADO", usuario.token)
+//
+//                            }else{
+//                                Toast.makeText(interfaceActual, "INVALID SESSION", Toast.LENGTH_SHORT).show()
+//                            }
+//                        }
+//                        override fun onFailure(call: Call<UserValid>, t: Throwable) {
+//                            msg = "FireAuth2"
+//                            Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+//                            Log.e("AUTH2", t.message.toString())
+//                        }
+//                    })
+                }else{
+                    Toast.makeText(interfaceActual, "Auth1 INCORRECT", Toast.LENGTH_SHORT).show()
                 }
             }.addOnFailureListener { e ->
-                Toast.makeText(interfaceActual, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                Log.e("AUTH1", e.message.toString())
+                Toast.makeText(interfaceActual, "FireAuth1", Toast.LENGTH_SHORT).show()
             }
     }
     fun enviarCredenciales(correoC : String, contrasenaC : String, interfaceActual : AppCompatActivity){

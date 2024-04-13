@@ -1,6 +1,5 @@
 package com.javierprado.jmapp.view.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
@@ -29,7 +27,6 @@ import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
-import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import com.javierprado.jmapp.view.adapters.HorarioAdapter
 import com.javierprado.jmapp.view.clicks.HorarioClick
 import retrofit2.Call
@@ -43,16 +40,15 @@ class HorarioFragment : Fragment() {
     private val dias = listOf("Lunes","Martes","Miércoles","Jueves","Viernes")
 
     private lateinit var nivelA: String
-    private var gradoA: Int = 0
+    private var gradoA: Int = 0 ; private var estVer: Int = 0
     private lateinit var seleccionA: String
 
     private lateinit var recyclerViews: MutableList<RecyclerView>
     private lateinit var textViewsDias: MutableList<TextView>
 
-    private var fechaMostrar = LocalDate.now()
-    private lateinit var rangoFechas: MutableList<LocalDate>
+    private var fechaLunes = LocalDate.now()
 
-    private var estudiantes : List<Estudiante>? = ArrayList()
+    private lateinit var estudiantesNombres : List<Estudiante>
 
     private lateinit var nivelSpinner: Spinner
     private lateinit var gradoSpinner: Spinner
@@ -62,18 +58,14 @@ class HorarioFragment : Fragment() {
     private lateinit var txtMes: TextView
 
     private lateinit var progressC: CircularProgressIndicator
-
     private lateinit var adapters : MutableList<HorarioAdapter>
-    private lateinit var msg : String
 
-    val TOKEN = "token"
     var PARAADMIN = "forAdmin"
-    var ESTUDIANTES = "estudiantes"
-    var paraAdmin = false
+    var paraAdmin = false ; var usuarioId = "";
     private val TAG: String  = toString()
     private val retro = RetrofitHelper.getInstanceStatic()
     private lateinit var activity: AppCompatActivity
-
+    private lateinit var msg : String
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as ControlHorarioActivity
@@ -82,9 +74,10 @@ class HorarioFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            retro.setBearerToken(it.getString(TOKEN, ""))
+            retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
+            usuarioId = it.getString(MenuAdministradorActivity().USUARIOID, usuarioId)
             paraAdmin = it.getBoolean(PARAADMIN, false)
-            estudiantes = it.getSerializable(ESTUDIANTES) as List<Estudiante>
+            estudiantesNombres = it.getSerializable(ControlHorarioActivity().ESTUDIANTES) as List<Estudiante>
         }
     }
 
@@ -101,10 +94,9 @@ class HorarioFragment : Fragment() {
         progressC = view.findViewById(R.id.pb_fragment_horario)
 
         if(!paraAdmin){
-            nivelSpinner.visibility = View.GONE
-            gradoSpinner.visibility = View.GONE
+            nivelSpinner.visibility = View.GONE ; gradoSpinner.visibility = View.GONE
 
-            val nombres = estudiantes?.map { e-> e.nombres!! + " " + e.apellidos!! }
+            val nombres = estudiantesNombres.map { e-> e.nombres + " " + e.apellidos }
             val adapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, nombres as ArrayList<String>)
             selectSpinner.adapter=adapter
         }
@@ -135,68 +127,33 @@ class HorarioFragment : Fragment() {
             gradoA = gradoSpinner.selectedItem.toString()[0].toString().toInt()
         } else{
             val index = (selectSpinner.adapter as ArrayAdapter<String>).getPosition(seleccionA)
-            val estudianteSeleccionado = estudiantes?.get(index)!!
-            nivelA = estudianteSeleccionado.nivelEducativo!!
-            gradoA = estudianteSeleccionado.grado!!
-            seleccionA = estudianteSeleccionado.seccion!!
+            val estudianteSeleccionado = estudiantesNombres[index]
+            nivelA = estudianteSeleccionado.nivelEducativo
+            gradoA = estudianteSeleccionado.grado
+            seleccionA = estudianteSeleccionado.seccion
         }
 
-        var cursos : List<Curso>
-
         progressC.visibility = View.VISIBLE
-        api.obtenerEstudiantes(null, nivelA, gradoA, seleccionA).enqueue(object :
-            Callback<Collection<Estudiante>> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<Collection<Estudiante>>, response: Response<Collection<Estudiante>>) {
+        api.listarHorarios(gradoA, nivelA, seleccionA, fechaLunes.toString()).enqueue(object : Callback<List<List<Horario>>> {
+            override fun onResponse(call: Call<List<List<Horario>>>, response: Response<List<List<Horario>>>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
-                    val estudiantes = response.body()!!
-                    if(!estudiantes.isEmpty()){
-                        val estudiante = (estudiantes as MutableList)[0].estudianteId
-                        api.obtenerCursos(estudiante, null).enqueue(object : Callback<Collection<Curso>> {
-                            override fun onResponse(call: Call<Collection<Curso>>, response: Response<Collection<Curso>>) {
-                                if (response.isSuccessful) {
-                                    for (i in 0..<rangoFechas.size){
-                                        val fecha = rangoFechas[i].toString()
-                                        val diaNum = dias[i] + "\n" + fecha.substring(8)
-                                        textViewsDias[i].text = diaNum
-                                        val idsCursoDia = obtenerCursosXDia(i, response.body()!!.toList())
-                                        api.obtenerHorarios(fecha, idsCursoDia).enqueue(object :
-                                            Callback<Collection<Horario>> {
-                                            override fun onResponse(call: Call<Collection<Horario>>, response: Response<Collection<Horario>>) {
-                                                if (response.isSuccessful) {
-                                                    val horarios = response.body()!!.toList()
-                                                    adapters[i].setHorarios(horarios)
-                                                    adapters[i].notifyDataSetChanged()
-                                                }
-                                            }
-                                            override fun onFailure(call: Call<Collection<Horario>>, t: Throwable) {
-                                                msg = "Error en la API: ${t.message}"
-                                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                                                Log.e("LISTAR HORARIOS", t.message.toString())
-                                            }
-                                        } )
-                                    }
-                                    progressC.visibility = View.GONE
-                                }
-                            }
-                            override fun onFailure(call: Call<Collection<Curso>>, t: Throwable) {
-                                msg = "Error en la API: ${t.message}"
-                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                                Log.e("LISTAR CURSOS", t.message.toString())
-                            }
-                        } )
-
-                    }
+                    val horarios = response.body()!!
+                    for((i, hh) in horarios.withIndex()){ adapters[i].setHorarios(hh) ; }
                 }else{
-                    msg = "FAIL $msg"
-                    Log.e("ERROR:", msg)
+                    estVer++
+                    if(estVer == estudiantesNombres.size){
+                        activity.supportFragmentManager.popBackStackImmediate()
+                    }
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("LISTAR HORARIOS", msg)
                 }
+                progressC.visibility = View.GONE
             }
-            override fun onFailure(call: Call<Collection<Estudiante>>, t: Throwable) {
+            override fun onFailure(call: Call<List<List<Horario>>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                Log.e("OBTENER ESTUDIANTES", t.message.toString())
+                Log.e("LISTAR HORARIOS", t.message.toString())
             }
         } )
     }
@@ -226,45 +183,36 @@ class HorarioFragment : Fragment() {
         }
     }
     private fun obtenerFechas(){
-        rangoFechas = ArrayList()
-        val diferenciaDias = fechaMostrar.dayOfWeek.value - Calendar.MONDAY+1
-        val fechaLunes = fechaMostrar.minusDays(diferenciaDias.toLong())
-        Log.e("FECHA DEL LUNES", fechaLunes.toString())
-        var fechaActual = fechaLunes
-        var mesActual = fechaActual.month.value
-        var nombreMesActual = fechaActual.month.name
-        for (i in 0..4) {
-            if(fechaActual.month.value != mesActual ){
-                nombreMesActual+= " - ${fechaActual.month.name}"
-            }
-            rangoFechas.add(fechaActual)
-            fechaActual = fechaLunes.plusDays(i+1.toLong())
-        }
+        val diferenciaDias = fechaLunes.dayOfWeek.value - Calendar.MONDAY+1
+        fechaLunes = fechaLunes.minusDays(diferenciaDias.toLong())
+        var nombreMesActual = fechaLunes.month.name
         txtMes.text = nombreMesActual
+
+        Log.e("FECHA DEL LUNES", fechaLunes.toString())
     }
     private fun moverEnSemanas(api: ColegioAPI, siguiente: Boolean){
-        fechaMostrar = if (siguiente) fechaMostrar.plusWeeks(1.toLong()) else fechaMostrar.minusWeeks(1.toLong())
-        obtenerFechas()
-        filtrarHorario(api)
+        fechaLunes = if (siguiente) fechaLunes.plusWeeks(1.toLong()) else fechaLunes.minusWeeks(1.toLong())
+        obtenerFechas() ; filtrarHorario(api)
     }
-    private fun obtenerCursosXDia(dia: Int, cursos: List<Curso>): List<Int>{
-        return cursos.filter { it.dia == dias[dia] }.map { it.cursoId }
-    }
+
     companion object {
         @JvmStatic
-        fun newInstance(token: String, paraAdmin: Boolean, estudiantes: List<Estudiante>) =
+        fun newInstance(token: String, usuarioId: String,paraAdmin: Boolean, estudiantes: List<Estudiante>) =
             HorarioFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
+                    putSerializable(MenuAdministradorActivity().TOKEN, token)
+                    putSerializable(MenuAdministradorActivity().USUARIOID, usuarioId)
                     putSerializable(PARAADMIN, paraAdmin)
-                    putSerializable(ESTUDIANTES, estudiantes as Serializable)
+                    putSerializable(ControlHorarioActivity().ESTUDIANTES, estudiantes as Serializable)
                 }
             }
     }
     override fun onDestroy() {
         val intent = ControlHorarioActivity().getActivityRol(context, paraAdmin)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
+        intent.putExtra(MenuAdministradorActivity().USUARIOID, usuarioId)
+        intent.putExtra(MenuAdministradorActivity().TOKEN, retro.getBearerToken())
+        startActivity(intent) ; activity.finish()
         super.onDestroy()
     }
 }

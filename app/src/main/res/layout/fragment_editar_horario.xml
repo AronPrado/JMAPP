@@ -121,7 +121,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/fg_CAMBIARTXT"
+                    android:id="@+id/txt_curso_horario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Matemática"
@@ -129,8 +129,17 @@
                     app:layout_constrainedHeight="true"
                     android:ellipsize="end"
                     android:layout_marginTop="8dp"/>
+                <TextView
+                    android:id="@+id/txt_docente_horario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombres y Apellidos"
+                    android:maxLines="2"
+                    app:layout_constrainedHeight="true"
+                    android:ellipsize="end"
+                    android:layout_marginTop="8dp"/>
                 <ImageView
-                    android:id="@+id/fg_img_CAMBIAR"
+                    android:id="@+id/fg_img_horario"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginStart="16dp"

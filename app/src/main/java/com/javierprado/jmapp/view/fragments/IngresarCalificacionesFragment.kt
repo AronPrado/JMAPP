@@ -1,6 +1,5 @@
 package com.javierprado.jmapp.view.fragments
 
-import Calificacion
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -13,12 +12,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.set
 import androidx.fragment.app.DialogFragment
-import androidx.room.util.getColumnIndex
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.Calificacion
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,14 +31,13 @@ class IngresarCalificacionesFragment : DialogFragment() {
     private lateinit var txtNotaFinal: EditText
     private lateinit var btnGuardarCalificaciones: Button
 
-    val TOKEN = "token" ; val ESTUDIANTE = "alumno" ; val CURSO = "curso"
+    val ESTUDIANTE = "estudiante"
 
     private val retro = RetrofitHelper.getInstanceStatic()
-    private var estudianteId: Int = 0
+    private var estudianteId: String = "" ; private var cursoId: String = ""
     private lateinit var calificacion: Calificacion
-    private var cursoId: Int = 0
-    private lateinit var msg : String
     private lateinit var activity: AppCompatActivity
+    private lateinit var msg : String
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as ControlSeleccionActivity
@@ -46,9 +45,9 @@ class IngresarCalificacionesFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            retro.setBearerToken(it.getString(TOKEN, ""))
-            estudianteId = it.getInt(ESTUDIANTE)
-            cursoId = it.getInt(CURSO)
+            retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
+            estudianteId = it.getString(ESTUDIANTE, "")
+            cursoId = it.getString(MenuDocenteActivity().CURSOID, "")
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,21 +69,15 @@ class IngresarCalificacionesFragment : DialogFragment() {
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            fun validarNum(num: Int?): Boolean{
-                return (num==null) or (num!!>20)
-            }
+            fun validarNum(num: Int?): Boolean{ return (num==null) or (num!!>20) }
             fun calcularPromedio(): Double{
                 try{
                     val n1 = txtPrimeraNota.text.toString().toIntOrNull() ; val n2 = txtSegundaNota.text.toString().toIntOrNull()
                     val n3 = txtTerceraNota.text.toString().toIntOrNull() ; val n4 = txtCuartaNota.text.toString().toIntOrNull()
-
                     return (n1!!+n2!!+n3!!+n4!!) / 4.0
                 }
-                catch(ex: NullPointerException){
-                    return 0.0
-                }
+                catch(ex: NullPointerException){ return 0.0 }
             }
-
             txtNotaFinal.setText("")
             if(!s.isNullOrEmpty() && !validarNum(s.toString().toIntOrNull())){
                 val txts: List<EditText> = listOf(txtPrimeraNota, txtSegundaNota, txtTerceraNota, txtCuartaNota)
@@ -102,8 +95,9 @@ class IngresarCalificacionesFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
 
-        api.obtenerCalificaciones(estudianteId, cursoId).enqueue(object : Callback<Calificacion> {
+        api.listarCalificaciones(estudianteId, cursoId).enqueue(object : Callback<Calificacion> {
             override fun onResponse(call: Call<Calificacion>, response: Response<Calificacion>) {
+                msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
                     val calificaciones = response.body()
                     calificacion = calificaciones!!
@@ -116,9 +110,7 @@ class IngresarCalificacionesFragment : DialogFragment() {
                     txtPrimeraNota.setText(nota1) ; txtSegundaNota.setText(nota2)
                     txtTerceraNota.setText(nota3) ; txtCuartaNota.setText(nota4) ;
                     txtNotaFinal.setText(notaF)
-                } else {
-                    showToast("No se encontraron calificaciones.")
-                }
+                } else { showToast(msg); Log.e("OBTENER CALIFICACIONES", msg) }
             }
             override fun onFailure(call: Call<Calificacion>, t: Throwable) {
                 showToast("Error de red: ${t.message}")
@@ -139,34 +131,31 @@ class IngresarCalificacionesFragment : DialogFragment() {
             }
 
             // Crea una instancia de Calificacion con las notas ingresadas
-
-            calificacion.calificacion1 = primeraNota
-            calificacion.calificacion2 = segundaNota
-            calificacion.calificacion3 = terceraNota
-            calificacion.calificacion4 = cuartaNota
+            calificacion.calificacion1 = primeraNota ; calificacion.calificacion2 = segundaNota
+            calificacion.calificacion3 = terceraNota ; calificacion.calificacion4 = cuartaNota
             calificacion.calificacionFinal = notaFinal
 
             // Realiza la llamada al método de la API para ingresar las calificaciones
-            api.editarCalificacion(calificacion).enqueue(object : Callback<Void> {
+            api.editarCalificaciones(calificacion, calificacion.id).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) { activity.supportFragmentManager.popBackStackImmediate() }
-                    else { showToast(msg) }
+                    else { showToast(msg); Log.e("LISTAR CALIFICACIONES", msg) }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    showToast("Error de red: ${t.message}")
+                    showToast("Error de red: ${t.message}"); Log.e("LISTAR CALIFICACIONES", msg)
                 }
             })
         }
     }
     companion object {
         @JvmStatic
-        fun newInstance(token: String, estudiante: Int, curso: Int) =
+        fun newInstance(token: String, estudiante: String, cursoId: String) =
             IngresarCalificacionesFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
+                    putSerializable(MenuAdministradorActivity().TOKEN, token)
                     putSerializable(ESTUDIANTE, estudiante)
-                    putSerializable(CURSO, curso)
+                    putSerializable(MenuDocenteActivity().CURSOID, cursoId)
                 }
             }
     }

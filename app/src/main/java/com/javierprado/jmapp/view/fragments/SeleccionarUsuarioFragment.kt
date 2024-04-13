@@ -56,12 +56,9 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
     var aulas: Collection<Aula> = ArrayList()
 
     private var token = ""
-    var usuarioId: Int = 0
+    var usuarioId: String = ""
     private val retro = RetrofitHelper.getInstanceStatic()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seleccionar_usuario, container, false)
         return binding.root
@@ -108,12 +105,12 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
             override fun onAulaClicker(aula: Aula?) {
                 val emailsApoderados = aula!!.emailsApoderados
                 if(emailsApoderados.isNotEmpty()){
-                    viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner, Observer {
+                    viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner) {
                         adapter.setList(it)
                         rvUsers.adapter = adapter
-                        rvSeleccionarUsuarios.visibility=View.GONE
-                        rvUsers.visibility=View.VISIBLE
-                    })
+                        rvSeleccionarUsuarios.visibility = View.GONE
+                        rvUsers.visibility = View.VISIBLE
+                    }
                 }else{
                     Toast.makeText(activity, "No hay docentes.", Toast.LENGTH_SHORT).show()
                 }
@@ -121,27 +118,23 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
         })
         hijoAdapter = HijoApoderadoAdapter(ArrayList(), object : onEstudianteApoClickListener {
             override fun onHijoSelected(hijo: Estudiante) {
-                api.obtenerDocentes(null, hijo.estudianteId).enqueue(object : Callback<Collection<Docente>> {
-                    override fun onResponse(call: Call<Collection<Docente>>, response: Response<Collection<Docente>>) {
+                api.listarDocentes("null", hijo.id, "null").enqueue(object : Callback<List<Docente>> {
+                    override fun onResponse(call: Call<List<Docente>>, response: Response<List<Docente>>) {
+                        msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
-                            val emailsDocentes = response.body()!!.map { d-> d.correo!! }
-                            viewModel.getUsers(emailsDocentes).observe(viewLifecycleOwner, Observer {
-                                if(it.isNotEmpty()){
-                                    adapter.setList(it)
-                                    rvUsers.adapter = adapter
-                                    rvSeleccionarUsuarios.visibility=View.GONE
-                                    rvUsers.visibility=View.VISIBLE
-
-                                }else {
-                                    Toast.makeText(activity, "No hay docentes.", Toast.LENGTH_SHORT).show()
-                                }
-                            })
+                            val emailsDocentes = response.body()!!.map { d-> d.correo }
+                            viewModel.getUsers(emailsDocentes).observe(viewLifecycleOwner) {
+                                adapter.setList(it)
+                                rvUsers.adapter = adapter
+                                rvSeleccionarUsuarios.visibility = View.GONE
+                                rvUsers.visibility = View.VISIBLE
+                            }
                         }else{
-                            msg = "FAIL $msg"
                             Log.e("NR:", msg)
+                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                         }
                     }
-                    override fun onFailure(call: Call<Collection<Docente>>, t: Throwable) {
+                    override fun onFailure(call: Call<List<Docente>>, t: Throwable) {
                         Log.e("OBTENER DOCENTES", t.message.toString())
                     }
                 } )
@@ -150,24 +143,23 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener{ value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject(Users::class.java)
-                usuarioId = Integer.valueOf(user!!.tipoid!!)
+                usuarioId = user!!.tipoid!!
                 token = user.token!!
                 retro.setBearerToken(token)
                 if(user.tipo!! == RoleType.DOC.name){
                     rvSeleccionarUsuarios.adapter = aulaAdapter
-                    api.obtenerAulas(usuarioId).enqueue(object : Callback<Collection<Aula>> {
-                        override fun onResponse(call: Call<Collection<Aula>>, response: Response<Collection<Aula>>) {
+                    api.obtenerAulas(usuarioId, null, null, null).enqueue(object : Callback<List<Aula>> {
+                        override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {
                             msg = response.headers()["message"] ?: ""
                             if (response.isSuccessful) {
                                 aulas = response.body()!!
                                 aulaAdapter.setAulas(aulas as MutableList)
                             }else{
-                                msg = "FAIL $msg"
+                                Log.e("OBTENER AULAS:", msg)
                                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                                Log.e("ERROR:", msg)
                             }
                         }
-                        override fun onFailure(call: Call<Collection<Aula>>, t: Throwable) {
+                        override fun onFailure(call: Call<List<Aula>>, t: Throwable) {
                             msg = "Error en la API: ${t.message}"
                             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                             Log.e("OBTENER AULAS", t.message.toString())
@@ -175,17 +167,17 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                     } )
                 }else{
                     rvSeleccionarUsuarios.adapter = hijoAdapter
-                    api.obtenerApoderado(usuarioId).enqueue(object : Callback<Apoderado> {
-                        override fun onResponse(call: Call<Apoderado>, response: Response<Apoderado>) {
+                    api.listarEstudiantes(usuarioId, ArrayList()).enqueue(object : Callback<List<Estudiante>> {
+                        override fun onResponse(call: Call<List<Estudiante>>, response: Response<List<Estudiante>>) {
                             if (response.isSuccessful) {
-                                val estudiantes = response.body()!!.itemsEstudiante!!.toList()
+                                val estudiantes = response.body()!!
                                 hijoAdapter.setEstudiantes(estudiantes)
                             }else{
                                 msg = "FAIL $msg"
                                 Log.e("NR :", msg)
                             }
                         }
-                        override fun onFailure(call: Call<Apoderado>, t: Throwable) {
+                        override fun onFailure(call: Call<List<Estudiante>>, t: Throwable) {
                             Log.e("OBTENER APODERADOS", t.message.toString())
                         }
                     } )
@@ -204,7 +196,11 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
 //        }
 
     }
-    @Deprecated("Deprecated in Java")
+    //?
+    @Deprecated("Deprecated in Java", ReplaceWith(
+        "super.onActivityCreated(savedInstanceState)",
+        "androidx.fragment.app.Fragment"
+    ))
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.javierprado.jmapp.mvvm.ChatAppViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -42,21 +48,45 @@
                 android:paddingBottom="24dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp">
-                <!-- <FrameLayout-->
-                <!-- android:layout_width="match_parent"-->
-                <!-- android:layout_height="wrap_content"-->
-                <!-- android:orientation="horizontal">-->
-                <!-- <TextView-->
-                <!-- android:id="@+id/fg_date_horario"-->
-                <!-- android:layout_width="wrap_content"-->
-                <!-- android:layout_height="wrap_content"-->
-                <!-- android:maxLines="1"-->
-                <!-- android:layout_gravity="right"-->
-                <!--
-               android:fontFamily="@font/librefranklin_italic"-->
-                <!-- android:text="2021-24-12"-->
-                <!-- android:textSize="15sp" />-->
-                <!-- </FrameLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/txt_enviar_reunion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Docentes:"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Spinner
+                            android:id="@+id/s_docente_reunion"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            app:layout_constrainedHeight="true"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:background="@color/nude"
+                            android:inputType="text"/>
+                        <TextView
+                            android:id="@+id/txt_apoderado_reunion"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:text="Nombres y Apellidos - Grado y Seccion - Alumno"
+                            android:maxLines="4"
+                            android:textAlignment="center"
+                            android:ellipsize="end"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,56 +96,87 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Texto:"
+                        android:text="Fecha y Hora:"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/linear_fechahora"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <EditText
+                            android:id="@+id/fecha_reunion"
+                            android:layout_width="150dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="start"
+                            app:layout_constrainedHeight="true"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:maxLength="10"
+                            android:background="@color/nude"
+                            android:inputType="date"
+                            android:padding="3dp"
+                            android:enabled="false"/>
+                        <EditText
+                            android:id="@+id/hora_reunion"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constrainedHeight="true"
+                            android:maxLength="5"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:background="@color/nude"
+                            android:inputType="datetime"
+                            android:padding="3dp"
+                            android:enabled="false" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/txt_estado_reunion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estado:"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                     <EditText
-                        android:id="@+id/txt_CAMBIAREDITTEXT"
+                        android:id="@+id/estado_reunion"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_gravity="left"
+                        android:layout_height="match_parent"
                         app:layout_constrainedHeight="true"
-                        android:textSize="15sp"
+                        android:maxLines="5"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:text="No disponible"
+                        android:textSize="35sp"
                         android:textStyle="bold"
-                        android:background="@color/nude"
-                        android:inputType="text" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Spinner:"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                    <Spinner
-                        android:id="@+id/s_CAMBIARSPINNER"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_gravity="left"
-                        app:layout_constrainedHeight="true"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:background="@color/nude"
-                        android:inputType="text" />
+                        android:background="#BA3B46"
+                        android:textColor="#FCFAF9"
+                        android:inputType="none"
+                        android:enabled="false"
+                        />
                 </LinearLayout>
                 <TextView
-                    android:id="@+id/fg_txt_CAMBIARTXT"
+                    android:id="@+id/txt_mensaje_reunion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Matemática"
-                    android:maxLines="1"
+                    android:text="Solo puede programar una reunión de 1/2 hora"
+                    android:maxLines="2"
+                    android:textAlignment="center"
                     app:layout_constrainedHeight="true"
-                    android:ellipsize="end"
-                    android:layout_marginTop="8dp"/>
+                    android:fontFamily="@font/librefranklin_bolditalic"
+                    android:layout_marginTop="15dp"/>
                 <ImageView
                     android:id="@+id/fg_img_CAMBIAR"
                     android:layout_width="match_parent"
@@ -125,27 +186,49 @@
                     android:layout_marginVertical="15dp"/>
             </LinearLayout>
             <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/pb_nombre"
+                android:id="@+id/pb_programar_reunion"
                 android:layout_gravity="center"
+                android:layout_marginTop="150dp"
                 android:indeterminate="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </FrameLayout>
     </androidx.cardview.widget.CardView>
-    <Button
-        android:id="@+id/fg_btn_funcion"
-        android:layout_width="300dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:layout_marginVertical="15dp"
-        android:text="funcion"
-        android:backgroundTint="@color/md_theme_light_tertiary"
-        android:padding="0dp"
-        android:fontFamily="@font/librefranklin_extrabolditalic"
+        android:orientation="horizontal"
+        android:paddingHorizontal="3dp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_nombre" />
+        app:layout_constraintTop_toBottomOf="@+id/cv_nombre">
+        <Button
+            android:id="@+id/fg_btn1_reunion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:layout_marginEnd="30dp"
+            android:text="Aceptar"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+            android:fontFamily="@font/librefranklin_bold"/>
+        <Button
+            android:id="@+id/fg_btn2_reunion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:text="Reprogramar"
+            android:textSize="24sp"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+            android:fontFamily="@font/librefranklin_bold"
+            android:enabled="false"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

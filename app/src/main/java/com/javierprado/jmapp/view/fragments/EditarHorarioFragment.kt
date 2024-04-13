@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.format.Time
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,17 +19,18 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalTime
 
-private const val TOKEN = "token"
 private const val HORARIO_ID = "ID"
 class EditarHorarioFragment : DialogFragment() {
     private lateinit var txtHInicio: EditText
     private lateinit var txtHFin: EditText
     private lateinit var txtCurso: TextView
+    private lateinit var txtDocente: TextView
     private lateinit var txtFecha: TextView
     private lateinit var btnEdit: Button
 
@@ -38,7 +38,7 @@ class EditarHorarioFragment : DialogFragment() {
 
     private lateinit var horarioUpd: Horario
 
-    private var horario_id = 0
+    private lateinit var horarioId: String
 
     private lateinit var msg : String
     private val retro = RetrofitHelper.getInstanceStatic()
@@ -50,8 +50,8 @@ class EditarHorarioFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            retro.setBearerToken(it.getString(TOKEN, ""))
-            horario_id =  it.getInt(HORARIO_ID, 0)
+            retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
+            horarioId =  it.getString(HORARIO_ID, "")
         }
     }
 
@@ -61,7 +61,8 @@ class EditarHorarioFragment : DialogFragment() {
         txtHInicio = view.findViewById(R.id.txt_hinicio_horario)
         txtHFin = view.findViewById(R.id.txt_hfin_horario)
         txtFecha = view.findViewById(R.id.fg_date_horario)
-        txtCurso = view.findViewById(R.id.fg_CAMBIARTXT)
+        txtCurso = view.findViewById(R.id.txt_curso_horario)
+        txtDocente = view.findViewById(R.id.txt_docente_horario)
         btnEdit = view.findViewById(R.id.fg_btn_funcion)
         progressC = view.findViewById(R.id.pb_editar_horario)
         fun validarTiempo(time: String): Boolean{
@@ -128,18 +129,19 @@ class EditarHorarioFragment : DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
         progressC.visibility=View.VISIBLE
-        api.buscarHorario(horario_id).enqueue(object : Callback<Horario> {
+        api.buscarHorario(horarioId).enqueue(object : Callback<Horario> {
             override fun onResponse(call: Call<Horario>, response: Response<Horario>) {
                 if (response.isSuccessful) {
                     val horario = response.body()!!
                     horarioUpd = horario
                     txtHInicio.setText(horario.horaInicio)
                     txtHFin.setText(horario.horaFin)
-                    txtCurso.text = horario.curso.nombre.toString()
-                    txtFecha.text = horario.fechaClase.toString()
+                    txtCurso.text = horario.cursoId
+                    txtDocente.text = horario.docenteId
+                    txtFecha.text = horario.fechaClase
                     progressC.visibility=View.GONE
 
                 }else{
@@ -161,7 +163,6 @@ class EditarHorarioFragment : DialogFragment() {
 
             horarioUpd.horaInicio=txtInicio
             horarioUpd.horaFin=txtFin
-            // Validate the information
 
             if (txtInicio.isEmpty() || txtFin.isEmpty()) {
                 Toast.makeText(requireContext(), "Los campos no deben estar vacios.", Toast.LENGTH_SHORT).show()
@@ -169,18 +170,13 @@ class EditarHorarioFragment : DialogFragment() {
             }
 
             progressC.visibility=View.VISIBLE
-            api.actualizarHorario(horarioUpd).enqueue(object : Callback<Void> {
+            api.editarHorario(horarioUpd, horarioId).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers().get("message").toString()
                     if (response.isSuccessful) {
-                        progressC.visibility=View.GONE
+                        progressC.visibility=View.GONE ;
                         activity.supportFragmentManager.popBackStackImmediate()
-//                        val fragment = HorarioFragment.newInstance(retro.getBearerToken(), true, ArrayList())
-//                        activity.supportFragmentManager.beginTransaction()
-//                            .replace(R.id.fcv_horario_main, fragment).commit()
-                    } else{
-                        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-                    }
+                    } else{ Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show() }
 
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -196,8 +192,8 @@ class EditarHorarioFragment : DialogFragment() {
         fun newInstance(horario: Horario, token: String) =
             EditarHorarioFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
-                    putSerializable(HORARIO_ID, horario.horarioId)
+                    putSerializable(MenuAdministradorActivity().TOKEN, token)
+                    putSerializable(HORARIO_ID, horario.id)
                 }
             }
     }

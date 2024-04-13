@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.EstudiantesConFuncionesFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_estudiantes_f"
         android:layout_width="match_parent"
