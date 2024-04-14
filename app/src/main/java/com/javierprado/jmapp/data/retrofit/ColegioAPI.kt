@@ -28,8 +28,8 @@ interface ColegioAPI {
     fun login(@Body usuario : Usuario, @Query("rol") rol : String): Call<Usuario>
     @PUT("/api/auth/contrasena") // ACTUALIZAR CONTRASEÑA DE USUARIO
     fun actualizarContrasena(@Body usuario : Usuario): Call<Void>//QUITAR
-    @GET("/api/auth/session") // COMPROBAR SESION
-    fun obtenerSesion(@Query("rol") rol : String): Call<Usuario>
+//    @GET("/api/auth/session") // COMPROBAR SESION
+//    fun obtenerSesion(@Query("rol") rol : String): Call<Usuario>
     @GET("/api/auth/email") // COMPROBAR CORREO
     fun existeCorreo(@Query("correo") correo : String): Call<Void>
 
@@ -37,7 +37,7 @@ interface ColegioAPI {
     @GET("/api/noticias") // OBTENER NOTICIAS
     fun listarNoticias(): Call<List<Noticia>>
     @GET("/api/noticias/{id}") // OBTENER NOTICIA POR ID
-    fun obtenerNoticia(@Path("id")  noticiaId: String): Call<Noticia>
+    fun buscarNoticia(@Path("id")  noticiaId: String): Call<Noticia>
     @POST("/api/noticias") // AGREGAR NOTICIA
     fun agregarNoticia(@Body noticia : Noticia) : Call<Void>
     @PUT("/api/noticias/{id}") // EDITAR NOTICIA
@@ -55,7 +55,7 @@ interface ColegioAPI {
 
     // ESTUDIANTES - AULA
     @GET("/api/estudiantes/aulas") // OBTENER AULAS
-    fun obtenerAulas(@Query("docente") docenteId : String?, @Query("grado") grado : Int?, @Query("nivel") nivel : String?, @Query("seccion") seccion : String?): Call<List<Aula>>
+    fun listarAulas(@Query("docente") docenteId : String?, @Query("grado") grado : Int?, @Query("nivel") nivel : String?, @Query("seccion") seccion : String?): Call<List<Aula>>
     @POST("/api/estudiantes") // LISTAR
     fun listarEstudiantes(@Query("apoderado") apoderadoId : String, @Body estudiantes: List<String>): Call<List<Estudiante>>
     @GET("/api/estudiantes/{id}") // OBTENER ESTUDIANTES
@@ -65,7 +65,7 @@ interface ColegioAPI {
     @GET("/api/cursos") // OBTENER CURSOS
     fun listarCursos(@Query("estudiante") estudianteId : String?, @Query("nivel") nivel : String?): Call<List<Curso>>
     @GET("/api/cursos/{id}") // OBTENER CURSO
-    fun obtenerCurso(@Query("id") cursoId : String?): Call<Curso>
+    fun buscarCurso(@Query("id") cursoId : String?): Call<Curso>
 
     // ASISTENCIAS
     @POST("/api/asistencias") // OBTENER ASISTENCIAS
@@ -90,7 +90,7 @@ interface ColegioAPI {
     // DOCENTES
     @GET("/api/docentes") // LISTAR
     fun listarDocentes(@Query("curso") cursoId : String, @Query("estudiante") estudianteId : String, @Query("aula") aulaId: String): Call<List<Docente>>
-    @POST("/api/docentes/{id}") // BUSCAR
+    @GET("/api/docentes/{id}") // BUSCAR
     fun buscarDocente(@Path("id") docenteId: String): Call<Docente>
     @POST("/api/docentes/{id}") // REGISTRO y ACTUALIZACION
     fun guardarDocente(@Body docente: Docente, @Path("id") docenteId: String?): Call<Void>
@@ -115,7 +115,7 @@ interface ColegioAPI {
     @GET("/api/reuniones/{id}") // BUSCAR
     fun buscarReunion(@Path("id") id: String): Call<Reunion>
     @POST("/api/reuniones/{id}") // GUARDAR - EDITAR
-    fun guardarReunion(@Body reunion: Reunion, @Path("id") id: String): Call<Void>
+    fun guardarReunion(@Body reunion: Reunion, @Path("id") id: String): Call<Reunion>
     @DELETE("/api/reuniones/{id}") // ELIMINAR
     fun eliminarReunion(@Path("id") id: String): Call<Void>
 

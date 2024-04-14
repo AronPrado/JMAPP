@@ -109,7 +109,7 @@ class RegistroAsistenciaFragment : Fragment() {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
                             val emails = response.body()!!
-                            notiFuncs.notificarFalta(viewLifecycleOwner, emails, "Matemática", activity)
+                            NotificacionesJMA.notificarFalta(viewLifecycleOwner, emails, "Matemática", activity)
                         }else{
                             Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                         }

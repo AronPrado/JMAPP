@@ -12,7 +12,7 @@ import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.SharedPrefs
 
 private const val CHANNEL_ID = "my_channel"
-class NotificationReply: BroadcastReceiver() {
+class NotificationJustificacion: BroadcastReceiver() {
     val firestore = FirebaseFirestore.getInstance()
     override fun onReceive(context: Context?, intent: Intent?) {
 
@@ -65,8 +65,7 @@ class NotificationReply: BroadcastReceiver() {
             val replyid : Int = sharedCustomPref.getIntValue("values", 0)
 
             val repliedNotification  =
-                NotificationCompat
-                    .Builder(context, CHANNEL_ID)
+                NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.chatapp)
                     .setContentText("Reply Sent").build()
             notificationManager.notify(replyid, repliedNotification)

@@ -14,7 +14,7 @@ class AnotherUtil {
         val firestore = FirebaseFirestore.getInstance()
 
         private val auth = FirebaseAuth.getInstance()
-        private var userid: String = ""
+        private var userid: String = "" ; private var token: String = ""
         const val REQUEST_IMAGE_CAPTURE = 1
         const val REQUEST_IMAGE_PICK = 2
         const val MESSAGE_RIGHT = 1
@@ -30,6 +30,16 @@ class AnotherUtil {
             val formatter = SimpleDateFormat("HH:mm:ss")
             val date = Date(System.currentTimeMillis())
             return formatter.format(date)
+        }
+        fun getToken(): String {
+            if (auth.currentUser!=null){
+                auth.currentUser!!.getIdToken(true).addOnCompleteListener{ idToken->
+                    if (idToken.isSuccessful) {
+                        token = idToken.result?.token!!
+                    }
+                }
+            }
+            return token
         }
     }
 }

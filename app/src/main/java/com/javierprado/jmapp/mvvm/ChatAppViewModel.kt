@@ -11,11 +11,16 @@ import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.modal.Messages
 import com.javierprado.jmapp.modal.RecentChats
 import com.javierprado.jmapp.modal.Users
-import com.javierprado.jmapp.notificaciones.entities.NotificationData
-import com.javierprado.jmapp.notificaciones.entities.PushNotification
+import com.javierprado.jmapp.notificaciones.entities.NotificacionData
+import com.javierprado.jmapp.notificaciones.entities.PushNotificacion
 import com.javierprado.jmapp.notificaciones.entities.Token
 import com.javierprado.jmapp.notificaciones.network.RetrofitNoti
 import com.google.firebase.firestore.FirebaseFirestore
+import com.javierprado.jmapp.data.entities.Estudiante
+import com.javierprado.jmapp.data.entities.Reunion
+import com.javierprado.jmapp.notificaciones.FirebaseService
+import com.javierprado.jmapp.notificaciones.FirebaseServiceReuniones
+import com.javierprado.jmapp.notificaciones.entities.NotificacionDataReunion
 import com.javierprado.jmapp.view.activities.MyApplication
 import kotlinx.coroutines.*
 
@@ -40,7 +45,7 @@ class ChatAppViewModel : ViewModel() {
     fun getUsers(emails: List<String>): LiveData<List<Users>> {
         return usersRepo.getUsers(emails)
     }
-    // sendMessage
+    // ENVIO DE MENSAJES
     fun sendMessage(sender: String, receiver: String, friendname: String) =
         viewModelScope.launch(Dispatchers.IO) {
             val context = MyApplication.instance.applicationContext
@@ -85,8 +90,8 @@ class ChatAppViewModel : ViewModel() {
                             val loggedInUsername =
                                 mysharedPrefs.getValue("username")!!.split("\\s".toRegex())[0]
                             if (message.value!!.isNotEmpty() && receiver.isNotEmpty()) {
-                                PushNotification(
-                                    NotificationData(loggedInUsername, message.value!!), token!!
+                                PushNotificacion(
+                                    NotificacionData(loggedInUsername, message.value!!, FirebaseService().TIPO_NOTI), token!!
                                 ).also {
                                     sendNotification(it)
                                 }
@@ -101,15 +106,67 @@ class ChatAppViewModel : ViewModel() {
                     }
                 }
         }
-    // getting messages
+    // PROGRAMACION DE REUNION
+    fun accionReuniones(sender: String, emailReceiver: String, accion: String, reunion: Reunion, esid: Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
+        var receiver = "" ; var nombreSender = "" ; var nombreEstudiante = reunion.estudianteId
+
+        if(!esid){
+            //OBTENER INFO DEL USUARIO DESTINO
+            val query = firestore.collection("Users").whereEqualTo("correo", emailReceiver)
+            query.get().addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val user = querySnapshot.documents[0].toObject(Users::class.java)!!
+                    receiver = user.userid!!
+                }
+            }.addOnFailureListener { }
+        }else{
+            receiver = emailReceiver
+        }
+
+        firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, error ->
+            if (value != null && value.exists()) {
+                val user = value.toObject(Users::class.java)!! ; nombreSender = user.info!!
+            }
+        }
+
+        var mensaje = ""
+        when(accion){
+            "PROGRAMAR" -> mensaje = "Tienes una solicitud de reunión con el apoderado $nombreSender del alumno $nombreEstudiante"
+            "ACEPTADA_D" -> mensaje = "El docente $nombreSender ha aceptado la solicitud de programación de la reunión."
+            "ACEPTADA_A" -> mensaje = "El apoderado $nombreSender ha aceptado la solicitud de reprogramación."
+            "CANCELADA" -> mensaje = "El apoderado $nombreSender ha cancelado la solicitud de reprogramación."
+            "REPROGRAMAR" -> mensaje = "El docente $nombreSender ha solicitado reprogramar la fecha y hora de la reunión sugeridas."
+        }
+
+        firestore.collection("Tokens").document(receiver).addSnapshotListener { value, error ->
+            if (value != null && value.exists()) {
+                val tokenObject = value.toObject(Token::class.java)
+                token = tokenObject?.token!!
+                if (message.value!!.isNotEmpty() && receiver.isNotEmpty()) {
+                    PushNotificacion(
+                        NotificacionDataReunion("Reuniones", mensaje,
+                            FirebaseServiceReuniones().TIPO_NOTI, reunion.id, accion, sender), token!!
+                    ).also {
+                        sendNotification(it)
+                    }
+                } else {
+                    Log.e("ChatAppViewModel", "NO TOKEN, NO NOTIFICATION")
+                }
+            }
+            Log.e("ViewModel", token.toString())
+
+            }
+        }
+
+    // OBTENER MENSAJES
     fun getMessages(friend: String): LiveData<List<Messages>> {
         return messageRepo.getMessages(friend)
     }
-    // get RecentUsers
+    // OBTENER USUARIOS RECIENTES
     fun getRecentUsers(): LiveData<List<RecentChats>> {
         return chatlistRepo.getAllChatList()
     }
-    fun sendNotification(notification: PushNotification) = viewModelScope.launch {
+    fun sendNotification(notification: PushNotificacion) = viewModelScope.launch {
         try {
             val response = RetrofitNoti.api.postNotificacion(notification)
         } catch (e: Exception) {

@@ -21,7 +21,6 @@ class UsersRepo {
             snapshot?.documents?.forEach { document ->
                 val user = document.toObject(Users::class.java)
                 if (user!!.userid != AnotherUtil.getUidLoggedIn() && emails.contains(user.correo)) {
-                    Log.e("LLEGA", user.correo!!)
                     user.let {
                         usersList.add(it)
                     }

@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class DocenteAdapter(private val context: Context, private var docentes: List<Do
         nombres.text = docente.nombres + " " + docente.apellidos
         val nombreCurso = docente.cursoId
         curso.text = nombreCurso
+        Log.e("CURSOADAPTER",nombreCurso)
         // ESTABLECER COLORES
         view.setBackgroundColor(CursoUtil.getBackgroundColor(nombreCurso))
         nombres.setTextColor(CursoUtil.getTextColor(nombreCurso))

@@ -11,7 +11,7 @@ class Aula: Serializable {
     var estudiantes: List<String> = ArrayList()
     var apoderados: List<String> = ArrayList()
     var docentes: List<String> = ArrayList()
-    val emailsApoderados: List<String> = ArrayList()
+    val emails: List<String> = ArrayList()
 
     fun totalEstudiantes(): Int { return estudiantes.size }
 }

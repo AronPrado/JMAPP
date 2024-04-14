@@ -83,7 +83,7 @@ class EstudiantesHFragment : Fragment() {
             override fun onEstudianteFClicker(estudiante: Estudiante?) {
 //                Log.e("DIRECT", direct)
                 val fragment = extraF.obtenerFragment(direct, retro.getBearerToken(), estudiantes as Serializable,
-                    apoderadoId, estudiante?.aulaId!!)
+                    apoderadoId, estudiante?.aulaId!! +"-"+estudiante.id)
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.fcv_apoderado_main, fragment).addToBackStack(TAG).commit()
             }

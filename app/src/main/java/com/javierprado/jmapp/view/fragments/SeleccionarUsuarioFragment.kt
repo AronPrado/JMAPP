@@ -24,7 +24,6 @@ import com.javierprado.jmapp.modal.Users
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Aula
 import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Estudiante
@@ -37,6 +36,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val CHANNEL_ID = "my_channel"
 class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicked {
     lateinit var rvUsers : RecyclerView
     lateinit var rvSeleccionarUsuarios : RecyclerView
@@ -53,7 +53,8 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
     lateinit var binding: FragmentSeleccionarUsuarioBinding
 
     private lateinit var msg : String
-    var aulas: Collection<Aula> = ArrayList()
+//    var aulas: List<Aula> = ArrayList()
+//    var estudiantes: List<Estudiante> = ArrayList()
 
     private var token = ""
     var usuarioId: String = ""
@@ -103,7 +104,7 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
         val api = retro.getApi()
         aulaAdapter = AulaAdapter(ArrayList(), object : AulaClick {
             override fun onAulaClicker(aula: Aula?) {
-                val emailsApoderados = aula!!.emailsApoderados
+                val emailsApoderados = aula!!.emails
                 if(emailsApoderados.isNotEmpty()){
                     viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner) {
                         adapter.setList(it)
@@ -148,12 +149,11 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                 retro.setBearerToken(token)
                 if(user.tipo!! == RoleType.DOC.name){
                     rvSeleccionarUsuarios.adapter = aulaAdapter
-                    api.obtenerAulas(usuarioId, null, null, null).enqueue(object : Callback<List<Aula>> {
+                    api.listarAulas(usuarioId, null, null, null).enqueue(object : Callback<List<Aula>> {
                         override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {
                             msg = response.headers()["message"] ?: ""
                             if (response.isSuccessful) {
-                                aulas = response.body()!!
-                                aulaAdapter.setAulas(aulas as MutableList)
+                                aulaAdapter.setAulas(response.body()!!)
                             }else{
                                 Log.e("OBTENER AULAS:", msg)
                                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
@@ -169,9 +169,9 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                     rvSeleccionarUsuarios.adapter = hijoAdapter
                     api.listarEstudiantes(usuarioId, ArrayList()).enqueue(object : Callback<List<Estudiante>> {
                         override fun onResponse(call: Call<List<Estudiante>>, response: Response<List<Estudiante>>) {
+                            msg = response.headers()["message"] ?: ""
                             if (response.isSuccessful) {
-                                val estudiantes = response.body()!!
-                                hijoAdapter.setEstudiantes(estudiantes)
+                                hijoAdapter.setEstudiantes(response.body()!!)
                             }else{
                                 msg = "FAIL $msg"
                                 Log.e("NR :", msg)
@@ -186,8 +186,8 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
         }
         adapter.setOnClickListener(this)
         viewModel.getRecentUsers().observe(viewLifecycleOwner, Observer {
-            recentadapter.setList(it)
             rvRecentChats.adapter = recentadapter
+            recentadapter.setList(it)
         })
         recentadapter.setOnChatClickListener(this)
 

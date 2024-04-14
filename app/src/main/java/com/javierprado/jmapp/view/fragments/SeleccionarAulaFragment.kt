@@ -74,7 +74,7 @@ class SeleccionarAulaFragment : Fragment() {
         })
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
-        api.obtenerAulas(docenteId, null, null, null).enqueue(object : Callback<List<Aula>> {
+        api.listarAulas(docenteId, null, null, null).enqueue(object : Callback<List<Aula>> {
             override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {

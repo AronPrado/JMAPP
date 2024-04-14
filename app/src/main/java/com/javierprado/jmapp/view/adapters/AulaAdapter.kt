@@ -1,5 +1,6 @@
 package com.javierprado.jmapp.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class AulaAdapter(): RecyclerView.Adapter<AulaAdapter.VHAula>() {
         this.aulas = aulas
         this.aulaClick = aulaClick
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun setAulas(aulas: List<Aula>){
         this.aulas = aulas
         notifyDataSetChanged()

@@ -124,7 +124,7 @@ class ControlNoticiaActivity : AppCompatActivity() {
             val progressBarListar: CircularProgressIndicator = findViewById(R.id.pb_control_noticia)
             progressBarListar.visibility = View.VISIBLE
             noticiaId.let {
-                api.obtenerNoticia(it).enqueue(object : Callback<Noticia> {
+                api.buscarNoticia(it).enqueue(object : Callback<Noticia> {
                     override fun onResponse(call: Call<Noticia>, response: Response<Noticia>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {

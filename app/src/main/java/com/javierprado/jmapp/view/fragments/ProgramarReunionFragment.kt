@@ -17,13 +17,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.javierprado.jmapp.R
-import com.javierprado.jmapp.data.entities.Apoderado
 import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.data.util.AnotherUtil
+import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.databinding.FragmentProgramarReunionBinding
+import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
+import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.adapters.DocenteAdapter
 import retrofit2.Call
@@ -34,12 +37,12 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeParseException
-
+//REU primero info - luego id
 class ProgramarReunionFragment : Fragment() {
     lateinit var binding: FragmentProgramarReunionBinding
-    //VARIABLES
-
-    val REUNION = "reunion" ; var docentes: List<Docente> = ArrayList()
+    var tipoUsuario = RoleType.APOD.name
+    val REUNION = "reunion" ; val IDREUNION = "reunionid"
+    var docentes: List<Docente> = ArrayList()
     private lateinit var reunion: Reunion
     var aulaId = "" ; var usuarioId = ""; var estudianteId = "" ; lateinit var docente: Docente
     var infoApoderado = "" ; var ocupadas: MutableList<String> = ArrayList()
@@ -51,7 +54,8 @@ class ProgramarReunionFragment : Fragment() {
     private lateinit var api: ColegioAPI
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = context as ControlEstudianteActivity
+        activity = if(tipoUsuario == RoleType.DOC.name){ context as ControlSeleccionActivity }
+                                                   else{ context as ControlEstudianteActivity }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +63,10 @@ class ProgramarReunionFragment : Fragment() {
             retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
             api = retro.getApi()
             reunion = try{ it.getSerializable(REUNION) as Reunion } catch(c: ClassCastException){ Reunion() }
-            toProgramar = reunion.id != ""
-            aulaId = it.getString(ControlEstudianteActivity().AULAID, "")
+            toProgramar = reunion.id == ""
+            aulaId = it.getString(ControlEstudianteActivity().AULAID, "").split("-")[0]
             usuarioId = it.getString(MenuAdministradorActivity().USUARIOID, "")
+            estudianteId = reunion.estudianteId
             //VARIABLES
         }
     }
@@ -76,6 +81,7 @@ class ProgramarReunionFragment : Fragment() {
         if(toProgramar){
             binding.fgBtn1Reunion.visibility = View.GONE ; binding.txtApoderadoReunion.visibility = View.GONE
             binding.fechaReunion.isEnabled=true ; binding.horaReunion.isEnabled = true
+            binding.fgBtn2Reunion.text = "Programar"
 
             val adapter = DocenteAdapter(activity, ArrayList())
             binding.sDocenteReunion.adapter = adapter
@@ -95,7 +101,9 @@ class ProgramarReunionFragment : Fragment() {
             binding.estadoReunion.visibility = View.GONE ;
             binding.fgBtn2Reunion.isEnabled=true ; binding.fgBtn1Reunion.isEnabled=true
             binding.txtEnviarReunion.text = "Apoderado:"; binding.fgBtn2Reunion.text = "Reprogramar"
-            getApoderadoInfo()
+            val nsa = reunion.apoderadoId.split("-")[0] ; var nse = reunion.estudianteId.split("-")[0]
+            var infoe = reunion.estudianteId.split("-")[1]
+            infoApoderado = nsa + "\n" + infoe + "\n" + nse
             binding.txtApoderadoReunion.text = infoApoderado
             binding.fechaReunion.setText(reunion.fecha) ; binding.horaReunion.setText(reunion.horaInicio)
 
@@ -124,24 +132,25 @@ class ProgramarReunionFragment : Fragment() {
     }
 
     private fun funcionBtn1() {
-        val fecha = binding.fechaReunion.text.toString() ; val hora = binding.horaReunion.text.toString()
-        val reunionGuardar = Reunion(fecha, hora, docente.id, usuarioId, estudianteId)
+        reunion.estado = "PROGRAMADA"
         val id = reunion.id
-        api.guardarReunion(reunionGuardar, id).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        api.guardarReunion(reunion, id).enqueue(object : Callback<Reunion> {
+            override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
                     //ENVIAR CORREO A DOCENTE
-                    val correo = msg
-                    Log.e("CORREO", correo)
-                    activity.supportFragmentManager.popBackStackImmediate()
+                    val reuActualizada = response.body()!!
+                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
+                        reunion.apoderadoId.split("-")[1], "ACEPTADA_D", reuActualizada)
+
                     Toast.makeText(activity, "Se envió la notificación de aprobación.", Toast.LENGTH_SHORT).show()
+                    activity.supportFragmentManager.popBackStackImmediate()
                 }else{
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("REUNION", msg)
                 }
             }
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<Reunion>, t: Throwable) {
                 Toast.makeText(activity, "FAIL", Toast.LENGTH_SHORT).show()
                 Log.e("REUNION", t.message.toString())
             }
@@ -149,7 +158,6 @@ class ProgramarReunionFragment : Fragment() {
     }
 
     private fun funcionBtn2() {
-        docente = Docente()
         val fecha = binding.fechaReunion.text.toString() ; val hora = binding.horaReunion.text.toString()
         val estado = "RESPUESTA_A"
         val reunionGuardar = Reunion(fecha, hora, docente.id, usuarioId, estudianteId)
@@ -165,29 +173,34 @@ class ProgramarReunionFragment : Fragment() {
                 binding.fgBtn1Reunion.visibility=View.GONE ; binding.fgBtn2Reunion.text=txtButton
                 binding.fechaReunion.isEnabled=true ; binding.horaReunion.isEnabled=true
                 binding.fechaReunion.requestFocus()
+                //ABRIR TECLADO
                 val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.fechaReunion, InputMethodManager.SHOW_IMPLICIT)
-                Log.e("D-REPROGRAMAR", id)
-                return
+                imm.showSoftInput(binding.fechaReunion, InputMethodManager.SHOW_IMPLICIT) ; return
             }
             reunionGuardar.estado = estado
             Log.e("D-ENVIAR", id)
         }
-        api.guardarReunion(reunionGuardar, id).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        api.guardarReunion(reunionGuardar, id).enqueue(object : Callback<Reunion> {
+            override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
-                    //ENVIAR CORREO A DOCENTE
-                    val correo = msg
-                    Log.e("CORREO", correo)
+                    val reuCreada = response.body()!!
+
+                    val accion = if(toProgramar){ "PROGRAMAR" } else { "REPROGRAMAR" }
+                    val correo = if(toProgramar) { reunion.docenteId.split("-")[1] }
+                    else{ reunion.apoderadoId.split("-")[1] }
+
+                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
+                        correo, accion, reuCreada)
+                    Toast.makeText(activity,
+                        "Se ha enviado la notificacion para solicitar"+if(toProgramar) "programación de reunión." else " la reprogramación.", Toast.LENGTH_SHORT).show()
                     activity.supportFragmentManager.popBackStackImmediate()
-                    Toast.makeText(activity, "Se ha enviado la notificacion de "+if(id.equals("null"))"solicitud." else "reprogramacion.", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("REUNION", msg)
                 }
             }
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<Reunion>, t: Throwable) {
                 Toast.makeText(activity, "FAIL", Toast.LENGTH_SHORT).show()
                 Log.e("REUNION", t.message.toString())
             }
@@ -196,12 +209,12 @@ class ProgramarReunionFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(token: String, reunion: Serializable, apoderadoId: String, aulaId: String) =
+        fun newInstance(token: String, reunion: Serializable, usuarioId: String, aulaId: String) =
             ProgramarReunionFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(MenuAdministradorActivity().TOKEN, token)
                     putSerializable(REUNION, reunion)
-                    putSerializable(MenuAdministradorActivity().USUARIOID, apoderadoId)
+                    putSerializable(MenuAdministradorActivity().USUARIOID, usuarioId)
                     putSerializable(ControlEstudianteActivity().AULAID, aulaId)
                 }
             }
@@ -263,26 +276,6 @@ class ProgramarReunionFragment : Fragment() {
             }
             override fun onFailure(call: Call<List<Docente>>, t: Throwable) {
                 Log.e("DOCENTES", t.message.toString())
-            }
-        } )
-    }
-    fun getApoderadoInfo(){
-        api.buscarApoderadoReunion(reunion).enqueue(object : Callback<Apoderado> {
-            override fun onResponse(call: Call<Apoderado>, response: Response<Apoderado>) {
-                msg = response.headers()["message"] ?: ""
-                if (response.isSuccessful) {
-                    val apoderado = response.body()!!
-                    infoApoderado = apoderado.nombres +" "+ apoderado.apellidos +"\n"
-                    infoApoderado += apoderado.direccion
-
-                }else{
-                    Log.e("APODERADOS:", msg)
-                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-                    activity.supportFragmentManager.popBackStackImmediate()
-                }
-            }
-            override fun onFailure(call: Call<Apoderado>, t: Throwable) {
-                Log.e("APODERADOS", t.message.toString())
             }
         } )
     }

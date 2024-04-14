@@ -7,8 +7,8 @@ data class Users (
     val info: String? = "",
     val correo : String? ="",
     val estado : String? = "",
-    val tipo : String? = "",
-    val tipoid : String? = "",
+    val tipo : String? = "",//DOC, APOD
+    val tipoid : String? = "",//docenteId, apderadoId
     val token : String? = "",
     ): Parcelable{
         constructor(parcel: Parcel) : this(
