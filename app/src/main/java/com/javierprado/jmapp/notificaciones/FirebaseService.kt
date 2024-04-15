@@ -77,7 +77,7 @@ class FirebaseService: FirebaseMessagingService() {
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         val accion = data["accion"]!! ; val userDestino = data["sender"]!!
         val tipo = if (accion.contains("D")) RoleType.APOD.name else RoleType.DOC.name
-        val accionTipo = accion.split("-")[1][0].toString()// R, P, A, C
+        val accionTipo = accion.split("_")[1][0].toString()// R, P, A, C
         val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
         //INTENT NOTIFICACION PARA EL DOCENTE
         var intent = if(tipo == "D") { Intent(this, ControlSeleccionActivity::class.java) }else{ Intent() }
@@ -138,7 +138,7 @@ class FirebaseService: FirebaseMessagingService() {
             // NotificationCompat.Action DERECHA action
             val derechaAction = NotificationCompat.Action.Builder(
                 R.drawable.reply,//CAMBIAR
-                accion, derechaPI).build()
+                if (accion == "A_PROGRAMA") "REPROGRAMAR" else "CANCELAR" , derechaPI).build()
 
             val sharedCustomPref = SharedPrefs(applicationContext)
             sharedCustomPref.setIntValue("values", notificationID)
@@ -151,7 +151,7 @@ class FirebaseService: FirebaseMessagingService() {
                 .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
-            if(!listOf("A", "C").contains(accionTipo)) { notification.addAction(derechaAction); notification.addAction(izquierdaAction) }
+            if(!listOf("A", "C").contains(accionTipo)) {  notification.addAction(izquierdaAction); notification.addAction(derechaAction) }
             notificationManager.notify(notificationID, notification.build())
         }
 
