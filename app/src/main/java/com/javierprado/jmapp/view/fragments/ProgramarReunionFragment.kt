@@ -80,7 +80,6 @@ class ProgramarReunionFragment : Fragment() {
         //MODO APODERADO
         if(toProgramar){
             binding.fgBtn1Reunion.visibility = View.GONE ; binding.txtApoderadoReunion.visibility = View.GONE
-            binding.fechaReunion.isEnabled=true ; binding.horaReunion.isEnabled = true
             binding.fgBtn2Reunion.text = "Programar"
 
             val adapter = DocenteAdapter(activity, ArrayList())
@@ -188,7 +187,7 @@ class ProgramarReunionFragment : Fragment() {
                 if (response.isSuccessful) {
                     val reuCreada = response.body()!!
                     val cidApoderado = reuCreada.apoderadoId ; val cidDocente = reuCreada.docenteId
-                    val accion = if(toProgramar){ "PROGRAMAR" } else { "REPROGRAMAR" }
+                    val accion = if(toProgramar){ "A_PROGRAMA" } else { "D_REPROGRAMA" }
                     val correo = if(toProgramar) { cidDocente.split("-")[0] } else{ cidApoderado.split("-")[0] }
 
                     reuCreada.apoderadoId = cidApoderado.split("-")[1]
@@ -269,6 +268,7 @@ class ProgramarReunionFragment : Fragment() {
                 if (response.isSuccessful) {
                     docentes = response.body()!!
                     binding.sDocenteReunion.adapter = adapter
+                    binding.fechaReunion.isEnabled=true ; binding.horaReunion.isEnabled = true
                     adapter.setList(docentes)
                 }else{
                     Log.e("DOCENTES:", msg)

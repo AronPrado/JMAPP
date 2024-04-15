@@ -107,19 +107,19 @@ class ChatAppViewModel : ViewModel() {
                 }
         }
     // PROGRAMACION DE REUNION
-    fun accionReuniones(sender: String, emailReceiver: String, accion: String, reunion: Reunion, esid: Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
-        var receiver = "" ; var nombreSender = "" ; var nombreEstudiante = reunion.estudianteId
+    fun accionReuniones(sender: String, emailReceiver: String, accion: String, reunion: Reunion?, esid: Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
+        var receiver = "" ; var nombreSender = "" ; var nombreEstudiante = reunion?.estudianteId
         fun enviar(idSender: String){
             firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
                 if (value != null && value.exists()) {
                     val user = value.toObject(Users::class.java)!! ; nombreSender = user.info!!
                     var mensaje = ""
                     when(accion){
-                        "PROGRAMAR" -> mensaje = "Tienes una solicitud de reunión con el apoderado $nombreSender del alumno $nombreEstudiante"
-                        "ACEPTADA_D" -> mensaje = "El docente $nombreSender ha aceptado la solicitud de programación de la reunión."
-                        "ACEPTADA_A" -> mensaje = "El apoderado $nombreSender ha aceptado la solicitud de reprogramación."
-                        "CANCELADA" -> mensaje = "El apoderado $nombreSender ha cancelado la solicitud de reprogramación."
-                        "REPROGRAMAR" -> mensaje = "El docente $nombreSender ha solicitado reprogramar la fecha y hora de la reunión sugeridas."
+                        "A_PROGRAMA" -> mensaje = "Tienes una solicitud con el apoderado $nombreSender a las FECHA Y HORA"
+                        "D_ACEPTA" -> mensaje = "El docente $nombreSender ha aceptado la solicitud de programación de la reunión."
+                        "D_REPROGRAMA" -> mensaje = "El docente $nombreSender quiere reprogramar la reunion a F y H."
+                        "A_ACEPTA" -> mensaje = "El apoderado $nombreSender ha aceptado la solicitud de reprogramación."
+                        "A_CANCELA" -> mensaje = "El apoderado $nombreSender ha cancelado la solicitud de reprogramación."
                     }
                     firestore.collection("Tokens").document(idSender).addSnapshotListener { value, _ ->
                         if (value != null && value.exists()) {
@@ -128,7 +128,7 @@ class ChatAppViewModel : ViewModel() {
                             if (idSender.isNotEmpty()) {
                                 PushNotificacion(
                                     NotificacionDataReunion("Reuniones", mensaje,
-                                        FirebaseService().TIPOR, reunion.id, accion, sender), token!!
+                                        FirebaseService().TIPOR, reunion?.id ?: "", accion, sender), token!!
                                 ).also {
                                     sendNotification(it)
                                 }
