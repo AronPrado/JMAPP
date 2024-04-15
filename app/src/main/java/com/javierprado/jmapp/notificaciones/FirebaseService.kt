@@ -130,7 +130,7 @@ class FirebaseService: FirebaseMessagingService() {
 
                 // PendingIntent para APROBAR_REUNION
                 val aprobarIntent = Intent(this, NotificationReunion::class.java)//CAMBIAR
-                aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == dcode) "A" else "D")
+                aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == acode) "A" else "D")
                 val aprobarPendingIntent =
                     PendingIntent.getBroadcast(this, 0, aprobarIntent, PendingIntent.FLAG_MUTABLE)
                 // NotificationCompat.Action APROBAR_REUNION action

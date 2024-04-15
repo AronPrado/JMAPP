@@ -34,7 +34,7 @@ class NotificationReunion: BroadcastReceiver() {
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, reunion, true)
 
-        msg = if(accion == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
+        msg = if(accion == "CANCELADA") "Reunión cancelada." else "Reunión programada correctamente."
         val repliedNotification  =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.chatapp)//CAMBIAR
