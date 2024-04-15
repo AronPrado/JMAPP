@@ -132,13 +132,13 @@ class FirebaseService: FirebaseMessagingService() {
             val izquierdaAction = NotificationCompat.Action.Builder(
                 R.drawable.reply,//CAMBIAR
                 "Aceptar", izquierdaPI ).build()
-            if(tipo == acode && accionTipo == "P"){
+            if(tipo == dcode && accionTipo == "P"){
                 derechaPI = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
             }
             // NotificationCompat.Action DERECHA action
             val derechaAction = NotificationCompat.Action.Builder(
                 R.drawable.reply,//CAMBIAR
-                if (accion == "A_PROGRAMA") "REPROGRAMAR" else "CANCELAR" , derechaPI).build()
+                if (accion == "A_PROGRAMA") "Reprogramar" else "Cancelar" , derechaPI).build()
 
             val sharedCustomPref = SharedPrefs(applicationContext)
             sharedCustomPref.setIntValue("values", notificationID)
