@@ -75,9 +75,10 @@ class FirebaseService: FirebaseMessagingService() {
 
     private fun notiReuniones(data: Map<String, String>){
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-        val accion = data["accion"]!! ; val userDestino = data["sender"]!!
-
-        var intent = Intent() ; val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
+        var accion = "" ; val userDestino = data["sender"]!!
+//data["accion"]!!
+        var intent = Intent() ; var repOcanPendingIntent: PendingIntent? = null
+        val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
         val bundle = Bundle()
         var tipo = ""
 
@@ -99,7 +100,9 @@ class FirebaseService: FirebaseMessagingService() {
                 val tokenUser = user.token!!
                 FirebaseServiceReuniones.retro.setBearerToken(tokenUser)
                 intent = Intent(this, intentUsuario[tipo])
+                repOcanPendingIntent = pendingsTOActions[tipo]!!
                 val reunionId = data["reunion"]!!
+                accion = if(tipo == dcode) "Reprogramar" else "Cancelar"
                 FirebaseServiceReuniones.retro.getApi().buscarReunion(reunionId).enqueue(object :
                     Callback<Reunion> {
                     override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
@@ -129,7 +132,7 @@ class FirebaseService: FirebaseMessagingService() {
 
         // PendingIntent para APROBAR_REUNION
         val aprobarIntent = Intent(this, NotificationReunion::class.java)//CAMBIAR
-        aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == acode) "A" else "D")
+        aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == dcode) "A" else "D")
         val aprobarPendingIntent =
             PendingIntent.getBroadcast(this, 0, aprobarIntent, PendingIntent.FLAG_MUTABLE)
         // NotificationCompat.Action APROBAR_REUNION action
@@ -138,17 +141,15 @@ class FirebaseService: FirebaseMessagingService() {
             "Aceptar", aprobarPendingIntent ).build()
 
         // PendingIntent para REPROGRAMAR o CANCELAR
-        val repOcanPendingIntent = pendingsTOActions[tipo]
+        // repOcanPendingIntent = pendingsTOActions[tipo]
         // NotificationCompat.Action REPROGRAMAR o CANCELAR action
         val repOcanAction = NotificationCompat.Action.Builder(
             R.drawable.reply,//CAMBIAR
-            accion, repOcanPendingIntent ).build()
+            accion, repOcanPendingIntent).build()
 
         val sharedCustomPref = SharedPrefs(applicationContext)
         sharedCustomPref.setIntValue("values", notificationID)
         sharedCustomPref.setValue("d_notir", userDestino) // USER para notificar accion
-//            sharedCustomPref.setValue("nd_notir", nombreDestino)
-//            sharedCustomPref.setValue("en_notir", estudianteNombre)
         sharedCustomPref.setValue("td_notir", tipo)
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)

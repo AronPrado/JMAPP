@@ -19,7 +19,6 @@ private const val CHANNEL_ID = "my_channel"
 class NotificationReunion: BroadcastReceiver() {
     val firestore = FirebaseFirestore.getInstance()
     override fun onReceive(context: Context?, intent: Intent?) {
-
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val accion = intent?.extras?.getString("ACCION") ?: ""
@@ -33,7 +32,7 @@ class NotificationReunion: BroadcastReceiver() {
         var msg = "Su solicitud de reunión con el docente -- ha sido aceptada."
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
-            userAenviar, accion, reunion)
+            userAenviar, accion, reunion, true)
 
         msg = if(accion == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
         val repliedNotification  =
