@@ -58,8 +58,8 @@ class FirebaseService: FirebaseMessagingService() {
 
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         when(message.data["tipo"]){
-            TIPOM -> { notiMensajes(message.data, firestore) }
-            TIPOR -> { notiReuniones(message.data, firestore) }
+            TIPOM -> { notiMensajes(message.data) }
+            TIPOR -> { notiReuniones(message.data) }
             TIPOJ -> { notiJustificaciones(message.data, firestore) }
         }
     }
@@ -73,7 +73,8 @@ class FirebaseService: FirebaseMessagingService() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun notiReuniones(data: Map<String, String>, firestore: FirebaseFirestore){
+    private fun notiReuniones(data: Map<String, String>){
+        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         val accion = data["accion"]!! ; val userDestino = data["sender"]!!
 
         var intent = Intent() ; val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
@@ -164,7 +165,8 @@ class FirebaseService: FirebaseMessagingService() {
     private fun notiJustificaciones(data: Map<String, String>, firestore: FirebaseFirestore){
 
     }
-    private fun notiMensajes(data: Map<String, String>, firestore: FirebaseFirestore){
+    private fun notiMensajes(data: Map<String, String>){
+        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         var intent = Intent()
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, error ->
             if (value != null && value.exists()) {

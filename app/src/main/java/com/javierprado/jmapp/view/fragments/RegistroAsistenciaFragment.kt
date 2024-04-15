@@ -106,7 +106,7 @@ class RegistroAsistenciaFragment : Fragment() {
 
         btnRegistrar.setOnClickListener {
             if (asistencias.isNotEmpty()){
-//                asistencias.map { a->a.estudianteId = a.estudianteId.split("-")[1] }
+                asistencias.map { a->a.estudianteId = a.estudianteId.split("-")[1] }
                 api.editarAsistencias(asistencias).enqueue(object : Callback<List<String>> {
                     override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                         msg = response.headers()["message"] ?: ""
