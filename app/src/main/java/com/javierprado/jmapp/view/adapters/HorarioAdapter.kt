@@ -14,6 +14,7 @@ import com.javierprado.jmapp.data.entities.Curso
 import com.javierprado.jmapp.data.entities.Docente
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.data.util.CursoUtil
 import com.javierprado.jmapp.databinding.ItemDiaHorarioBinding
 import com.javierprado.jmapp.view.clicks.HorarioClick
 import retrofit2.Call
@@ -54,10 +55,16 @@ class HorarioAdapter() : RecyclerView.Adapter<HorarioAdapter.VHHorario>() {
         private val binding: ItemDiaHorarioBinding
         init { this.binding = binding }
         fun bind(horario: Horario) {
-            binding.cursoHorario.text = horario.cursoId
-            binding.docenteHorario.text = horario.docenteId
+            val c = horario.cursoId ; val d = horario.docenteId
+            binding.cursoHorario.text = c
+            binding.docenteHorario.text = d
             val horas = horario.horaInicio + "\n-\n" + horario.horaFin
             binding.horasHorario.text = horas
+
+            //COLORES
+            binding.itemHorario.setBackgroundColor(CursoUtil.getBackgroundColor(c))
+            binding.docenteHorario.setTextColor(CursoUtil.getTextColor(c))
+            binding.cursoHorario.setTextColor(CursoUtil.getTextColor(c))
         }
     }
 }

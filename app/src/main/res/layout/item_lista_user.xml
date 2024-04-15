@@ -11,8 +11,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/person"
-        app:civ_border_width="2dp"
         android:layout_centerHorizontal="true"
+        app:civ_border_width="2dp"
         app:civ_border_color="#FE2C54"
         android:id="@+id/imageViewUser"/>
 

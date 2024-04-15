@@ -30,8 +30,8 @@ class EstudianteSeleccionAdapter(): RecyclerView.Adapter<EstudianteSeleccionAdap
             val info = "$grado° '$seccion' - $nivel"
             binding.gradoSeccionEstudiante.text = info
             binding.nombreEstudiante.text = estudiante.nombres + " " + estudiante.apellidos
-            //PONER IMG DE ACUERDO AL SEXO
-            binding.imgGeneroEstudiante.setImageResource(R.drawable.estudiantem)
+            //PONER IMG DE ACUERDO AL GENERO
+            binding.imgGeneroEstudiante.setImageResource(R.drawable.estudiantef)
             if(estudiante.genero == "M"){ binding.imgGeneroEstudiante.setImageResource(R.drawable.estudiantem) }
         }
     }

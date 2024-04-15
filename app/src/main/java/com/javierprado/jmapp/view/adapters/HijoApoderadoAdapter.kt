@@ -31,6 +31,8 @@ class HijoApoderadoAdapter(): RecyclerView.Adapter<HijoApoderadoAdapter.VHEstudi
     override fun onBindViewHolder(holder: VHEstudiante, position: Int) {
         val estudiante = listOfEstudiantes[position]
         holder.hijoNombre.text = "${estudiante.nombres} ${estudiante.apellidos}"
+        holder.hijoImagen.setImageResource(R.drawable.estudiantef)
+        if(estudiante.genero == "M"){ holder.hijoImagen.setImageResource(R.drawable.estudiantem) }
         holder.itemView.setOnClickListener {
             listener?.onHijoSelected(estudiante) }
     }
@@ -41,6 +43,7 @@ class HijoApoderadoAdapter(): RecyclerView.Adapter<HijoApoderadoAdapter.VHEstudi
     }
     class VHEstudiante(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val hijoNombre: TextView = itemView.findViewById(R.id.estudiante)
+        val hijoImagen: ImageView = itemView.findViewById(R.id.img_hijo)
 //        private val binding: ItemListaHijosBinding
 //        init { this.binding = binding }
 //        fun bind(estudiante: Estudiante) {

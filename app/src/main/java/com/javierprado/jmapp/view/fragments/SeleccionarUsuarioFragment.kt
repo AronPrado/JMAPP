@@ -108,6 +108,7 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                 if(emailsApoderados.isNotEmpty()){
                     viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner) {
                         adapter.setList(it)
+                        adapter.setTipoUsuarios(RoleType.APOD.name)
                         rvUsers.adapter = adapter
                         rvSeleccionarUsuarios.visibility = View.GONE
                         rvUsers.visibility = View.VISIBLE
@@ -124,8 +125,12 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
                             val emailsDocentes = response.body()!!.map { d-> d.correo }
+                            val cursosDocentes = response.body()!!.map { d -> d.cursoId }
+                            Log.e("CURSOS", cursosDocentes.toString())
                             viewModel.getUsers(emailsDocentes).observe(viewLifecycleOwner) {
                                 adapter.setList(it)
+                                adapter.setCursos(cursosDocentes)
+                                adapter.setTipoUsuarios(RoleType.DOC.name)
                                 rvUsers.adapter = adapter
                                 rvSeleccionarUsuarios.visibility = View.GONE
                                 rvUsers.visibility = View.VISIBLE
@@ -144,9 +149,7 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener{ value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject(Users::class.java)
-                usuarioId = user!!.tipoid!!
-                token = user.token!!
-                retro.setBearerToken(token)
+                usuarioId = user!!.tipoid!! ; token = user.token!! ; retro.setBearerToken(token)
                 if(user.tipo!! == RoleType.DOC.name){
                     rvSeleccionarUsuarios.adapter = aulaAdapter
                     api.listarAulas(usuarioId, null, null, null).enqueue(object : Callback<List<Aula>> {
