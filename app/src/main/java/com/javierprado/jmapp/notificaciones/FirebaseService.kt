@@ -118,50 +118,50 @@ class FirebaseService: FirebaseMessagingService() {
                         Log.e("REUNION", t.message.toString())
                     }
                 } )
+
+                val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                val notificationID = Random.nextInt()
+
+                createNotificationChannel(notificationManager)
+
+                intent.putExtras(bundle)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+
+                // PendingIntent para APROBAR_REUNION
+                val aprobarIntent = Intent(this, NotificationReunion::class.java)//CAMBIAR
+                aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == dcode) "A" else "D")
+                val aprobarPendingIntent =
+                    PendingIntent.getBroadcast(this, 0, aprobarIntent, PendingIntent.FLAG_MUTABLE)
+                // NotificationCompat.Action APROBAR_REUNION action
+                val aprobarAction = NotificationCompat.Action.Builder(
+                    R.drawable.reply,//CAMBIAR
+                    "Aceptar", aprobarPendingIntent ).build()
+
+                // PendingIntent para REPROGRAMAR o CANCELAR
+                // repOcanPendingIntent = pendingsTOActions[tipo]
+                // NotificationCompat.Action REPROGRAMAR o CANCELAR action
+                val repOcanAction = NotificationCompat.Action.Builder(
+                    R.drawable.reply,//CAMBIAR
+                    accion, repOcanPendingIntent).build()
+
+                val sharedCustomPref = SharedPrefs(applicationContext)
+                sharedCustomPref.setIntValue("values", notificationID)
+                sharedCustomPref.setValue("d_notir", userDestino) // USER para notificar accion
+                sharedCustomPref.setValue("td_notir", tipo)
+
+                val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+//            .setContentTitle(message.data["title"])
+                    .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
+                    .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .addAction(aprobarAction)
+                    .addAction(repOcanAction)
+                    .build()
+                notificationManager.notify(notificationID, notification)
             }
         }
-
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val notificationID = Random.nextInt()
-
-        createNotificationChannel(notificationManager)
-
-        intent.putExtras(bundle)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-
-        // PendingIntent para APROBAR_REUNION
-        val aprobarIntent = Intent(this, NotificationReunion::class.java)//CAMBIAR
-        aprobarIntent.putExtra("ACCION", "ACEPTADA_"+if(tipo == dcode) "A" else "D")
-        val aprobarPendingIntent =
-            PendingIntent.getBroadcast(this, 0, aprobarIntent, PendingIntent.FLAG_MUTABLE)
-        // NotificationCompat.Action APROBAR_REUNION action
-        val aprobarAction = NotificationCompat.Action.Builder(
-            R.drawable.reply,//CAMBIAR
-            "Aceptar", aprobarPendingIntent ).build()
-
-        // PendingIntent para REPROGRAMAR o CANCELAR
-        // repOcanPendingIntent = pendingsTOActions[tipo]
-        // NotificationCompat.Action REPROGRAMAR o CANCELAR action
-        val repOcanAction = NotificationCompat.Action.Builder(
-            R.drawable.reply,//CAMBIAR
-            accion, repOcanPendingIntent).build()
-
-        val sharedCustomPref = SharedPrefs(applicationContext)
-        sharedCustomPref.setIntValue("values", notificationID)
-        sharedCustomPref.setValue("d_notir", userDestino) // USER para notificar accion
-        sharedCustomPref.setValue("td_notir", tipo)
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setContentTitle(message.data["title"])
-            .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
-            .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .addAction(aprobarAction)
-            .addAction(repOcanAction)
-            .build()
-        notificationManager.notify(notificationID, notification)
     }
     private fun notiJustificaciones(data: Map<String, String>, firestore: FirebaseFirestore){
 
