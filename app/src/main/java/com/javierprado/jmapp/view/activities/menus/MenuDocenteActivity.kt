@@ -48,7 +48,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     lateinit var firestore: FirebaseFirestore
     private lateinit var api : ColegioAPI
 
-    val CURSOID = "cursoid"
+    val CURSOID = "cursoid" ; val ESTUDIANTES = "estudiantes"
     private var tokenDoc = ""; private var docenteId = ""; private var cursoId = ""
     private lateinit var msg : String
     private var extraFuns : ExtraFunctions = ExtraFunctions()

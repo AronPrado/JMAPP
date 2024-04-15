@@ -13,8 +13,9 @@ import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
+import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 
-private const val CHANNEL_ID = "noti_reuniones"
+private const val CHANNEL_ID = "my_channel"
 class NotificationReunion: BroadcastReceiver() {
     val firestore = FirebaseFirestore.getInstance()
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -22,7 +23,7 @@ class NotificationReunion: BroadcastReceiver() {
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val accion = intent?.extras?.getString("ACCION") ?: ""
-        val reunion = try { intent?.extras?.getSerializable("ACCION") as Reunion }
+        val reunion = try { intent?.extras?.getSerializable(ProgramarReunionFragment().REUNION) as Reunion }
         catch (e: NullPointerException){ Reunion() }
 
         val sharedCustomPref = SharedPrefs(context)
@@ -34,7 +35,6 @@ class NotificationReunion: BroadcastReceiver() {
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, reunion)
 
-        Log.e("CORRECTO", "RESPUESTA ENVIADA")
         msg = if(accion == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
         val repliedNotification  =
             NotificationCompat.Builder(context, CHANNEL_ID)

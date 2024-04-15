@@ -31,7 +31,6 @@ class EstudiantesConFuncionesFragment : Fragment() {
     private var adapter : EstudianteFuncsAdapter = EstudianteFuncsAdapter()
     private lateinit var estudiantes: List<String>
 
-    val ESTUDIANTES = "estudiantes" ; val TOKEN = "token"
     private var docenteId = ""; private var cursoId = ""
     private val retro = RetrofitHelper.getInstanceStatic()
     private lateinit var activity: AppCompatActivity
@@ -43,8 +42,8 @@ class EstudiantesConFuncionesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            retro.setBearerToken(it.getString(TOKEN, ""))
-            estudiantes = it.getStringArrayList(ESTUDIANTES)?.toList() ?: ArrayList()
+            retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
+            estudiantes = it.getStringArrayList(MenuDocenteActivity().ESTUDIANTES)?.toList() ?: ArrayList()
             docenteId = it.getString(MenuAdministradorActivity().USUARIOID, "")
             cursoId = it.getString(MenuDocenteActivity().CURSOID, "")
         }
@@ -83,8 +82,8 @@ class EstudiantesConFuncionesFragment : Fragment() {
         fun newInstance(token: String, estudiantes: Serializable) =
             EstudiantesConFuncionesFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
-                    putSerializable(ESTUDIANTES, estudiantes)
+                    putSerializable(MenuAdministradorActivity().TOKEN, token)
+                    putSerializable(MenuDocenteActivity().ESTUDIANTES, estudiantes)
                     putSerializable("DOCENTEID", docenteId)
                 }
             }

@@ -19,6 +19,8 @@ import com.javierprado.jmapp.data.entities.Asistencia
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.notificaciones.NotificacionesJMA
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
 import com.javierprado.jmapp.view.adapters.AsistenciaAdapter
 import com.javierprado.jmapp.view.clicks.AsistenciaClick
 import retrofit2.Call
@@ -38,11 +40,10 @@ class RegistroAsistenciaFragment : Fragment() {
     private lateinit var estudiantes: List<String>
     private var asistencias: MutableList<Asistencia> = ArrayList()
 
-    val ESTUDIANTES = "estudiantes"
-    val TOKEN = "token"
+    var docenteId = ""; var cursoId = ""
+
     private val TAG: String  = toString()
     private val retro = RetrofitHelper.getInstanceStatic()
-    private val notiFuncs = NotificacionesJMA()
     private lateinit var activity: AppCompatActivity
     private lateinit var msg : String
     override fun onAttach(context: Context) {
@@ -53,8 +54,10 @@ class RegistroAsistenciaFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            retro.setBearerToken(it.getString(TOKEN, ""))
-            estudiantes = it.getStringArrayList(ESTUDIANTES)?.toList() ?: ArrayList()
+            retro.setBearerToken(it.getString(MenuAdministradorActivity().TOKEN, ""))
+            estudiantes = it.getStringArrayList(MenuDocenteActivity().ESTUDIANTES)?.toList() ?: ArrayList()
+            docenteId = it.getString(MenuAdministradorActivity().USUARIOID, "")
+            cursoId = it.getString(MenuDocenteActivity().CURSOID, "")
         }
     }
 
@@ -85,8 +88,7 @@ class RegistroAsistenciaFragment : Fragment() {
         recycler.adapter = adapter
 
         progressC.visibility = View.VISIBLE
-//        estudiantes, fecha, cursoId, docenteId
-        api.listarAsistencias(estudiantes, fecha, "", "" ).enqueue(object : Callback<List<Asistencia>> {
+        api.listarAsistencias(estudiantes, fecha, cursoId, docenteId ).enqueue(object : Callback<List<Asistencia>> {
             override fun onResponse(call: Call<List<Asistencia>>, response: Response<List<Asistencia>>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
@@ -104,6 +106,7 @@ class RegistroAsistenciaFragment : Fragment() {
 
         btnRegistrar.setOnClickListener {
             if (asistencias.isNotEmpty()){
+//                asistencias.map { a->a.estudianteId = a.estudianteId.split("-")[1] }
                 api.editarAsistencias(asistencias).enqueue(object : Callback<List<String>> {
                     override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                         msg = response.headers()["message"] ?: ""
@@ -125,11 +128,13 @@ class RegistroAsistenciaFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(token: String, estudiantes: Serializable) =
+        fun newInstance(token: String, estudiantes: Serializable, docenteId: String, cursoId: String) =
             RegistroAsistenciaFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
-                    putSerializable(ESTUDIANTES, estudiantes)
+                    putSerializable(MenuAdministradorActivity().TOKEN, token)
+                    putSerializable(MenuAdministradorActivity().USUARIOID, docenteId)
+                    putSerializable(MenuDocenteActivity().CURSOID, cursoId)
+                    putSerializable(MenuDocenteActivity().ESTUDIANTES, estudiantes)
                 }
             }
     }

@@ -1,6 +1,7 @@
 package com.javierprado.jmapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,8 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
         init { this.binding = binding }
         @SuppressLint("SetTextI18n")
         fun bind(asistencia: Asistencia, positionA: Int, asistencias: MutableList<Asistencia>) {
-            val estudiante = asistencia.estudianteId.split("-")[0]
+            Log.e("EEEEE", asistencia.estudianteId)
+            val estudiante = asistencia.estudianteId.split("-")[0]//CAMBIAR
             binding.txtAlumno.text =  estudiante
             val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(asistencia.estado)
 

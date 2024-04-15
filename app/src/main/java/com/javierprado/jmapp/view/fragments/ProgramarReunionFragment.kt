@@ -160,11 +160,14 @@ class ProgramarReunionFragment : Fragment() {
     private fun funcionBtn2() {
         val fecha = binding.fechaReunion.text.toString() ; val hora = binding.horaReunion.text.toString()
         val estado = "RESPUESTA_A"
-        val reunionGuardar = Reunion(fecha, hora, docente.id, usuarioId, estudianteId)
+        val reunionGuardar = Reunion(fecha, hora, docente.id, usuarioId, "wh2h32mYWV0h1e203FeP")
         var id = reunion.id
+
+        //sender: String, emailReceiver: String, accion: String, reunion: Reunion
+        //IDUSUARIOACTUAL - EMAIL DOC o APOD, PROGRAMAR, REUNIONCREADA - EDITADA, SI EL RECEIVER ES EMAIL O USER
+
         if(toProgramar){
             id = "null"
-            Log.e("A-PROGRAMAR", id)
         }else{
             val txtButton = "Enviar"
             if(binding.fgBtn2Reunion.text.toString() != txtButton){
@@ -178,23 +181,22 @@ class ProgramarReunionFragment : Fragment() {
                 imm.showSoftInput(binding.fechaReunion, InputMethodManager.SHOW_IMPLICIT) ; return
             }
             reunionGuardar.estado = estado
-            Log.e("D-ENVIAR", id)
         }
         api.guardarReunion(reunionGuardar, id).enqueue(object : Callback<Reunion> {
             override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
                     val reuCreada = response.body()!!
-
+                    val cidApoderado = reuCreada.apoderadoId ; val cidDocente = reuCreada.docenteId
                     val accion = if(toProgramar){ "PROGRAMAR" } else { "REPROGRAMAR" }
-                    val correo = if(toProgramar) { reunion.docenteId.split("-")[1] }
-                    else{ reunion.apoderadoId.split("-")[1] }
+                    val correo = if(toProgramar) { cidDocente.split("-")[0] } else{ cidApoderado.split("-")[0] }
 
-                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
-                        correo, accion, reuCreada)
+                    reuCreada.apoderadoId = cidApoderado.split("-")[1]
+                    reuCreada.docenteId = cidDocente.split("-")[1]
+                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada)
                     Toast.makeText(activity,
                         "Se ha enviado la notificacion para solicitar"+if(toProgramar) "programación de reunión." else " la reprogramación.", Toast.LENGTH_SHORT).show()
-                    activity.supportFragmentManager.popBackStackImmediate()
+//                    activity.supportFragmentManager.popBackStackImmediate()
                 }else{
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("REUNION", msg)

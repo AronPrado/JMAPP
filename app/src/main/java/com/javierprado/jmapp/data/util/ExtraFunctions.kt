@@ -69,7 +69,7 @@ class ExtraFunctions {
             //DOCENTE
             NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav, usuarioId, extraId) }
             NavigationWindows.FUNCIONES.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista) }
-            NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista) }
+            NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista, usuarioId, extraId) }
 //            NavigationWindows.NOTAS.name-> { fragment = IngresarCalificacionesFragment.newInstance(token, estudianteId) }
             NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista) }
             //APODERADO
