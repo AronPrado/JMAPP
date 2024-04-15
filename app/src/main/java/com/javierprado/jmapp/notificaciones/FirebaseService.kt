@@ -107,7 +107,7 @@ class FirebaseService: FirebaseMessagingService() {
                                     bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
                                     bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
                                     if(tipo == dcode){
-                                        intent.putExtras(bundle) ; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        intent.putExtras(bundle) //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     }
                                     onResult(intent)
                                 }else{ Log.e("REUNION:", msg) }
@@ -117,13 +117,15 @@ class FirebaseService: FirebaseMessagingService() {
                             }
                         } )
                     }
-                    onResult(intent)
+//                    onResult(intent)
                 }
             }
         }
         obtenerIntentBusqueda(intent) { updatedIntent ->
             intent = updatedIntent
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
@@ -133,7 +135,8 @@ class FirebaseService: FirebaseMessagingService() {
                 R.drawable.reply,//CAMBIAR
                 "Aceptar", izquierdaPI ).build()
             if(tipo == dcode && accionTipo == "P"){
-                derechaPI = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+                derechaPI = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
             }
             // NotificationCompat.Action DERECHA action
             val derechaAction = NotificationCompat.Action.Builder(
