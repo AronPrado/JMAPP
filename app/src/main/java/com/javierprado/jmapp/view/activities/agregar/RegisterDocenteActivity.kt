@@ -132,18 +132,17 @@ class RegisterDocenteActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) {
-                        progresDialog.dismiss()
-                        val id = msg
+                        val t = msg.length ; val id = msg.substring(0, t - 40) ; val pass = msg.substring(t - 40, t - 30)
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
+                                    progresDialog.dismiss()
                                     // GUARDAR USUARIO EN FireStpre
                                     val user = auth.currentUser!!
                                     val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "DOC",
                                         "tipoid" to id, "token" to "" )
                                     firestore.collection("Users").document(user.uid).set(dataHashMap)
-
-                                    authFunctions.enviarCredenciales(correo, telefono, this@RegisterDocenteActivity)
+                                    authFunctions.enviarCredenciales(correo, pass, this@RegisterDocenteActivity)
                                     val intent = Intent(this@RegisterDocenteActivity, MenuAdministradorActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                     startActivity(intent)

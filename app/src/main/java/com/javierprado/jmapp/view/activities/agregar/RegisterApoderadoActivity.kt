@@ -23,11 +23,12 @@ import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AuthFunctions
-import com.javierprado.jmapp.view.adapters.EstudianteAdapter
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.adapters.EstudianteAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class RegisterApoderadoActivity : AppCompatActivity() {
     private lateinit var nombresEditText: EditText
@@ -104,7 +105,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
-                            val id = msg
+                            val t = msg.length ; val id = msg.substring(0, t - 40) ; val pass = msg.substring(t - 40, t - 30)
                             auth.createUserWithEmailAndPassword(correo, telefono)
                                 .addOnCompleteListener { task: Task<AuthResult?> ->
                                     if (task.isSuccessful) {
@@ -114,7 +115,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                                         val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "Desconectado", "tipo" to "APOD",
                                             "tipoid" to id, "token" to "")
                                         firestore.collection("Users").document(user.uid).set(dataHashMap)
-                                        authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
+                                        authFunctions.enviarCredenciales(correo, pass, this@RegisterApoderadoActivity)
                                         val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
                                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                         startActivity(intent)
