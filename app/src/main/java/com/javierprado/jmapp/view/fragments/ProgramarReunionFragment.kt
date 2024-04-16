@@ -224,7 +224,6 @@ class ProgramarReunionFragment : Fragment() {
                     putSerializable(MenuAdministradorActivity().TOKEN, token)
                     putSerializable(REUNION, reunion)
                     putSerializable(MenuAdministradorActivity().USUARIOID, usuarioId)
-                    Log.e("ANTES", aulaId)
                     putSerializable(ControlEstudianteActivity().AULAID, aulaId)
                 }
             }

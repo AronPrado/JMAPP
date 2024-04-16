@@ -40,7 +40,7 @@ class UserAdapter : RecyclerView.Adapter<UserHolder>() {
         }
         if(tipo == RoleType.DOC.name){
             holder.imageProfile.setImageResource(CursoUtil.getImg(cursos[position]))
-            holder.imageProfile.setBackgroundColor(CursoUtil.getBackgroundColor(cursos[position]))
+//            holder.imageProfile.setBackgroundColor(CursoUtil.getBackgroundColor(cursos[position]))
 //            holder.imageProfile.setCircleBackgroundColorResource(CursoUtil.getBackgroundColor(cursos[position]))
         }else{
             holder.imageProfile.setImageResource(R.drawable.usuario)

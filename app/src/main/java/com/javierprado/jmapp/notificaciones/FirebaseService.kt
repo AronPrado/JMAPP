@@ -81,11 +81,14 @@ class FirebaseService: FirebaseMessagingService() {
         //INTENT NOTIFICACION PARA EL DOCENTE
         var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
         //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
-        val ia = Intent(this, NotificationReunion::class.java) ; ia.putExtra("ACCION", "ACEPTAR")
-        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
+        val ia = Intent(this, NotificationReunion::class.java)
+        ia.putExtra("ACCION", "ACEPTAR")
+        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_IMMUTABLE)
         //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
-        val ic = Intent(this, NotificationReunion::class.java) ; ic.putExtra("ACCION", "CANCELAR")
-        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_MUTABLE)
+        val ic = Intent(this, NotificationReunion::class.java)
+        ic.putExtra("ACCION", "CANCELAR")
+        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_IMMUTABLE)
+
 
         val bundle = Bundle()
         fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
@@ -136,6 +139,7 @@ class FirebaseService: FirebaseMessagingService() {
             val izquierdaAction = NotificationCompat.Action.Builder(
                 R.drawable.reply,//CAMBIAR
                 "Aceptar", izquierdaPI ).build()
+
             if(tipo == dcode && accionTipo == "P"){
                 derechaPI = PendingIntent.getActivity(this@FirebaseService, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
@@ -163,93 +167,93 @@ class FirebaseService: FirebaseMessagingService() {
     }
 
     private fun notiJustificaciones(data: Map<String, String>){
-        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-        val accion = data["accion"]!! ; val userDestino = data["sender"]!!
-        val tipo = if (accion.contains("D")) RoleType.APOD.name else RoleType.DOC.name
-        val accionTipo = accion.split("_")[1][0].toString()// R, P, A, C
-        val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
-        //INTENT NOTIFICACION PARA EL DOCENTE
-        var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
-        //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
-        val ia = Intent(this, NotificationReunion::class.java) ; ia.putExtra("ACCION", "ACEPTAR")
-        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
-        //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
-        val ic = Intent(this, NotificationReunion::class.java) ; ic.putExtra("ACCION", "CANCELAR")
-        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_MUTABLE)
-
-        val bundle = Bundle()
-        fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
-            firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
-                if (value != null && value.exists()) {
-                    val user = value.toObject(Users::class.java)!!
-                    val tokenUser = user.token!!
-                    retro.setBearerToken(tokenUser)
-
-                    val reunionId = data["reunion"]!!
-                    if(!reunionId.isEmpty()){
-                        retro.getApi().buscarReunion(reunionId).enqueue(object: Callback<Reunion> {
-                            override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
-                                val msg = response.headers()["message"] ?: ""
-                                if (response.isSuccessful) {
-                                    val reu = response.body()!!
-                                    bundle.putSerializable(ProgramarReunionFragment().REUNION, reu)
-                                    bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
-                                    bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
-                                    bundle.putBoolean(TIPOR, true)
-                                    if(tipo == dcode){
-                                        intent.putExtras(bundle);
-                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                        //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                    }
-                                    onResult(intent)
-                                }else{ Log.e("REUNION:", msg) }
-                            }
-                            override fun onFailure(call: Call<Reunion>, t: Throwable) {
-                                Log.e("REUNION", t.message.toString())
-                            }
-                        } )
-                    }
-//                    onResult(intent)
-                }
-            }
-        }
-        obtenerIntentBusqueda(intent) { updatedIntent ->
-            intent = updatedIntent
-
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
-
-            // NotificationCompat.Action IZQUIERDA ACTION
-            val izquierdaAction = NotificationCompat.Action.Builder(
-                R.drawable.reply,//CAMBIAR
-                "Aceptar", izquierdaPI ).build()
-            if(tipo == dcode && accionTipo == "P"){
-                derechaPI = PendingIntent.getActivity(this@FirebaseService, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-            }
-            // NotificationCompat.Action DERECHA action
-            val derechaAction = NotificationCompat.Action.Builder(
-                R.drawable.reply,//CAMBIAR
-                if (accion == "A_PROGRAMA") "Reprogramar" else "Cancelar" , derechaPI).build()
-
-            val sharedCustomPref = SharedPrefs(applicationContext)
-            sharedCustomPref.setIntValue("values", notificationID)
-            sharedCustomPref.setValue("d_notir", userDestino)
-            sharedCustomPref.setValue("a_notir", accion)
-            sharedCustomPref.setValue("idreunion", data["reunion"]!!)
-
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setContentTitle(message.data["title"])
-                .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
-                .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-            if(!listOf("A", "C").contains(accionTipo)) {  notification.addAction(izquierdaAction); notification.addAction(derechaAction) }
-            notificationManager.notify(notificationID, notification.build())
-        }
+//        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+//        val accion = data["accion"]!! ; val userDestino = data["sender"]!!
+//        val tipo = if (accion.contains("D")) RoleType.APOD.name else RoleType.DOC.name
+//        val accionTipo = accion.split("_")[1][0].toString()// R, P, A, C
+//        val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
+//        //INTENT NOTIFICACION PARA EL DOCENTE
+//        var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
+//        //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
+////        val ia = Intent(this, NotificationReunion::class.java) ; ia.putExtra("ACCION", "ACEPTAR")
+////        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
+//        //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
+//        val ic = Intent(this, NotificationReunion::class.java) ; ic.putExtra("ACCION", "CANCELAR")
+//        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_MUTABLE)
+//
+//        val bundle = Bundle()
+//        fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
+//            firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
+//                if (value != null && value.exists()) {
+//                    val user = value.toObject(Users::class.java)!!
+//                    val tokenUser = user.token!!
+//                    retro.setBearerToken(tokenUser)
+//
+//                    val reunionId = data["reunion"]!!
+//                    if(!reunionId.isEmpty()){
+//                        retro.getApi().buscarReunion(reunionId).enqueue(object: Callback<Reunion> {
+//                            override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
+//                                val msg = response.headers()["message"] ?: ""
+//                                if (response.isSuccessful) {
+//                                    val reu = response.body()!!
+//                                    bundle.putSerializable(ProgramarReunionFragment().REUNION, reu)
+//                                    bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
+//                                    bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
+//                                    bundle.putBoolean(TIPOR, true)
+//                                    if(tipo == dcode){
+//                                        intent.putExtras(bundle);
+//                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//                                        //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                                    }
+//                                    onResult(intent)
+//                                }else{ Log.e("REUNION:", msg) }
+//                            }
+//                            override fun onFailure(call: Call<Reunion>, t: Throwable) {
+//                                Log.e("REUNION", t.message.toString())
+//                            }
+//                        } )
+//                    }
+////                    onResult(intent)
+//                }
+//            }
+//        }
+//        obtenerIntentBusqueda(intent) { updatedIntent ->
+//            intent = updatedIntent
+//
+//            val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+//                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+//
+//            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+//            val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
+//
+//            // NotificationCompat.Action IZQUIERDA ACTION
+//            val izquierdaAction = NotificationCompat.Action.Builder(
+//                R.drawable.reply,//CAMBIAR
+//                "Aceptar", izquierdaPI ).build()
+//            if(tipo == dcode && accionTipo == "P"){
+//                derechaPI = PendingIntent.getActivity(this@FirebaseService, 0, intent,
+//                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+//            }
+//            // NotificationCompat.Action DERECHA action
+//            val derechaAction = NotificationCompat.Action.Builder(
+//                R.drawable.reply,//CAMBIAR
+//                if (accion == "A_PROGRAMA") "Reprogramar" else "Cancelar" , derechaPI).build()
+//
+//            val sharedCustomPref = SharedPrefs(applicationContext)
+//            sharedCustomPref.setIntValue("values", notificationID)
+//            sharedCustomPref.setValue("d_notir", userDestino)
+//            sharedCustomPref.setValue("a_notir", accion)
+//            sharedCustomPref.setValue("idreunion", data["reunion"]!!)
+//
+//            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+////            .setContentTitle(message.data["title"])
+//                .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
+//                .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
+//                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+//            if(!listOf("A", "C").contains(accionTipo)) {  notification.addAction(izquierdaAction); notification.addAction(derechaAction) }
+//            notificationManager.notify(notificationID, notification.build())
+//        }
     }
 
     private fun notiMensajes(data: Map<String, String>){

@@ -32,7 +32,6 @@ class CursoUtil {
         private var images = hashMapOf("m" to imgM, "e" to imgE, "a" to imgA, "i" to imgI, "l" to imgL, "c" to imgC, "h" to imgH)
 
         fun getBackgroundColor(item: String, isCurso: Boolean = true ): Int {
-            Log.e("CURSOUTIL", item[0].toString().lowercase())
             return if(isCurso){
                 backCs[item[0].toString().lowercase()]!! ?: Color.parseColor("#0089e2")
             }else{

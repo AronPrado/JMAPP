@@ -4,9 +4,11 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
@@ -18,6 +20,7 @@ class NotificationReunion: BroadcastReceiver() {
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val ap = intent?.extras?.getString("ACCION", "")
+        Log.e("ACCION", ap?:"NO SE SELECCIONOXD")
 
         val sharedCustomPref = SharedPrefs(context)
         val notificationId : Int = sharedCustomPref.getIntValue("values", 0)
@@ -32,12 +35,13 @@ class NotificationReunion: BroadcastReceiver() {
         val reunionId = sharedCustomPref.getValue("idreunion") ?: "null"
         val estado = if (ap == "CANCELAR") "CANCELADA" else "PROGRAMADA"
 
-        val hashMap = hashMapOf<String, Any>("estado" to estado)
-        firestore.collection("reuniones").document(reunionId).update(hashMap)
-
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
-            userAenviar, accion, null, true)
+            userAenviar, accion, Reunion(), true)
+
+//        val hashMap = hashMapOf<String, Any>("estado" to estado)
+//        firestore.collection("reuniones").document(reunionId).update(hashMap)
+
 
         val repliedNotification  =
             NotificationCompat.Builder(context, CHANNEL_ID)
