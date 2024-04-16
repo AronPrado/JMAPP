@@ -74,7 +74,7 @@ class SeleccionarAulaFragment : Fragment() {
         })
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapter
-        api.listarAulas(docenteId, null, null, null).enqueue(object : Callback<List<Aula>> {
+        api.listarAulas(docenteId, null, "null", "null").enqueue(object : Callback<List<Aula>> {
             override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
@@ -83,12 +83,14 @@ class SeleccionarAulaFragment : Fragment() {
                 }else{
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("OBTENER AULAS:", msg)
+                    activity.supportFragmentManager.popBackStackImmediate()
                 }
             }
             override fun onFailure(call: Call<List<Aula>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
                 Log.e("OBTENER AULAS", t.message.toString())
+                activity.supportFragmentManager.popBackStackImmediate()
             }
         } )
     }
@@ -106,13 +108,13 @@ class SeleccionarAulaFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        activity.supportFragmentManager.popBackStackImmediate()
 //        val intent = Intent(context, MenuDocenteActivity::class.java)
 //        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 //        intent.putExtra(ControlSeleccionActivity().TOKEN, tokenDoc)
 //        intent.putExtra(SeleccionarAulaFragment().DIRECT, direct)
 //        intent.putExtra(MenuDocenteActivity().USUARIOID, docenteId)
 //        startActivity(intent)
+        activity.finish()
         super.onDestroy()
     }
 }

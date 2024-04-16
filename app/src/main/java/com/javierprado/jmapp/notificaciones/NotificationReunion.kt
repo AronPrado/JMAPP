@@ -29,6 +29,12 @@ class NotificationReunion: BroadcastReceiver() {
         val accion = if (ap == "CANCELAR") tipoEnviar+"CANCELA" else tipoEnviar+"ACEPTA"
         val msg = if(ap == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
 
+        val reunionId = sharedCustomPref.getValue("idreunion") ?: "null"
+        val estado = if (ap == "CANCELAR") "CANCELADA" else "PROGRAMADA"
+
+        val hashMap = hashMapOf<String, Any>("estado" to estado)
+        firestore.collection("reuniones").document(reunionId).update(hashMap)
+
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, null, true)

@@ -92,10 +92,11 @@ class RegistroAsistenciaFragment : Fragment() {
             override fun onResponse(call: Call<List<Asistencia>>, response: Response<List<Asistencia>>) {
                 msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
-                    asistencias = response.body()!!.toList() as MutableList<Asistencia>
+                    asistencias = response.body()!! as MutableList<Asistencia>
                     adapter.setAsistencias(asistencias)
                     progressC.visibility = View.GONE
                 }else{
+                    progressC.visibility = View.GONE
                     Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                     activity.supportFragmentManager.popBackStackImmediate()
                 }
@@ -104,6 +105,7 @@ class RegistroAsistenciaFragment : Fragment() {
                 msg = "Error en la API: ${t.message}"
                 Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                 Log.e("OBTENER ASISTENCIAS", t.message.toString())
+                activity.supportFragmentManager.popBackStackImmediate()
             }
         } )
 

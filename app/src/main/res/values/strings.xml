@@ -63,9 +63,9 @@
     <string name="navigation_drawer_close">Close</string>
 
     <string-array name="estados_asistencia">
-        <item>A</item>
-        <item>F</item>
-        <item>T</item>
+        <item>Asistencia</item>
+        <item>Tardanza</item>
+        <item>Falta</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

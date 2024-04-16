@@ -95,6 +95,7 @@ class IngresarCalificacionesFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val api = retro.getApi()
 
+        Log.e("-"+estudianteId+"-", "-"+cursoId+"-")
         api.listarCalificaciones(estudianteId, cursoId).enqueue(object : Callback<Calificacion> {
             override fun onResponse(call: Call<Calificacion>, response: Response<Calificacion>) {
                 msg = response.headers()["message"] ?: ""
@@ -139,7 +140,9 @@ class IngresarCalificacionesFragment : DialogFragment() {
             api.editarCalificaciones(calificacion, calificacion.id).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
-                    if (response.isSuccessful) { activity.supportFragmentManager.popBackStackImmediate() }
+                    if (response.isSuccessful) {
+                        showToast("Notas guardadas.") ; activity.supportFragmentManager.popBackStackImmediate()
+                    }
                     else { showToast(msg); Log.e("LISTAR CALIFICACIONES", msg) }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {

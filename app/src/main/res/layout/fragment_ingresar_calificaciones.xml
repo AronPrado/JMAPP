@@ -59,11 +59,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
+                    app:layout_constrainedHeight="true"
                     android:id="@+id/txt_primera_nota"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    app:layout_constrainedHeight="true"
+                    android:maxLength="2"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:background="@color/md_theme_dark_onPrimaryContainer"
@@ -83,11 +84,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
+                    app:layout_constrainedHeight="true"
                     android:id="@+id/txt_segunda_nota"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    app:layout_constrainedHeight="true"
+                    android:layout_gravity="center"
+                    android:maxLength="2"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:background="@color/md_theme_dark_onPrimaryContainer"
@@ -107,11 +109,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
+                    app:layout_constrainedHeight="true"
                     android:id="@+id/txt_tercera_nota"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    app:layout_constrainedHeight="true"
+                    android:layout_gravity="center"
+                    android:maxLength="2"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:background="@color/md_theme_dark_onPrimaryContainer"
@@ -131,11 +134,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
+                    app:layout_constrainedHeight="true"
                     android:id="@+id/txt_cuarta_nota"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    app:layout_constrainedHeight="true"
+                    android:layout_gravity="center"
+                    android:maxLength="2"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:background="@color/md_theme_dark_onPrimaryContainer"
@@ -155,13 +159,14 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <EditText
+                    app:layout_constrainedHeight="true"
                     android:id="@+id/txt_nota_final"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    app:layout_constrainedHeight="true"
+                    android:layout_gravity="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:enabled="false"
                     android:background="@color/md_theme_dark_onPrimaryContainer"
                     android:inputType="number" />
             </LinearLayout>

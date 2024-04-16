@@ -67,6 +67,7 @@ class EstudiantesConFuncionesFragment : Fragment() {
                 } else{
                     Log.e("LISTAR ESTUDIANTES", msg)
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+                    activity.supportFragmentManager.popBackStackImmediate()
                 }
 
             }
@@ -79,17 +80,14 @@ class EstudiantesConFuncionesFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(token: String, estudiantes: Serializable) =
+        fun newInstance(token: String, estudiantes: Serializable, docenteId: String, cursoId: String) =
             EstudiantesConFuncionesFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(MenuAdministradorActivity().TOKEN, token)
                     putSerializable(MenuDocenteActivity().ESTUDIANTES, estudiantes)
-                    putSerializable("DOCENTEID", docenteId)
+                    putSerializable(MenuAdministradorActivity().USUARIOID, docenteId)
+                    putSerializable(MenuDocenteActivity().CURSOID, cursoId)
                 }
             }
-    }
-    override fun onDestroy() {
-        activity.supportFragmentManager.popBackStackImmediate()
-        super.onDestroy()
     }
 }

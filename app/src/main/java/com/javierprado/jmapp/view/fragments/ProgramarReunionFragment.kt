@@ -44,6 +44,7 @@ class ProgramarReunionFragment : Fragment() {
     var docentes: List<Docente> = ArrayList()
     private lateinit var reunion: Reunion
     var aulaId = "" ; var usuarioId = ""; var estudianteId = "" ; lateinit var docente: Docente
+    var apoderadoId = ""
     var infoApoderado = "" ; var ocupadas: MutableList<String> = ArrayList()
     private val TAG: String = toString()
     private val retro = RetrofitHelper.getInstanceStatic()
@@ -71,8 +72,10 @@ class ProgramarReunionFragment : Fragment() {
             toProgramar = reunion.id == ""
             aulaId = it.getString(ControlEstudianteActivity().AULAID, "").split("-")[0]
             usuarioId = it.getString(MenuAdministradorActivity().USUARIOID, "")
-            estudianteId = reunion.estudianteId
-            activity = context as ControlSeleccionActivity
+            estudianteId = reunion.estudianteId ; apoderadoId = reunion.apoderadoId
+            if(toProgramar){
+                estudianteId = aulaId.split("-")[1]
+            }
             //VARIABLES
         }
     }
@@ -164,7 +167,9 @@ class ProgramarReunionFragment : Fragment() {
     private fun funcionBtn2() {
         val fecha = binding.fechaReunion.text.toString() ; val hora = binding.horaReunion.text.toString()
         val estado = "RESPUESTA_A"
-        val reunionGuardar = Reunion(fecha, hora, docente.id, usuarioId, "wh2h32mYWV0h1e203FeP")
+
+        val reunionGuardar = Reunion(fecha, hora,
+        if(!toProgramar) usuarioId else docente.id, if(toProgramar) usuarioId else apoderadoId, estudianteId)
         var id = reunion.id
 
         //sender: String, emailReceiver: String, accion: String, reunion: Reunion

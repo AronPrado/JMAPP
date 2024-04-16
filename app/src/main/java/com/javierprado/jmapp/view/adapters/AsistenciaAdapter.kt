@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view.adapters
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.javierprado.jmapp.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.javierprado.jmapp.data.entities.Asistencia
+import com.javierprado.jmapp.data.util.CursoUtil
 import com.javierprado.jmapp.databinding.ItemAsistenciaAlumnoBinding
 import com.javierprado.jmapp.view.clicks.AsistenciaClick
 
@@ -28,18 +30,26 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
         init { this.binding = binding }
         @SuppressLint("SetTextI18n")
         fun bind(asistencia: Asistencia, positionA: Int, asistencias: MutableList<Asistencia>) {
-            val estudiante = asistencia.estudianteId.split("-")[0]
-            binding.txtAlumno.text =  estudiante
-            val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(asistencia.estado)
+            val estudiante = asistencia.estudianteId
+            Log.e("RPRPRP", estudiante)
+            binding.txtAlumno.text =  estudiante.split("-")[0]
 
-            binding.sAsistencia.setSelection(indice)
+            val e = asistencia.estado ; val estado = if(e=="F") "Falta" else if(e=="T") "Tardanza" else "Asistencia"
+            val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(estado)
+            binding.imgEstudianteGenero.setImageResource(R.drawable.estudiantem)
+            if(estudiante.split("-")[2] == "F"){
+                binding.imgEstudianteGenero.setImageResource(R.drawable.estudiantef)
+            }
+
             binding.sAsistencia.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val nuevoEstado = binding.sAsistencia.selectedItem.toString()
+                    val nuevoEstado = binding.sAsistencia.selectedItem.toString()[0].toString()
                     asistencias[positionA].estado = nuevoEstado
+
                 }
             }
+            binding.sAsistencia.setSelection(indice)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHAsistencia {
