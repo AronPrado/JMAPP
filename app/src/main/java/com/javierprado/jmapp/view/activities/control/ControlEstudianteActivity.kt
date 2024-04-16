@@ -6,7 +6,6 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.util.NavigationWindows
-import com.javierprado.jmapp.notificaciones.FirebaseServiceReuniones
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 import com.javierprado.jmapp.view.fragments.EstudiantesHFragment
@@ -28,21 +27,12 @@ class ControlEstudianteActivity : AppCompatActivity() {
             apoderadoId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
             hijos = bundle.getSerializable(MenuApoderadoActivity().HIJOS) as List<Estudiante>
             direct = bundle.getString(DIRECT, NavigationWindows.FUNCIONES.name)
-
-            notificacion = bundle.getBoolean(FirebaseServiceReuniones().NOTIFICACION_REUNIONES, false)
-            reunion =  try{ bundle.getSerializable(ProgramarReunionFragment().REUNION) as Reunion }
-            catch(c: NullPointerException){ Reunion() }
-            aulaId = bundle.getString(ControlEstudianteActivity().AULAID, "")
         }
         // Botón regresar
 //        val backImageView: ImageView = findViewById(R.id.back)
 //        backImageView.setOnClickListener { finish() }
 
-        val fragment = if(notificacion) {
-            ProgramarReunionFragment.newInstance(token, reunion, apoderadoId, aulaId)
-        }else{
-            EstudiantesHFragment.newInstance(token, direct, apoderadoId, hijos as Serializable)
-        }
+        val fragment = EstudiantesHFragment.newInstance(token, direct, apoderadoId, hijos as Serializable)
         supportFragmentManager.beginTransaction().replace(R.id.fcv_apoderado_main, fragment).addToBackStack("").commit()
     }
 }

@@ -1,8 +1,12 @@
 package com.javierprado.jmapp.data.util
 
+import android.app.AlertDialog
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
@@ -25,8 +29,12 @@ import javax.mail.internet.MimeMessage
 
 class AuthFunctions {
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance())
+    fun mostrarCarga(context: Context, text: String):AlertDialog{
+        return AlertDialog.Builder(context).setView(ProgressBar(context)).setMessage(text).setCancelable(false).create()
+    }
     fun loginUser(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity, nextMenu : AppCompatActivity) {
-         ; val userLog = UserAuth(emailUser, passUser)
+        val progresDialog = mostrarCarga(interfaceActual, "Iniciando sesión")
+        progresDialog.show()
         var msg : String
         //INICIAR SESION
         mAuth.signInWithEmailAndPassword(emailUser, passUser)
@@ -43,6 +51,7 @@ class AuthFunctions {
                                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                                     msg = response.headers()["message"] ?: ""
                                     if (response.isSuccessful) {
+                                        progresDialog.dismiss()
                                         val user = response.body()!!
                                         val intent = Intent(interfaceActual, nextMenu::class.java)
                                         intent.putExtra(MenuAdministradorActivity().USUARIOID, user.usuarioId)
@@ -52,12 +61,14 @@ class AuthFunctions {
                                     }else{
                                         Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
                                         Log.e("FIRESTORE", msg)
+                                        progresDialog.dismiss()
                                     }
                                 }
                                 override fun onFailure(call: Call<Usuario>, t: Throwable) {
                                     msg = "Firestore"
                                     Log.e("FIRESTORE", t.message.toString())
                                     Toast.makeText(interfaceActual, msg, Toast.LENGTH_SHORT).show()
+                                    progresDialog.dismiss()
                                 }
                             })
                         }
@@ -79,6 +90,7 @@ class AuthFunctions {
 //                        }
 //                    })
                 }else{
+                    progresDialog.dismiss()
                     Toast.makeText(interfaceActual, "Auth1 INCORRECT", Toast.LENGTH_SHORT).show()
                 }
             }.addOnFailureListener { e ->

@@ -98,7 +98,8 @@ class RegisterApoderadoActivity : AppCompatActivity() {
             val estudiantesApoderado: List<String> = estudiantes.map { e->e.id }
             if(telefono.isNotEmpty()){
                 val apoderado = Apoderado(nombres, apellidos, correo, telefono.toInt(), direccion, estudiantesApoderado)
-                Log.e("APODERADO", apoderado.toString())
+                val progresDialog = authFunctions.mostrarCarga(this@RegisterApoderadoActivity, "Registrando al apoderado.")
+                progresDialog.show()
                 api.guardarApoderado(apoderado, "null").enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         msg = response.headers()["message"] ?: ""
@@ -107,10 +108,11 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                             auth.createUserWithEmailAndPassword(correo, telefono)
                                 .addOnCompleteListener { task: Task<AuthResult?> ->
                                     if (task.isSuccessful) {
+                                        progresDialog.dismiss()
                                         // GUARDAR USUARIO EN FIRESTORE (USERS)
                                         val user = auth.currentUser!!
-                                        val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "APOD",
-                                            "tipoid" to id, "token" to "" )
+                                        val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "Desconectado", "tipo" to "APOD",
+                                            "tipoid" to id, "token" to "")
                                         firestore.collection("Users").document(user.uid).set(dataHashMap)
                                         authFunctions.enviarCredenciales(correo, telefono, this@RegisterApoderadoActivity)
                                         val intent = Intent(this@RegisterApoderadoActivity, MenuAdministradorActivity::class.java)
@@ -121,11 +123,13 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                                     }
                                 }
                         } else{
+                            progresDialog.dismiss()
                             Log.e("AGREGAR APODERADO", msg)
                             Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         }
                     }
                     override fun onFailure(call: Call<Void>, t: Throwable) {
+                        progresDialog.dismiss()
                         msg = "Error en la API: ${t.message}"
                         Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
                         Log.e("ERROR AL AGREGAR APODERADO", t.message.toString())

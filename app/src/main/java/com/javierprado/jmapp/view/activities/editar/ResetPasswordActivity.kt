@@ -63,7 +63,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                                 sendEmail(email)
                                 msg = "Correo para restablecer contraseña enviado."
                                 val usuario = Usuario(email, newPass, "")
-                                api.actualizarContrasena(usuario)?.enqueue(object : Callback<Void> {
+                                api.actualizarContrasena(usuario).enqueue(object : Callback<Void> {
                                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                     }
                                     override fun onFailure(call: Call<Void>, t: Throwable) {

@@ -54,8 +54,7 @@ class ProgramarReunionFragment : Fragment() {
     private lateinit var api: ColegioAPI
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = if(tipoUsuario == RoleType.DOC.name){ context as ControlSeleccionActivity }
-                                                   else{ context as ControlEstudianteActivity }
+        activity = context as ControlSeleccionActivity
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

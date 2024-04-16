@@ -1,20 +1,16 @@
 package com.javierprado.jmapp.view.activities.control
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Reunion
-import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.NavigationWindows
-import com.javierprado.jmapp.notificaciones.FirebaseServiceReuniones
+import com.javierprado.jmapp.notificaciones.FirebaseService
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuDocenteActivity
-import com.javierprado.jmapp.view.fragments.EstudiantesHFragment
 import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 import com.javierprado.jmapp.view.fragments.SeleccionarAulaFragment
-import java.io.Serializable
 
 class ControlSeleccionActivity : AppCompatActivity() {
     val DIRECT = "direct"
@@ -31,7 +27,7 @@ class ControlSeleccionActivity : AppCompatActivity() {
             cursoId = bundle.getString(MenuDocenteActivity().CURSOID, "")
             direct = bundle.getString(DIRECT, NavigationWindows.FUNCIONES.name)
 
-            notificacion = bundle.getBoolean(FirebaseServiceReuniones().NOTIFICACION_REUNIONES, false)
+            notificacion = bundle.getBoolean(FirebaseService().TIPOR, false)
             reunion = try{ bundle.getSerializable(ProgramarReunionFragment().REUNION) as Reunion }
             catch(c: NullPointerException){ Reunion() }
             aulaId = bundle.getString(ControlEstudianteActivity().AULAID, "")

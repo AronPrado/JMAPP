@@ -56,11 +56,10 @@ class FirebaseService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
         when(message.data["tipo"]){
             TIPOM -> { notiMensajes(message.data) }
             TIPOR -> { notiReuniones(message.data) }
-            TIPOJ -> { notiJustificaciones(message.data, firestore) }
+            TIPOJ -> { notiJustificaciones(message.data) }
         }
     }
     private fun createNotificationChannel(notificationManager: NotificationManager) {
@@ -80,13 +79,13 @@ class FirebaseService: FirebaseMessagingService() {
         val accionTipo = accion.split("_")[1][0].toString()// R, P, A, C
         val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
         //INTENT NOTIFICACION PARA EL DOCENTE
-        var intent = if(tipo == "D") { Intent(this, ControlSeleccionActivity::class.java) }else{ Intent() }
+        var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
         //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
         val ia = Intent(this, NotificationReunion::class.java) ; ia.putExtra("ACCION", "ACEPTAR")
-        val izquierdaPI = PendingIntent.getBroadcast(this, 0, ia, PendingIntent.FLAG_MUTABLE)
+        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
         //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
         val ic = Intent(this, NotificationReunion::class.java) ; ic.putExtra("ACCION", "CANCELAR")
-        var derechaPI = PendingIntent.getBroadcast(this, 0, ic, PendingIntent.FLAG_MUTABLE)
+        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_MUTABLE)
 
         val bundle = Bundle()
         fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
@@ -106,8 +105,11 @@ class FirebaseService: FirebaseMessagingService() {
                                     bundle.putSerializable(ProgramarReunionFragment().REUNION, reu)
                                     bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
                                     bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
+                                    bundle.putBoolean(TIPOR, true)
                                     if(tipo == dcode){
-                                        intent.putExtras(bundle) //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        intent.putExtras(bundle);
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                    //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     }
                                     onResult(intent)
                                 }else{ Log.e("REUNION:", msg) }
@@ -135,7 +137,7 @@ class FirebaseService: FirebaseMessagingService() {
                 R.drawable.reply,//CAMBIAR
                 "Aceptar", izquierdaPI ).build()
             if(tipo == dcode && accionTipo == "P"){
-                derechaPI = PendingIntent.getActivity(this, 0, intent,
+                derechaPI = PendingIntent.getActivity(this@FirebaseService, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
             }
             // NotificationCompat.Action DERECHA action
@@ -159,7 +161,7 @@ class FirebaseService: FirebaseMessagingService() {
         }
 
     }
-    private fun notiJustificaciones(data: Map<String, String>, firestore: FirebaseFirestore){
+    private fun notiJustificaciones(data: Map<String, String>){
 
     }
     private fun notiMensajes(data: Map<String, String>){

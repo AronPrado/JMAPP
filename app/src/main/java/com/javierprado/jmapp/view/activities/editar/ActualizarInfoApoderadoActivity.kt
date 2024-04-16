@@ -105,10 +105,11 @@ class ActualizarInfoApoderadoActivity : AppCompatActivity() {
         }
     }
     private fun regresar(){
-        val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
-        intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
-        intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent) ; finish()
+//        val intent = Intent(this@ActualizarInfoApoderadoActivity, MenuApoderadoActivity::class.java)
+//        intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+//        intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//        startActivity(intent) ;
+        finish()
     }
 }

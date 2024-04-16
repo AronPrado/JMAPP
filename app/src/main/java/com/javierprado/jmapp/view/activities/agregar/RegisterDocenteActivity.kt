@@ -126,10 +126,13 @@ class RegisterDocenteActivity : AppCompatActivity() {
             val curso = cursoDocente!!
 
             val docente = Docente(nombres, apellidos, genero, correo, telefono.toInt(), direccion, fechaNac, curso.id)
+            val progresDialog = authFunctions.mostrarCarga(this@RegisterDocenteActivity, "Registrando al docente.")
+            progresDialog.show()
             api.guardarDocente(docente, "null").enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) {
+                        progresDialog.dismiss()
                         val id = msg
                         auth.createUserWithEmailAndPassword(correo, telefono)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
@@ -149,11 +152,13 @@ class RegisterDocenteActivity : AppCompatActivity() {
                                 }
                             }
                     } else{
+                        progresDialog.dismiss()
                         Log.e("AGREGAR DOCENTE", msg)
                         Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: Call<Void>, t: Throwable) {
+                    progresDialog.dismiss()
                     msg = "Error en la API: ${t.message}"
                     Toast.makeText(this@RegisterDocenteActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.e("ERROR AL AGREGAR DOCENTE", t.message.toString())

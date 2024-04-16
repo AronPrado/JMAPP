@@ -28,8 +28,7 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
         init { this.binding = binding }
         @SuppressLint("SetTextI18n")
         fun bind(asistencia: Asistencia, positionA: Int, asistencias: MutableList<Asistencia>) {
-            Log.e("EEEEE", asistencia.estudianteId)
-            val estudiante = asistencia.estudianteId.split("-")[0]//CAMBIAR
+            val estudiante = asistencia.estudianteId.split("-")[0]
             binding.txtAlumno.text =  estudiante
             val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(asistencia.estado)
 

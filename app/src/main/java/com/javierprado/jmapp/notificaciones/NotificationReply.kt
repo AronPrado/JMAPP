@@ -68,7 +68,7 @@ class NotificationReply: BroadcastReceiver() {
                 NotificationCompat
                     .Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.chatapp)
-                    .setContentText("Reply Sent").build()
+                    .setContentText("Mensaje enviado").build()
             notificationManager.notify(replyid, repliedNotification)
         }
     }
