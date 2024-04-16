@@ -1,6 +1,7 @@
 package com.javierprado.jmapp.data.util
 
 import android.graphics.Color
+import android.util.Log
 import com.javierprado.jmapp.R
 
 class CursoUtil {
@@ -11,7 +12,7 @@ class CursoUtil {
         private val m1 = Color.parseColor("#2a34c1") ; private val m2 = Color.parseColor("#FDFFFC")
         private val e1 = Color.parseColor("#655f68") ; private val e2 = Color.parseColor("#D6EAE8")
         private val a1 = Color.parseColor("#44A1A0") ; private val a2 = Color.parseColor("#FFFFFF")
-        private val i1 = Color.parseColor("#E7BB41") ; private val i2 = Color.parseColor("#FF2FBFF")
+        private val i1 = Color.parseColor("#E7BB41") ; private val i2 = Color.parseColor("#FF2FFF")
         private val l1 = Color.parseColor("#D33F49") ; private val l2 = Color.parseColor("#EFF0D1")
         private val c1 = Color.parseColor("#00a855") ; private val c2 = Color.parseColor("#4F3130")
         private val h1 = Color.parseColor("#65655E") ; private val h2 = Color.parseColor("#ECFFB0")
@@ -31,10 +32,11 @@ class CursoUtil {
         private var images = hashMapOf("m" to imgM, "e" to imgE, "a" to imgA, "i" to imgI, "l" to imgL, "c" to imgC, "h" to imgH)
 
         fun getBackgroundColor(item: String, isCurso: Boolean = true ): Int {
+            Log.e("CURSOUTIL", item[0].toString().lowercase())
             return if(isCurso){
-                backCs[item[0].toString().lowercase()] ?: Color.parseColor("#0089e2")
+                backCs[item[0].toString().lowercase()]!! ?: Color.parseColor("#0089e2")
             }else{
-                backAs[item[0].toString()] ?: Color.parseColor("#0089e2")
+                backAs[item[0].toString()]!! ?: Color.parseColor("#0089e2")
             }
         }
         fun getTextColor(curso: String): Int{ return textCs[curso[0].toString().lowercase()]!! }

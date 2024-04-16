@@ -59,8 +59,6 @@ class ProgramarReunionFragment : Fragment() {
             activity = context as ControlSeleccionActivity
         }catch (e: Exception){
             activity = context as ControlEstudianteActivity
-            Log.e("PROGRAMARREU","SE ESTABLECIO APODERADO")
-            Log.e("DETALLES",e.message.toString())
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +72,7 @@ class ProgramarReunionFragment : Fragment() {
             usuarioId = it.getString(MenuAdministradorActivity().USUARIOID, "")
             estudianteId = reunion.estudianteId ; apoderadoId = reunion.apoderadoId
             if(toProgramar){
-                estudianteId = aulaId.split("-")[1]
+                estudianteId = it.getString(ControlEstudianteActivity().AULAID, "").split("-")[1]
             }
             //VARIABLES
         }
@@ -226,6 +224,7 @@ class ProgramarReunionFragment : Fragment() {
                     putSerializable(MenuAdministradorActivity().TOKEN, token)
                     putSerializable(REUNION, reunion)
                     putSerializable(MenuAdministradorActivity().USUARIOID, usuarioId)
+                    Log.e("ANTES", aulaId)
                     putSerializable(ControlEstudianteActivity().AULAID, aulaId)
                 }
             }

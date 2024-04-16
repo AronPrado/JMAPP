@@ -63,7 +63,7 @@ class EstudiantesHFragment : Fragment() {
             tokenApod = it.getString(MenuAdministradorActivity().TOKEN, "")
             retro.setBearerToken(tokenApod)
             estudiantes = it.getSerializable(MenuApoderadoActivity().HIJOS) as List<Estudiante>
-            Log.e("TAG", TAG)
+            Log.e("HIJOS", estudiantes.size.toString())
         }
     }
     override fun onCreateView(

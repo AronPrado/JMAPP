@@ -32,7 +32,7 @@ class DocenteAdapter(private val context: Context, private var docentes: List<Do
         curso.text = nombreCurso
         Log.e("CURSOADAPTER",nombreCurso)
         // ESTABLECER COLORES
-        view.setBackgroundColor(CursoUtil.getBackgroundColor(nombreCurso))
+        view.setBackgroundColor(CursoUtil.getBackgroundColor(nombreCurso, true))
         nombres.setTextColor(CursoUtil.getTextColor(nombreCurso))
         curso.setTextColor(CursoUtil.getTextColor(nombreCurso))
         // ESTABLECER IMAGEN

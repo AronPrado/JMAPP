@@ -31,7 +31,6 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
         @SuppressLint("SetTextI18n")
         fun bind(asistencia: Asistencia, positionA: Int, asistencias: MutableList<Asistencia>) {
             val estudiante = asistencia.estudianteId
-            Log.e("RPRPRP", estudiante)
             binding.txtAlumno.text =  estudiante.split("-")[0]
 
             val e = asistencia.estado ; val estado = if(e=="F") "Falta" else if(e=="T") "Tardanza" else "Asistencia"
