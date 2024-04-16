@@ -71,7 +71,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
-
+    implementation("com.google.android.gms:play-services-safetynet:18.0.1")
 
     // Kotlin components
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.10")

@@ -9,6 +9,11 @@ import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.javierprado.jmapp.BuildConfig
@@ -32,6 +37,31 @@ class AuthFunctions {
     fun mostrarCarga(context: Context, text: String):AlertDialog{
         return AlertDialog.Builder(context).setView(ProgressBar(context)).setMessage(text).setCancelable(false).create()
     }
+    fun iniciarVerificacionRecaptcha(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity, nextMenu : AppCompatActivity) {
+        val API_SITE_KEY = "6LegfbwpAAAAABeU4KkeropZbw4Vtd8TRzci10YT"
+        SafetyNet.getClient(interfaceActual)
+            .verifyWithRecaptcha(API_SITE_KEY)
+            .addOnSuccessListener(interfaceActual, OnSuccessListener { response ->
+                // Indica que la comunicación con el servicio reCAPTCHA fue exitosa
+                val userResponseToken = response.tokenResult
+                if (response.tokenResult?.isNotEmpty() == true) {
+                    // Valida el token de respuesta del usuario utilizando la API de siteverify de reCAPTCHA
+//                    validarTokenRecaptcha(userResponseToken)
+//                    loginUser(emailUser, passUser, rol, interfaceActual, nextMenu)
+                }
+            })
+            .addOnFailureListener(interfaceActual, OnFailureListener { e ->
+                // Maneja los errores de la verificación de reCAPTCHA
+                if (e is ApiException) {
+                    // Error al comunicarse con el servicio reCAPTCHA
+                    Log.e("CAPTCHA", "Error: ${CommonStatusCodes.getStatusCodeString(e.statusCode)}")
+                } else {
+                    // Otro tipo de error desconocido
+                    Log.e("CAPTCHA", "Error: ${e.message}")
+                }
+            })
+    }
+
     fun loginUser(emailUser: String, passUser: String, rol: String, interfaceActual : AppCompatActivity, nextMenu : AppCompatActivity) {
         val progresDialog = mostrarCarga(interfaceActual, "Iniciando sesión")
         progresDialog.show()

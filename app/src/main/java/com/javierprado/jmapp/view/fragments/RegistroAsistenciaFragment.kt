@@ -95,7 +95,10 @@ class RegistroAsistenciaFragment : Fragment() {
                     asistencias = response.body()!!.toList() as MutableList<Asistencia>
                     adapter.setAsistencias(asistencias)
                     progressC.visibility = View.GONE
-                }else{ Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show() }
+                }else{
+                    Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+                    activity.supportFragmentManager.popBackStackImmediate()
+                }
             }
             override fun onFailure(call: Call<List<Asistencia>>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
