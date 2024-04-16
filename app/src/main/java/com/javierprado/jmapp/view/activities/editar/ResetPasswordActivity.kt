@@ -13,6 +13,7 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Usuario
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
+import com.javierprado.jmapp.data.util.AuthFunctions
 import com.javierprado.jmapp.view.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,6 +54,8 @@ class ResetPasswordActivity : AppCompatActivity() {
             emailEditText.error = "Correo inválido"
             return
         }
+        val progresDialog = AuthFunctions().mostrarCarga(this@ResetPasswordActivity, "Comprobando correo.")
+        progresDialog.show()
         api.existeCorreo(email).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 msg = "EL CORREO NO EXISTE"
@@ -65,19 +68,25 @@ class ResetPasswordActivity : AppCompatActivity() {
                                 val usuario = Usuario(email, newPass, "")
                                 api.actualizarContrasena(usuario).enqueue(object : Callback<Void> {
                                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                        progresDialog.dismiss()
                                     }
                                     override fun onFailure(call: Call<Void>, t: Throwable) {
+                                        progresDialog.dismiss()
                                         msg = "Error en la API: ${t.message}"
                                         Toast.makeText(this@ResetPasswordActivity, msg, Toast.LENGTH_SHORT).show()
                                         Log.e("ERROR CONTRASEÑA", t.message.toString())
                                     }
                                 } )
                             } else {
+                                progresDialog.dismiss()
                                 msg+=" EN FIREBASE"
                                 Toast.makeText(this@ResetPasswordActivity, msg, Toast.LENGTH_SHORT).show()
                             }
                         }
-                } else{ Log.e("NR COMPROBAR CORREO", msg) }
+                }
+                else{
+                    progresDialog.dismiss()
+                    Log.e("NR COMPROBAR CORREO", msg) }
             }
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 msg = "Error en la API: ${t.message}"
