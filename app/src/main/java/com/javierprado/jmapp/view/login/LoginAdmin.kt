@@ -47,7 +47,7 @@ class LoginAdmin : AppCompatActivity() {
             if (emailUser.isEmpty() || passUser.isEmpty()) {
                 Toast.makeText(this, "Por favor, ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show()
             } else {
-                authFunctions.loginUser(emailUser, passUser, RoleType.ADMIN.name, this@LoginAdmin, MenuAdministradorActivity())
+                authFunctions.iniciarVerificacionRecaptcha(emailUser, passUser, RoleType.ADMIN.name, this@LoginAdmin, MenuAdministradorActivity())
             }
         }
 

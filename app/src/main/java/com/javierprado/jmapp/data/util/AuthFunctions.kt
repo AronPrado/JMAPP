@@ -47,7 +47,7 @@ class AuthFunctions {
                 if (response.tokenResult?.isNotEmpty() == true) {
                     // Valida el token de respuesta del usuario utilizando la API de siteverify de reCAPTCHA
 //                    validarTokenRecaptcha(userResponseToken)
-//                    loginUser(emailUser, passUser, rol, interfaceActual, nextMenu)
+                    loginUser(emailUser, passUser, rol, interfaceActual, nextMenu)
                 }
             })
             .addOnFailureListener(interfaceActual, OnFailureListener { e ->
