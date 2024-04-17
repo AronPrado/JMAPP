@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 
 class NotisApp: ViewModel(){
     val firestore = FirebaseFirestore.getInstance()
-    val usersRepo = UsersRepo()
     var token: String? = null
 
     fun accionReuniones(sender: String, dataReceiver: String, accion: String, reunion: Reunion?, esid: Boolean = false)
@@ -48,9 +47,7 @@ class NotisApp: ViewModel(){
                                     NotificacionDataReunion("Reuniones", mensaje,
                                         FirebaseService().TIPOR, reunion?.id ?: "", accion, sender), token!!
                                 ).also {
-                                    GlobalScope.launch {
-                                        sendNotification(it)
-                                    }
+                                    sendNotification(it)
                                 }
                             } else {
                                 Log.e("ChatAppViewModel", "NO TOKEN, NO NOTIFICATION")
@@ -80,7 +77,7 @@ class NotisApp: ViewModel(){
 
     }
 
-    private suspend fun sendNotification(notification: PushNotificacion){
+    private fun sendNotification(notification: PushNotificacion) = viewModelScope.launch{
         try {
             val response = RetrofitNoti.api.postNotificacion(notification)
         } catch (e: Exception) {
