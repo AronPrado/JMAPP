@@ -38,6 +38,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     companion object{
         lateinit var instance : MenuDocenteActivity
     }
+
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
