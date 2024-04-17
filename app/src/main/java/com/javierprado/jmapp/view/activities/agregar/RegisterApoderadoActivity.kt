@@ -116,7 +116,7 @@ class RegisterApoderadoActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
-                            val t = msg.length;
+                            val t = msg.length
                             val id = msg.substring(0, t - 40);
                             val pass = msg.substring(t - 40, t - 30)
                             Log.e("CONTRASENA APODERADO", pass)
@@ -235,12 +235,12 @@ class RegisterApoderadoActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun afterTextChanged(s: Editable?) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val validacion = s.toString().length > 9 && validarTexto(s.toString())
-            btnRegistrar.isEnabled = validacion
-            if(!validacion){
-                msg = "Se ingresó un formato incorrecto en la información del apoderado."
-                Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
-            }
+//            val validacion = s.toString().length > 9 && validarTexto(s.toString())
+//            btnRegistrar.isEnabled = validacion
+//            if(!validacion){
+//                msg = "Se ingresó un formato incorrecto en la información del apoderado."
+//                Toast.makeText(this@RegisterApoderadoActivity, msg, Toast.LENGTH_SHORT).show()
+//            }
         }
         fun validarTexto(texto: String): Boolean {
             val regex = Regex("""^(?=\S*?[A-Za-z])([A-Za-z]{3,}\s){0,2}[A-Za-z]{3,}$""")

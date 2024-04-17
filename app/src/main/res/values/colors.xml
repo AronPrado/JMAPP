@@ -79,5 +79,6 @@
     <color name="plomo">#515151</color>
     <color name="bac_doc">#8FBC91</color>
     <color name="bac_do">#D0F1D2</color>
+    <color name="notification_title_color">#FF0000</color> <color name="notification_message_color">#808080</color>
 
 </resources>

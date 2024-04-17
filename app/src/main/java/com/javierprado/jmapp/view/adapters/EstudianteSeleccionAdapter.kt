@@ -26,7 +26,7 @@ class EstudianteSeleccionAdapter(): RecyclerView.Adapter<EstudianteSeleccionAdap
         init { this.binding = binding }
         fun bind(estudiante: Estudiante) {
             val grado = estudiante.grado ; val seccion = estudiante.seccion
-            val nivel = estudiante.nivelEducativo;
+            var nivel = estudiante.nivelEducativo; nivel = if(nivel=="P") "Primaria" else "Secundaria"
             val info = "$grado° '$seccion' - $nivel"
             binding.gradoSeccionEstudiante.text = info
             binding.nombreEstudiante.text = estudiante.nombres + " " + estudiante.apellidos

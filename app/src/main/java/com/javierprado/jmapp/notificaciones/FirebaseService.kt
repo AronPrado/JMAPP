@@ -81,12 +81,14 @@ class FirebaseService: FirebaseMessagingService() {
         //INTENT NOTIFICACION PARA EL DOCENTE
         var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
         //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
-        val ia = Intent(this, NotificationReunion::class.java)
-        ia.putExtra("ACCION", "ACEPTAR")
+        val ia = Intent(this, NotificationReunion::class.java) ; val bundleI = Bundle()
+        bundleI.putString("ACCION","ACEPTAR") ; ia.putExtras(bundleI)
+//        ia.putExtra("ACCION", "ACEPTAR")
         val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_IMMUTABLE)
         //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
-        val ic = Intent(this, NotificationReunion::class.java)
-        ic.putExtra("ACCION", "CANCELAR")
+        val ic = Intent(this, NotificationReunion::class.java) ; val bundleD = Bundle()
+        bundleI.putString("ACCION", "CANCELAR") ; ic.putExtras(bundleI)
+//        ic.putExtras("ACCION", "CANCELAR")
         var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_IMMUTABLE)
 
 

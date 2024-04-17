@@ -101,7 +101,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
                 startActivity(intent)
             }
             R.id.nav_item_4 -> {
-                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, RegistroDeNotificacionActivity::class.java)
                 intent.putExtra(USUARIOID, adminId)
                 startActivity(intent)
@@ -119,7 +119,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
                 intent.putExtra(USUARIOID, adminId)
                 intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)
                 startActivity(intent)
-                Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
             }
 //            R.id.nav_item_7 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 ->  {

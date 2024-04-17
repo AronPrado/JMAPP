@@ -14,12 +14,12 @@
         <TextView
             android:id="@+id/txt_titulo_noticia"
             android:layout_width="300dp"
+            android:text="Actualización en políticas de convivencia escolardwadwadwadwadwadwadwadwadwadwadwadwad wad wad wad wa dwadwadaw dwa dwa dwad wad wa"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="a"
+            android:ellipsize="end"
             android:textSize="24sp"
-            android:maxLines="2"
-            android:gravity="center" />
+            android:maxLines="2" />
         <TextView
             android:id="@+id/txt_fecha_noticia"
             android:layout_width="wrap_content"
@@ -57,8 +57,8 @@
                 android:layout_height="130dp"
                 android:paddingBottom="4dp"
                 android:textSize="16sp"
-                android:text="Hola"
-                android:maxLines="5"/>
+                android:ellipsize="end"
+                android:maxLines="6"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -69,14 +69,15 @@
 
                 <ImageView
                     android:id="@+id/editar_noticia"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/edit" />
 
                 <ImageView
                     android:id="@+id/eliminar_noticia"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:src="@drawable/delete" />
             </LinearLayout>
         </LinearLayout>

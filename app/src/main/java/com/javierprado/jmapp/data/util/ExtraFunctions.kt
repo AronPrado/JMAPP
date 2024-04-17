@@ -17,10 +17,15 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.data.entities.Aula
 import com.javierprado.jmapp.view.adapters.NoticiaAdapter
 import com.javierprado.jmapp.data.entities.Noticia
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
+import com.javierprado.jmapp.view.adapters.AulaAdapter
+import com.javierprado.jmapp.view.clicks.AulaClick
+import com.javierprado.jmapp.view.clicks.NoticiaClick
 import com.javierprado.jmapp.view.fragments.AsignarTareasFragment
+import com.javierprado.jmapp.view.fragments.DetalleNoticiaFragment
 import com.javierprado.jmapp.view.fragments.EstudiantesConFuncionesFragment
 import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 import com.javierprado.jmapp.view.fragments.RegistroAsistenciaFragment
@@ -52,6 +57,7 @@ class ExtraFunctions {
                     progressBarListar.visibility= View.GONE
                 }else{
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    progressBarListar.visibility= View.GONE
                 }
             }
             override fun onFailure(call: Call<List<Noticia>>, t: Throwable) {
@@ -61,6 +67,15 @@ class ExtraFunctions {
                 progressBarListar.visibility= View.GONE
             }
         })
+        if(adapter.getAdminId().isEmpty()){
+            adapter.setClicker(object : NoticiaClick {
+                override fun onNoticiaClicker(noticia: Noticia?) {
+                    val fragment = DetalleNoticiaFragment()
+                    fragment.noticia=noticia
+                    fragment.show(context.supportFragmentManager, "DETALLE_NOTICIA")
+                }
+            })
+        }else{ adapter.setClicker(object : NoticiaClick { override fun onNoticiaClicker(noticia: Noticia?) {} }) }
     }
 
     fun obtenerFragment(nav: String, token: String, lista: Serializable, usuarioId: String, extraId: String  ): Fragment{

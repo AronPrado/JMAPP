@@ -140,7 +140,7 @@ class RegisterDocenteActivity : AppCompatActivity() {
                                     progresDialog.dismiss()
                                     // GUARDAR USUARIO EN FireStpre
                                     val user = auth.currentUser!!
-                                    val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "default", "tipo" to "DOC",
+                                    val dataHashMap = hashMapOf("userid" to user.uid, "info" to "$nombres $apellidos", "correo" to correo, "estado" to "Desconectado", "tipo" to "DOC",
                                         "tipoid" to id, "token" to "" )
                                     firestore.collection("Users").document(user.uid).set(dataHashMap)
                                     authFunctions.enviarCredenciales(correo, pass, this@RegisterDocenteActivity)

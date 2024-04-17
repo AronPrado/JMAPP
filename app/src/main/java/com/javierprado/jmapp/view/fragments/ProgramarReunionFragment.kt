@@ -228,6 +228,7 @@ class ProgramarReunionFragment : Fragment() {
             }
     }
 
+    @SuppressLint("SetTextI18n")
     fun validacion(){
         binding.estadoReunion.setText("No disponible")
         var error = ""
@@ -250,6 +251,13 @@ class ProgramarReunionFragment : Fragment() {
             try{
                 LocalTime.parse(hora) ; val regex = Regex("^(1[5-7]):[0-5][0-9]\$")
                 if(!regex.matches(hora)){ error = "La hora de reuniones son de 3PM a 6PM." }
+                else{
+                    val minutos = hora.split(":")[1].toInt()
+                    if(minutos % 5 != 0) {
+                        binding.horaReunion.setText(hora.split(":")[0]+":")
+                        throw Exception("El tiempo debe ser de 15 minutos.")
+                    }
+                }
             } catch(d: DateTimeParseException ){ error = "El formato de la hora no es correcto." }
             if(error.isNotEmpty()){ binding.horaReunion.text.clear(); throw Exception(error) }
         }

@@ -39,8 +39,8 @@ class NotificationReunion: BroadcastReceiver() {
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, Reunion(), true)
 
-//        val hashMap = hashMapOf<String, Any>("estado" to estado)
-//        firestore.collection("reuniones").document(reunionId).update(hashMap)
+        val hashMap = hashMapOf<String, Any>("estado" to estado)
+        firestore.collection("reuniones").document(reunionId).update(hashMap)
 
 
         val repliedNotification  =

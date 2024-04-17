@@ -27,15 +27,15 @@ class RecentChatAdapter : RecyclerView.Adapter<MyChatListHolder>() {
     override fun onBindViewHolder(holder: MyChatListHolder, position: Int) {
         val chatlist = listOfChats[position]
         chatShitModal = chatlist
-        holder.userName.setText(chatlist.info)
+        holder.userName.text = chatlist.info
         val themessage = chatlist.message!!.split(" ").take(4).joinToString(" ")
         val makelastmessage = "${chatlist.person}: ${themessage} "
 
-        holder.lastMessage.setText(makelastmessage)
+        holder.lastMessage.text = makelastmessage
 
 //        Glide.with(holder.itemView.context).load(chatlist.friendsimage).into(holder.imageView)
 
-        holder.timeView.setText(chatlist.time!!.substring(0, 5))
+        holder.timeView.text = chatlist.time!!.substring(0, 5)
 
         holder.itemView.setOnClickListener {
             listener?.getOnChatCLickedItem(position, chatlist)

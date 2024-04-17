@@ -3,8 +3,10 @@
     <group>
         <item
             android:id="@+id/nav_item_1"
-            android:title="Inicio"/>
-        <item android:title="Funciones del Administrador">
+            android:title="Inicio"
+            />
+        <item
+            android:title="Funciones del Administrador">
             <menu>
                 <item
                     android:id="@+id/nav_item_2"
@@ -24,7 +26,8 @@
             </menu>
         </item>
 
-        <item android:title="Salir del App">
+        <item
+            android:title="Salir del App">
             <menu>
                 <item
                     android:id="@+id/nav_item_8"

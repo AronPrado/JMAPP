@@ -134,6 +134,10 @@ class HorarioFragment : Fragment() {
         }
 
         progressC.visibility = View.VISIBLE
+        Log.e("GRADO",gradoA.toString())
+        Log.e("NIVEL",nivelA)
+        Log.e("SECCION",seleccionA)
+        Log.e("FECHA",fechaLunes.toString())
         api.listarHorarios(gradoA, nivelA, seleccionA, fechaLunes.toString()).enqueue(object : Callback<List<List<Horario>>> {
             override fun onResponse(call: Call<List<List<Horario>>>, response: Response<List<List<Horario>>>) {
                 msg = response.headers()["message"] ?: ""
@@ -168,11 +172,13 @@ class HorarioFragment : Fragment() {
             val adapter = HorarioAdapter(ArrayList(), api, object : HorarioClick {
                 override fun onHorarioClicker(horario: Horario?) {
                     if(paraAdmin){
-                        val fragment: Fragment = EditarHorarioFragment.newInstance(horario!!, retro.getBearerToken())
-                        activity.supportFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_horario_main, fragment)
-                            .addToBackStack(TAG)
-                            .commit()
+                        EditarHorarioFragment
+                        val fragment = EditarHorarioFragment.newInstance(horario!!, retro.getBearerToken())
+                        fragment.show(activity.supportFragmentManager , "EDIT_HORARIO")
+//                        activity.supportFragmentManager.beginTransaction()
+//                            .replace(R.id.fcv_horario_main, fragment)
+//                            .addToBackStack(TAG)
+//                            .commit()
                     }
                 }
             })

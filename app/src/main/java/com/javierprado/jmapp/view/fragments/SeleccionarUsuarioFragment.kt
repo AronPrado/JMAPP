@@ -99,7 +99,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                 if(emailsApoderados.isNotEmpty()){
                     viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner) {
                         adapter.setList(it)
-                        adapter.setTipoUsuarios(RoleType.APOD.name)
                         rvUsers.adapter = adapter
                         rvSeleccionarUsuarios.visibility = View.GONE
                         rvUsers.visibility = View.VISIBLE
@@ -121,7 +120,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
                             viewModel.getUsers(emailsDocentes).observe(viewLifecycleOwner) {
                                 adapter.setList(it)
                                 adapter.setCursos(cursosDocentes)
-                                adapter.setTipoUsuarios(RoleType.DOC.name)
                                 rvUsers.adapter = adapter
                                 rvSeleccionarUsuarios.visibility = View.GONE
                                 rvUsers.visibility = View.VISIBLE

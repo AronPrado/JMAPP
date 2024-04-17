@@ -122,23 +122,23 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 //                Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
 //            }
             R.id.nav_item_3 -> {
-                Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.NOTAS.name
             }
             R.id.nav_item_4 -> {
-                Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Asistencia Escolar", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.ASISTENCIAS.name
             }
             R.id.nav_item_5 -> {
-                Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.EVALUACIONES.name
             }
             R.id.nav_item_6 -> {
-                Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.TAREAS.name
             }
             R.id.nav_item_7 -> {
-                Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
                 clase =  ChatDocenteApoderadoActivity()
                 firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("token", tokenDoc)
                 transport = NavigationWindows.COMUNICACION.name

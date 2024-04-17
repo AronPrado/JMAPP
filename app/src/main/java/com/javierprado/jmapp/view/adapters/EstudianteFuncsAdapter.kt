@@ -28,14 +28,12 @@ class EstudianteFuncsAdapter(): RecyclerView.Adapter<EstudianteFuncsAdapter.VHEs
         private val binding: ItemEstudianteConFuncionesBinding
         init { this.binding = binding }
         fun bind(estudiante: Estudiante, token: String, cursoId: String, activity: AppCompatActivity) {
-//            val grado = estudiante.obtenerGrado(estudianteId)
-//            val seccion = estudiante.obtenerSeccion(estudianteId)
             binding.nombreEstudiante.text = estudiante.nombres + " " + estudiante.apellidos
 
-            val lista: List<Estudiante> = ArrayList()
-            binding.btnOtraFuncion.setOnClickListener {
-                Log.e("PRESIONADO", "VAS A OTRA FUNCION POR ALUMNO")
-            }
+//            val lista: List<Estudiante> = ArrayList()
+//            binding.btnOtraFuncion.setOnClickListener {
+//                Log.e("PRESIONADO", "VAS A OTRA FUNCION POR ALUMNO")
+//            }
             binding.btnCalificacionFuncion.setOnClickListener {
                 val fragment = IngresarCalificacionesFragment.newInstance(token, estudiante.id, cursoId)
                 activity.supportFragmentManager.beginTransaction()

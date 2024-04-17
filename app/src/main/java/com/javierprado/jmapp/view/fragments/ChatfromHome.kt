@@ -45,7 +45,7 @@ class ChatfromHome : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
 //        Glide.with(view.getContext()).load(args.recentchats.friendsimage!!).placeholder(R.drawable.person).dontAnimate().into(circleImageView);
-        textViewName.setText(args.recentchats.info)
+        textViewName.text = args.recentchats.info
 
         binding.chatBackBtn.setOnClickListener {
             view.findNavController().navigate(R.id.action_chatFragment_to_seleccionarUsuarioFragment4)

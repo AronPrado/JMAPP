@@ -23,7 +23,8 @@
             android:fontFamily="@font/librefranklin_extrabold"
             android:text="Nombres y Apellidos"
             android:textAlignment="center"
-            android:textSize="30sp"
+            android:textSize="50sp"
+            android:maxLines="4"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -32,19 +33,21 @@
             android:layout_below="@+id/nombre_estudiante"
             android:layout_alignParentEnd="true"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:padding="5dp"
-            android:gravity="right">
+            android:gravity="center">
 
-            <ImageButton
-                android:id="@+id/btn_otra_funcion"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/color1"/>
+<!--            <ImageButton-->
+<!--                android:id="@+id/btn_otra_funcion"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@color/color1"/>-->
             <ImageButton
                 android:id="@+id/btn_calificacion_funcion"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/color2"/>
+                android:src="@drawable/notas"
+                />
         </LinearLayout>
 
     </RelativeLayout>

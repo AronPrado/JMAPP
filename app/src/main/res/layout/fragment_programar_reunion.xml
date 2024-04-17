@@ -115,10 +115,10 @@
                             app:layout_constrainedHeight="true"
                             android:textSize="15sp"
                             android:textStyle="bold"
+                            android:paddingHorizontal="8dp"
                             android:maxLength="10"
                             android:background="@color/nude"
                             android:inputType="date"
-                            android:padding="3dp"
                             android:enabled="false"/>
                         <EditText
                             android:id="@+id/hora_reunion"
@@ -131,7 +131,7 @@
                             android:textStyle="bold"
                             android:background="@color/nude"
                             android:inputType="datetime"
-                            android:padding="3dp"
+                            android:paddingHorizontal="8dp"
                             android:enabled="false" />
                     </LinearLayout>
                 </LinearLayout>
@@ -171,7 +171,7 @@
                     android:id="@+id/txt_mensaje_reunion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Solo puede programar una reunión de 1/2 hora"
+                    android:text="Solo puedes estabelcer el tiempo de 15 minutos."
                     android:maxLines="2"
                     android:textAlignment="center"
                     app:layout_constrainedHeight="true"
@@ -181,6 +181,7 @@
                     android:id="@+id/fg_img_CAMBIAR"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:src="@drawable/repogramar"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginVertical="15dp"/>
