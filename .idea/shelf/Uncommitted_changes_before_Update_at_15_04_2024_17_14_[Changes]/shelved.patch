@@ -1,0 +1,602 @@
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id(\"com.android.application\")\r\n    id(\"org.jetbrains.kotlin.android\")\r\n    id(\"com.google.gms.google-services\")\r\n    id(\"androidx.navigation.safeargs.kotlin\")\r\n//    id(\"kotlin-android\")\r\n//    id(\"kotlin-parcelize\")\r\n//    id(\"kotlin-kapt\")\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.javierprado.jmapp\"\r\n    compileSdk = 34\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.javierprado.jmapp\"\r\n        minSdk = 28\r\n        targetSdk = 33\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n\r\n        buildConfigField(\"String\", \"CORREO_JMA\", \"\\\"${project.findProperty(\"correoJMA\")}\\\"\")\r\n        buildConfigField(\"String\", \"CONTRASENA_JMA\", \"\\\"${project.findProperty(\"contrasenaJMA\")}\\\"\")\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_17\r\n        targetCompatibility = JavaVersion.VERSION_17\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"17\"\r\n    }\r\n    buildFeatures {\r\n        viewBinding = true\r\n        buildConfig = true\r\n        dataBinding = true\r\n    }\r\n\r\n    packagingOptions {\r\n        exclude(\"META-INF/NOTICE.md\")\r\n        exclude(\"META-INF/LICENSE.md\")\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    //Room\r\n    implementation (\"androidx.room:room-runtime:2.6.1\")\r\n    //kapt (\"androidx.room:room-compiler:2.3.0\")\r\n    implementation (\"androidx.room:room-ktx:2.6.1\")\r\n    implementation(\"androidx.room:room-common:2.6.1\")\r\n    implementation(\"androidx.activity:activity-ktx:1.8.2\")\r\n    implementation(\"androidx.activity:activity:1.8.0\")\r\n    testImplementation (\"androidx.room: room-testing:2.2.5\")\r\n\r\n    //RETROFIT (API)\r\n    implementation (\"com.squareup.retrofit2:retrofit:2.9.0\")\r\n    implementation (\"com.squareup.retrofit2:converter-gson:2.9.0\")\r\n    implementation (\"com.google.code.gson:gson:2.10.1\")\r\n    implementation (\"com.squareup.okhttp3:okhttp:4.12.0\")\r\n    implementation (\"com.squareup.okhttp3:logging-interceptor:4.12.0\")\r\n\r\n\r\n\r\n    // Kotlin components\r\n    implementation(\"org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.10\")\r\n    //coroutines\r\n    implementation(\"org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3\")\r\n    implementation(\"org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3\")\r\n    //EMAIL\r\n    implementation(\"com.sun.mail:android-mail:1.6.7\")\r\n    implementation(\"com.sun.mail:android-activation:1.6.7\")\r\n\r\n    //CHAT\r\n    implementation(\"com.github.bumptech.glide:glide:4.16.0\")\r\n    implementation(\"de.hdodenhof:circleimageview:3.1.0\")\r\n    implementation(\"com.google.firebase:firebase-firestore:24.11.0\")\r\n    implementation(\"com.google.firebase:firebase-firestore-ktx:24.11.0\")\r\n        //Firebase Storage\r\n    implementation (\"com.google.firebase:firebase-storage-ktx:20.3.0\")\r\n        //Firebase Cloud Messaging\r\n    implementation(\"com.google.firebase:firebase-messaging:23.4.1\")\r\n    implementation(\"com.google.firebase:firebase-installations:17.2.0\")\r\n//    implementation(\"com.google.firebase:firebase-database:20.0.2\")\r\n\r\n    implementation(\"androidx.core:core-ktx:1.12.0\")\r\n    implementation(\"androidx.appcompat:appcompat:1.6.1\")\r\n    implementation(\"com.google.android.material:material:1.11.0\")\r\n    implementation(\"androidx.constraintlayout:constraintlayout:2.1.4\")\r\n    implementation(\"com.google.firebase:firebase-auth:22.3.1\")\r\n    implementation(\"androidx.recyclerview:recyclerview:1.3.2\")\r\n    implementation(\"androidx.cardview:cardview:1.0.0\")\r\n    implementation(\"androidx.navigation:navigation-fragment-ktx:2.7.7\")\r\n    implementation(\"androidx.navigation:navigation-ui-ktx:2.7.7\")\r\n    testImplementation(\"junit:junit:4.13.2\")\r\n    androidTestImplementation(\"androidx.test.ext:junit:1.1.5\")\r\n    androidTestImplementation(\"androidx.test.espresso:espresso-core:3.5.1\")\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/app/build.gradle.kts	(date 1713190186131)
+@@ -71,7 +71,10 @@
+     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+ 
+-
++    //Captcha
++    //implementation ("androidx.browser:browser:1.3.0")
++    //implementation ("com.google.android.recaptcha:recaptcha:18.5.0-beta02")
++    implementation ("com.google.android.gms:play-services-safetynet:17.0.0")
+ 
+     // Kotlin components
+     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.10")
+Index: app/src/main/java/com/javierprado/jmapp/view/activities/notificaciones/RegistroDeNotificacionActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/activities/notificaciones/RegistroDeNotificacionActivity.kt b/app/src/main/java/com/javierprado/jmapp/view/activities/notificaciones/RegistroDeNotificacionActivity.kt
+new file mode 100644
+--- /dev/null	(date 1713161409999)
++++ b/app/src/main/java/com/javierprado/jmapp/view/activities/notificaciones/RegistroDeNotificacionActivity.kt	(date 1713161409999)
+@@ -0,0 +1,20 @@
++package com.javierprado.jmapp.view.activities.notificaciones
++
++import android.os.Bundle
++import android.view.View
++import androidx.appcompat.app.AppCompatActivity
++import com.google.android.material.progressindicator.CircularProgressIndicator
++import com.javierprado.jmapp.R
++import com.javierprado.jmapp.view.fragments.RegistroDeNotificacionFragment
++
++class RegistroDeNotificacionActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_registro_de_notificacion)
++
++        supportFragmentManager.beginTransaction()
++            .replace(R.id.fcv_rnotificaciones_main, RegistroDeNotificacionFragment())
++            .commit()
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/javierprado/jmapp/view/fragments/RegistroDeNotificacionFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/fragments/RegistroDeNotificacionFragment.kt b/app/src/main/java/com/javierprado/jmapp/view/fragments/RegistroDeNotificacionFragment.kt
+new file mode 100644
+--- /dev/null	(date 1713161410030)
++++ b/app/src/main/java/com/javierprado/jmapp/view/fragments/RegistroDeNotificacionFragment.kt	(date 1713161410030)
+@@ -0,0 +1,149 @@
++package com.javierprado.jmapp.view.fragments
++
++import android.os.Bundle
++import android.text.Editable
++import android.text.TextWatcher
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import android.widget.ArrayAdapter
++import android.widget.AutoCompleteTextView
++import android.widget.Button
++import android.widget.EditText
++import android.widget.Toast
++import androidx.fragment.app.Fragment
++import com.google.firebase.firestore.FirebaseFirestore
++import com.javierprado.jmapp.R
++
++class RegistroDeNotificacionFragment : Fragment() {
++
++    private lateinit var botonEnviar: Button
++    private lateinit var tituloEditText: EditText
++    private lateinit var descripcionEditText: EditText
++    private lateinit var autoCompleteTextView: AutoCompleteTextView
++
++    private var destinatarioSeleccionado: String = ""
++    private var titulo: String = ""
++    private var descripcion: String = ""
++
++    override fun onCreateView(
++        inflater: LayoutInflater,
++        container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++
++        val view = inflater.inflate(R.layout.fragment_registro_de_noticiaciones, container, false)
++
++        autoCompleteTextView = view.findViewById(R.id.autoCompleteTextView)
++        botonEnviar = view.findViewById(R.id.fg_btn_funcion)
++        tituloEditText = view.findViewById(R.id.txt_NotiTitulo)
++        descripcionEditText = view.findViewById(R.id.txt_NotiDescrip)
++
++        // Agregar TextWatchers a los EditText
++        tituloEditText.addTextChangedListener(textWatcher)
++        descripcionEditText.addTextChangedListener(textWatcher)
++
++        // Deshabilitar el botón al inicio
++        botonEnviar.isEnabled = false
++
++        return view
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        // Configurar el adaptador para el AutoCompleteTextView
++        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line)
++        autoCompleteTextView.setAdapter(adapter)
++
++        // Manejar el evento de cambio de texto en el AutoCompleteTextView
++        autoCompleteTextView.addTextChangedListener(object : TextWatcher {
++            override fun afterTextChanged(s: Editable?) {
++                val nombreCompleto = s.toString()
++                if (nombreCompleto.isNotBlank()) {
++                    val nombres = nombreCompleto.split(" ")
++                    if (nombres.size >= 2) {
++                        val nombre = nombres[0]
++                        val apellido = nombres[1]
++                        buscarUsuarios(nombre, apellido)
++                    }
++                } else {
++                    // Limpiar la lista de sugerencias si el campo está vacío
++                    adapter.clear()
++                }
++            }
++
++            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
++
++            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
++        })
++
++        // Agregar un listener para manejar la selección de usuario en el AutoCompleteTextView
++        autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
++            destinatarioSeleccionado = parent.getItemAtPosition(position) as String
++        }
++
++        // lógica del botón
++        botonEnviar.setOnClickListener {
++            titulo = tituloEditText.text.toString()
++            descripcion = descripcionEditText.text.toString()
++
++            // Verificar si los campos están completos
++            if (titulo.isNotEmpty() && descripcion.isNotEmpty() && destinatarioSeleccionado.isNotEmpty()) {
++                // Enviar Noti
++                enviarNotificacion(destinatarioSeleccionado, titulo, descripcion)
++            } else {
++                // Mostrar mensaje de error si falta algún campo
++                Toast.makeText(requireContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
++            }
++        }
++    }
++
++    private fun buscarUsuarios(nombre: String, apellido: String) {
++        val db = FirebaseFirestore.getInstance()
++        val usuariosRef = db.collection("usuarios")
++
++        // Realizar la consulta en Firestore
++        usuariosRef.whereEqualTo("nombres", nombre)
++            .whereEqualTo("apellidos", apellido)
++            .get()
++            .addOnSuccessListener { result ->
++                val usuarios = mutableListOf<String>()
++                for (document in result) {
++                    val nombreCompleto = "${document.getString("nombres")} ${document.getString("apellidos")}"
++                    usuarios.add(nombreCompleto)
++                }
++                // Actualizar el adaptador con los resultados de la búsqueda
++                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, usuarios)
++                autoCompleteTextView.setAdapter(adapter)
++            }
++            .addOnFailureListener { exception ->
++                // Manejar errores
++            }
++    }
++
++    private fun enviarNotificacion(destinatario: String, titulo: String, descripcion: String) {
++        // Aquí iría la lógica para enviar la notificación
++        // Mostrar mensaje de envío correcto
++        Toast.makeText(requireContext(), "Notificación enviada correctamente", Toast.LENGTH_SHORT).show()
++
++        // Regresar a la actividad anterior
++        requireActivity().finish()
++    }
++
++    private val textWatcher = object : TextWatcher {
++        override fun afterTextChanged(s: Editable?) {
++            // Verificar si todos los campos están llenos para habilitar el botón
++            val titulo = tituloEditText.text.toString().trim()
++            val descripcion = descripcionEditText.text.toString().trim()
++            botonEnviar.isEnabled =
++                titulo.isNotEmpty() && descripcion.isNotEmpty() && destinatarioSeleccionado.isNotEmpty()
++        }
++
++        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
++        }
++
++        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
++        }
++    }
++}
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"#JAVA_HOME\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveExternalAnnotations\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/.idea/gradle.xml	(date 1713161409967)
+@@ -5,7 +5,7 @@
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+-        <option name="gradleJvm" value="#JAVA_HOME" />
++        <option name="gradleJvm" value="jbr-17" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"corretto-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n  <component name=\"SuppressKotlinCodeStyleNotification\">\r\n    <option name=\"disableForAll\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/.idea/misc.xml	(date 1713161410019)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.KILL_BACKGROUND_PROCESSES\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n    <uses-permission android:name=\"com.google.android.c2dm.permission.RECEIVE\" />\r\n    <uses-permission\r\n        android:name=\"android.permission.READ_EXTERNAL_STORAGE\"\r\n        android:maxSdkVersion=\"32\" />\r\n\r\n    <application\r\n        android:name=\".view.activities.MyApplication\"\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.JMAPP\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".view.activities.control.ControlEstudianteActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatApoderadoDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatDocenteApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlSeleccionActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ActualizarInfoApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlHorarioActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlNoticiaActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activity_noticias\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginAdmin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuAdministradorActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.NotiEventosEsco\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.Seleccion_Sesion_Activity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MensajeDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.OptionLogin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ResetPasswordActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MenuPrincipalApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <service\r\n            android:name=\".notificaciones.FirebaseService\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"false\"\r\n            android:permission=\"com.google.android.c2dm.permission.SEND\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\r\n                <action android:name=\"com.google.android.c2dm.intent.RECEIVE\" />\r\n            </intent-filter>\r\n        </service>\r\n        <receiver android:name=\".notificaciones.NotificationReply\" />\r\n        <receiver android:name=\".notificaciones.NotificationReunion\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/app/src/main/AndroidManifest.xml	(date 1713161410059)
+@@ -23,6 +23,8 @@
+         android:theme="@style/Theme.JMAPP"
+         android:usesCleartextTraffic="true"
+         tools:targetApi="31">
++        <activity android:name=".view.activities.notificaciones.RegistroDeNotificacionActivity"
++            android:exported="true"/>
+         <activity
+             android:name=".view.activities.control.ControlEstudianteActivity"
+             android:exported="false" />
+Index: app/src/main/java/com/javierprado/jmapp/view/fragments/SeleccionarUsuarioFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@file:Suppress(\"DEPRECATION\")\r\n\r\npackage com.javierprado.jmapp.view.fragments\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Toast\r\nimport androidx.appcompat.widget.Toolbar\r\nimport androidx.databinding.DataBindingUtil\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.navigation.findNavController\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.javierprado.jmapp.R\r\nimport com.javierprado.jmapp.data.util.AnotherUtil\r\nimport com.javierprado.jmapp.view.adapters.*\r\nimport com.javierprado.jmapp.modal.RecentChats\r\nimport com.javierprado.jmapp.modal.Users\r\nimport com.javierprado.jmapp.mvvm.ChatAppViewModel\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.firestore.FirebaseFirestore\r\nimport com.javierprado.jmapp.data.entities.Aula\r\nimport com.javierprado.jmapp.data.entities.Docente\r\nimport com.javierprado.jmapp.data.entities.Estudiante\r\nimport com.javierprado.jmapp.data.retrofit.RetrofitHelper\r\nimport com.javierprado.jmapp.data.util.RoleType\r\nimport com.javierprado.jmapp.databinding.FragmentSeleccionarUsuarioBinding\r\nimport com.javierprado.jmapp.view.clicks.AulaClick\r\nimport de.hdodenhof.circleimageview.CircleImageView\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nprivate const val CHANNEL_ID = \"my_channel\"\r\nclass SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicked {\r\n    lateinit var rvUsers : RecyclerView\r\n    lateinit var rvSeleccionarUsuarios : RecyclerView\r\n    lateinit var rvRecentChats : RecyclerView\r\n    lateinit var adapter : UserAdapter\r\n    lateinit var aulaAdapter : AulaAdapter\r\n    lateinit var hijoAdapter : HijoApoderadoAdapter\r\n    lateinit var viewModel : ChatAppViewModel\r\n    lateinit var toolbar: Toolbar\r\n    lateinit var circleImageView: CircleImageView\r\n    lateinit var recentadapter : RecentChatAdapter\r\n    lateinit var auth: FirebaseAuth\r\n    lateinit var firestore : FirebaseFirestore\r\n    lateinit var binding: FragmentSeleccionarUsuarioBinding\r\n\r\n    private lateinit var msg : String\r\n//    var aulas: List<Aula> = ArrayList()\r\n//    var estudiantes: List<Estudiante> = ArrayList()\r\n\r\n    private var token = \"\"\r\n    var usuarioId: String = \"\"\r\n    private val retro = RetrofitHelper.getInstanceStatic()\r\n    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {\r\n        // Inflate the layout for this fragment\r\n        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seleccionar_usuario, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        viewModel = ViewModelProvider(this).get(ChatAppViewModel::class.java)\r\n        toolbar = view.findViewById(R.id.toolbarMain)\r\n//        val logoutimage = toolbar.findViewById<ImageView>(R.id.logOut)\r\n//        circleImageView = toolbar.findViewById(R.id.tlImage)\r\n        binding.lifecycleOwner = viewLifecycleOwner\r\n//        viewModel.imageUrl.observe(viewLifecycleOwner, Observer {\r\n//            Glide.with(requireContext()).load(it).into(circleImageView)\r\n//        })\r\n//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,\r\n//            object : OnBackPressedCallback(true) {\r\n//                override fun handleOnBackPressed() {\r\n//                    getActivity()?.moveTaskToBack(true);\r\n//                    getActivity()?.finish();\r\n//                }\r\n//            })\r\n        auth = FirebaseAuth.getInstance()\r\n        firestore = FirebaseFirestore.getInstance()\r\n\r\n        rvUsers = view.findViewById(R.id.rvUsers)\r\n        rvSeleccionarUsuarios = view.findViewById(R.id.rvSeleccionarUsuarios)\r\n        rvRecentChats = view.findViewById(R.id.rvRecentChats)\r\n        adapter = UserAdapter()\r\n        recentadapter = RecentChatAdapter()\r\n        hijoAdapter = HijoApoderadoAdapter()\r\n\r\n        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)\r\n        val layoutManager2 = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)\r\n        val layoutManager3 = LinearLayoutManager(activity)\r\n\r\n        rvUsers.layoutManager = layoutManager\r\n        rvSeleccionarUsuarios.layoutManager = layoutManager2\r\n        rvRecentChats.layoutManager= layoutManager3\r\n\r\n        val api = retro.getApi()\r\n        aulaAdapter = AulaAdapter(ArrayList(), object : AulaClick {\r\n            override fun onAulaClicker(aula: Aula?) {\r\n                val emailsApoderados = aula!!.emails\r\n                if(emailsApoderados.isNotEmpty()){\r\n                    viewModel.getUsers(emailsApoderados).observe(viewLifecycleOwner) {\r\n                        adapter.setList(it)\r\n                        rvUsers.adapter = adapter\r\n                        rvSeleccionarUsuarios.visibility = View.GONE\r\n                        rvUsers.visibility = View.VISIBLE\r\n                    }\r\n                }else{\r\n                    Toast.makeText(activity, \"No hay docentes.\", Toast.LENGTH_SHORT).show()\r\n                }\r\n            }\r\n        })\r\n        hijoAdapter = HijoApoderadoAdapter(ArrayList(), object : onEstudianteApoClickListener {\r\n            override fun onHijoSelected(hijo: Estudiante) {\r\n                api.listarDocentes(\"null\", hijo.id, \"null\").enqueue(object : Callback<List<Docente>> {\r\n                    override fun onResponse(call: Call<List<Docente>>, response: Response<List<Docente>>) {\r\n                        msg = response.headers()[\"message\"] ?: \"\"\r\n                        if (response.isSuccessful) {\r\n                            val emailsDocentes = response.body()!!.map { d-> d.correo }\r\n                            viewModel.getUsers(emailsDocentes).observe(viewLifecycleOwner) {\r\n                                adapter.setList(it)\r\n                                rvUsers.adapter = adapter\r\n                                rvSeleccionarUsuarios.visibility = View.GONE\r\n                                rvUsers.visibility = View.VISIBLE\r\n                            }\r\n                        }else{\r\n                            Log.e(\"NR:\", msg)\r\n                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()\r\n                        }\r\n                    }\r\n                    override fun onFailure(call: Call<List<Docente>>, t: Throwable) {\r\n                        Log.e(\"OBTENER DOCENTES\", t.message.toString())\r\n                    }\r\n                } )\r\n            }\r\n        })\r\n        firestore.collection(\"Users\").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener{ value, error ->\r\n            if (value != null && value.exists()) {\r\n                val user = value.toObject(Users::class.java)\r\n                usuarioId = user!!.tipoid!!\r\n                token = user.token!!\r\n                retro.setBearerToken(token)\r\n                if(user.tipo!! == RoleType.DOC.name){\r\n                    rvSeleccionarUsuarios.adapter = aulaAdapter\r\n                    api.listarAulas(usuarioId, null, null, null).enqueue(object : Callback<List<Aula>> {\r\n                        override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {\r\n                            msg = response.headers()[\"message\"] ?: \"\"\r\n                            if (response.isSuccessful) {\r\n                                aulaAdapter.setAulas(response.body()!!)\r\n                            }else{\r\n                                Log.e(\"OBTENER AULAS:\", msg)\r\n                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()\r\n                            }\r\n                        }\r\n                        override fun onFailure(call: Call<List<Aula>>, t: Throwable) {\r\n                            msg = \"Error en la API: ${t.message}\"\r\n                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()\r\n                            Log.e(\"OBTENER AULAS\", t.message.toString())\r\n                        }\r\n                    } )\r\n                }else{\r\n                    rvSeleccionarUsuarios.adapter = hijoAdapter\r\n                    api.listarEstudiantes(usuarioId, ArrayList()).enqueue(object : Callback<List<Estudiante>> {\r\n                        override fun onResponse(call: Call<List<Estudiante>>, response: Response<List<Estudiante>>) {\r\n                            msg = response.headers()[\"message\"] ?: \"\"\r\n                            if (response.isSuccessful) {\r\n                                hijoAdapter.setEstudiantes(response.body()!!)\r\n                            }else{\r\n                                msg = \"FAIL $msg\"\r\n                                Log.e(\"NR :\", msg)\r\n                            }\r\n                        }\r\n                        override fun onFailure(call: Call<List<Estudiante>>, t: Throwable) {\r\n                            Log.e(\"OBTENER APODERADOS\", t.message.toString())\r\n                        }\r\n                    } )\r\n                }\r\n            }\r\n        }\r\n        adapter.setOnClickListener(this)\r\n        viewModel.getRecentUsers().observe(viewLifecycleOwner, Observer {\r\n            rvRecentChats.adapter = recentadapter\r\n            recentadapter.setList(it)\r\n        })\r\n        recentadapter.setOnChatClickListener(this)\r\n\r\n//        circleImageView.setOnClickListener {\r\n//            view.findNavController().navigate(R.id.action_homeFragment_to_settingFragment)\r\n//        }\r\n\r\n    }\r\n    //?\r\n    @Deprecated(\"Deprecated in Java\", ReplaceWith(\r\n        \"super.onActivityCreated(savedInstanceState)\",\r\n        \"androidx.fragment.app.Fragment\"\r\n    ))\r\n    override fun onActivityCreated(savedInstanceState: Bundle?) {\r\n        super.onActivityCreated(savedInstanceState)\r\n    }\r\n    override fun onUserSelected(position: Int, users: Users) {\r\n        val action = SeleccionarUsuarioFragmentDirections.actionSeleccionarUsuarioFragmentToChatFragment(users)\r\n        view?.findNavController()?.navigate(action)\r\n    }\r\n    override fun getOnChatCLickedItem(position: Int, chatList: RecentChats) {\r\n        val action = SeleccionarUsuarioFragmentDirections.actionSeleccionarUsuarioFragmentToChatfromHome(chatList)\r\n        view?.findNavController()?.navigate(action)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/fragments/SeleccionarUsuarioFragment.kt b/app/src/main/java/com/javierprado/jmapp/view/fragments/SeleccionarUsuarioFragment.kt
+--- a/app/src/main/java/com/javierprado/jmapp/view/fragments/SeleccionarUsuarioFragment.kt	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/app/src/main/java/com/javierprado/jmapp/view/fragments/SeleccionarUsuarioFragment.kt	(date 1713161410072)
+@@ -24,6 +24,7 @@
+ import com.javierprado.jmapp.mvvm.ChatAppViewModel
+ import com.google.firebase.auth.FirebaseAuth
+ import com.google.firebase.firestore.FirebaseFirestore
++import com.javierprado.jmapp.data.entities.Apoderado
+ import com.javierprado.jmapp.data.entities.Aula
+ import com.javierprado.jmapp.data.entities.Docente
+ import com.javierprado.jmapp.data.entities.Estudiante
+@@ -36,7 +37,6 @@
+ import retrofit2.Callback
+ import retrofit2.Response
+ 
+-private const val CHANNEL_ID = "my_channel"
+ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicked {
+     lateinit var rvUsers : RecyclerView
+     lateinit var rvSeleccionarUsuarios : RecyclerView
+@@ -53,8 +53,7 @@
+     lateinit var binding: FragmentSeleccionarUsuarioBinding
+ 
+     private lateinit var msg : String
+-//    var aulas: List<Aula> = ArrayList()
+-//    var estudiantes: List<Estudiante> = ArrayList()
++    var aulas: Collection<Aula> = ArrayList()
+ 
+     private var token = ""
+     var usuarioId: String = ""
+@@ -153,7 +152,8 @@
+                         override fun onResponse(call: Call<List<Aula>>, response: Response<List<Aula>>) {
+                             msg = response.headers()["message"] ?: ""
+                             if (response.isSuccessful) {
+-                                aulaAdapter.setAulas(response.body()!!)
++                                aulas = response.body()!!
++                                aulaAdapter.setAulas(aulas as MutableList)
+                             }else{
+                                 Log.e("OBTENER AULAS:", msg)
+                                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+@@ -169,9 +169,9 @@
+                     rvSeleccionarUsuarios.adapter = hijoAdapter
+                     api.listarEstudiantes(usuarioId, ArrayList()).enqueue(object : Callback<List<Estudiante>> {
+                         override fun onResponse(call: Call<List<Estudiante>>, response: Response<List<Estudiante>>) {
+-                            msg = response.headers()["message"] ?: ""
+                             if (response.isSuccessful) {
+-                                hijoAdapter.setEstudiantes(response.body()!!)
++                                val estudiantes = response.body()!!
++                                hijoAdapter.setEstudiantes(estudiantes)
+                             }else{
+                                 msg = "FAIL $msg"
+                                 Log.e("NR :", msg)
+@@ -186,8 +186,8 @@
+         }
+         adapter.setOnClickListener(this)
+         viewModel.getRecentUsers().observe(viewLifecycleOwner, Observer {
++            recentadapter.setList(it)
+             rvRecentChats.adapter = recentadapter
+-            recentadapter.setList(it)
+         })
+         recentadapter.setOnChatClickListener(this)
+ 
+Index: app/src/main/java/com/javierprado/jmapp/view/activities/menus/MenuAdministradorActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.javierprado.jmapp.view.activities.menus\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.Menu\r\nimport android.view.MenuItem\r\nimport android.widget.ImageView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.core.view.GravityCompat\r\nimport androidx.drawerlayout.widget.DrawerLayout\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.google.android.material.navigation.NavigationView\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.javierprado.jmapp.R\r\nimport com.javierprado.jmapp.view.adapters.NoticiaAdapter\r\nimport com.javierprado.jmapp.data.retrofit.ColegioAPI\r\nimport com.javierprado.jmapp.data.retrofit.RetrofitHelper\r\nimport com.javierprado.jmapp.data.util.ExtraFunctions\r\nimport com.javierprado.jmapp.data.util.RoleType\r\nimport com.javierprado.jmapp.view.NotiEventosEsco\r\nimport com.javierprado.jmapp.view.activities.agregar.RegisterApoderadoActivity\r\nimport com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity\r\nimport com.javierprado.jmapp.view.activities.control.ControlHorarioActivity\r\nimport com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity\r\nimport com.javierprado.jmapp.view.login.OptionLogin\r\n\r\nclass MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {\r\n\r\n    private lateinit var drawer: DrawerLayout\r\n    private lateinit var toogle: ActionBarDrawerToggle\r\n\r\n    private lateinit var recyclerView: RecyclerView\r\n    private lateinit var btnMasRecientes: ImageView\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private lateinit var api : ColegioAPI\r\n\r\n    val TOKEN = \"token\"; val USUARIOID = \"usuarioid\"\r\n    var tokenAdmin = \"\"; var adminId = \"\"\r\n\r\n    private var extraFuns : ExtraFunctions = ExtraFunctions()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_menu_administrador)\r\n\r\n        btnMasRecientes = findViewById(R.id.btn_mas_reciente)\r\n        //API Y BUNDLE\r\n        val retro = RetrofitHelper.getInstanceStatic()\r\n        val bundle = intent.extras\r\n        if (bundle != null) {\r\n            tokenAdmin=bundle.getString(TOKEN, \"\")\r\n            adminId=bundle.getString(USUARIOID, \"\")\r\n            retro.setBearerToken(tokenAdmin)\r\n        }\r\n        api = retro.getApi()\r\n        //Noticias\r\n        recyclerView = findViewById(R.id.recyclerViewNews)\r\n        recyclerView.layoutManager = LinearLayoutManager(this)\r\n\r\n        actualizarNoticias(retro.getBearerToken())\r\n        btnMasRecientes.setOnClickListener { actualizarNoticias(retro.getBearerToken()) }\r\n\r\n        auth = FirebaseAuth.getInstance()\r\n\r\n\r\n        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_main)\r\n        setSupportActionBar(toolbar)\r\n\r\n        drawer = findViewById(R.id.drawer_layout)\r\n\r\n        toogle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)\r\n\r\n        drawer.addDrawerListener(toogle)\r\n\r\n        supportActionBar?.setDisplayHomeAsUpEnabled(true)\r\n        supportActionBar?.setHomeButtonEnabled(true)\r\n\r\n        val navigationView: NavigationView = findViewById(R.id.nav_view_administrador)\r\n        navigationView.setNavigationItemSelectedListener(this)\r\n    }\r\n\r\n    override fun onNavigationItemSelected(item: MenuItem): Boolean {\r\n        when(item.itemId){\r\n            R.id.nav_item_1 -> Toast.makeText(this, \"Inicio\", Toast.LENGTH_SHORT).show()\r\n            R.id.nav_item_2 -> {\r\n                val intent = Intent(this, RegisterApoderadoActivity::class.java)\r\n                intent.putExtra(USUARIOID, adminId)\r\n                intent.putExtra(RegisterApoderadoActivity().TOKEN, tokenAdmin)\r\n                startActivity(intent)\r\n            }\r\n            R.id.nav_item_3 -> {\r\n                val intent = Intent(this, RegisterDocenteActivity::class.java)\r\n                intent.putExtra(USUARIOID, adminId)\r\n                intent.putExtra(RegisterDocenteActivity().TOKEN, tokenAdmin)\r\n                startActivity(intent)\r\n            }\r\n            R.id.nav_item_4 -> {\r\n                Toast.makeText(this, \"Redactar y Enviar Notificaciones\", Toast.LENGTH_SHORT).show()\r\n                val intent = Intent(this, NotiEventosEsco::class.java)\r\n                intent.putExtra(USUARIOID, adminId)\r\n                startActivity(intent)\r\n            }\r\n            R.id.nav_item_5 -> {\r\n                Toast.makeText(this, \"Editar Horario Escolar\", Toast.LENGTH_SHORT).show()\r\n                val intent = Intent(this, ControlHorarioActivity::class.java)\r\n                intent.putExtra(MenuAdministradorActivity().USUARIOID, adminId)\r\n                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)\r\n                intent.putExtra(ControlHorarioActivity().ROLE, RoleType.ADMIN.name)\r\n                startActivity(intent)\r\n            }\r\n            R.id.nav_item_6 -> {\r\n                val intent = Intent(this, ControlNoticiaActivity::class.java)\r\n                intent.putExtra(USUARIOID, adminId)\r\n                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)\r\n                startActivity(intent)\r\n                Toast.makeText(this, \"Agregar Noticia\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            R.id.nav_item_7 -> Toast.makeText(this, \"Docentes Registrados\", Toast.LENGTH_SHORT).show()\r\n            R.id.nav_item_8 ->  {\r\n                auth.signOut()\r\n                val intent = Intent(this, OptionLogin::class.java)\r\n                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP\r\n                startActivity(intent)\r\n            }\r\n        }\r\n\r\n        drawer.closeDrawer(GravityCompat.START)\r\n        return true\r\n    }\r\n\r\n    //Iconos del Toolbar\r\n    override fun onCreateOptionsMenu(menu: Menu): Boolean {\r\n        menuInflater.inflate(R.menu.perfil_noti_main, menu)\r\n        return true\r\n    }\r\n\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        return when (item.itemId) {\r\n            R.id.action_perfil -> {\r\n\r\n                true\r\n            }\r\n            R.id.action_notificaciones -> {\r\n\r\n                true\r\n            }\r\n            else -> super.onOptionsItemSelected(item)\r\n        }\r\n    }\r\n    fun actualizarNoticias(token: String){\r\n        val adapter = NoticiaAdapter(this@MenuAdministradorActivity, ArrayList(), api, token, false)\r\n        adapter.setAdminId(adminId)\r\n        extraFuns.listarNoticias(api, adapter, this@MenuAdministradorActivity)\r\n        recyclerView.adapter = adapter\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/activities/menus/MenuAdministradorActivity.kt b/app/src/main/java/com/javierprado/jmapp/view/activities/menus/MenuAdministradorActivity.kt
+--- a/app/src/main/java/com/javierprado/jmapp/view/activities/menus/MenuAdministradorActivity.kt	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/app/src/main/java/com/javierprado/jmapp/view/activities/menus/MenuAdministradorActivity.kt	(date 1713161410112)
+@@ -26,6 +26,8 @@
+ import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
+ import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
+ import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
++import com.javierprado.jmapp.view.activities.notificaciones.RegistroDeNotificacionActivity
++import com.javierprado.jmapp.view.fragments.RegistroDeNotificacionFragment
+ import com.javierprado.jmapp.view.login.OptionLogin
+ 
+ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+@@ -100,7 +102,7 @@
+             }
+             R.id.nav_item_4 -> {
+                 Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
+-                val intent = Intent(this, NotiEventosEsco::class.java)
++                val intent = Intent(this, RegistroDeNotificacionActivity::class.java)
+                 intent.putExtra(USUARIOID, adminId)
+                 startActivity(intent)
+             }
+Index: app/src/main/res/layout/activity_registro_de_notificacion.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_registro_de_notificacion.xml b/app/src/main/res/layout/activity_registro_de_notificacion.xml
+new file mode 100644
+--- /dev/null	(date 1713161410050)
++++ b/app/src/main/res/layout/activity_registro_de_notificacion.xml	(date 1713161410050)
+@@ -0,0 +1,58 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    app:layout_constrainedHeight="true"
++    tools:context=".view.activities.notificaciones.RegistroDeNotificacionActivity">
++
++    <androidx.appcompat.widget.Toolbar
++        android:id="@+id/tb_noti_rnotificaciones"
++        android:layout_width="match_parent"
++        android:layout_height="?android:attr/actionBarSize"
++        android:background="@color/toolbar"
++        android:elevation="24dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:gravity="center_vertical"
++            android:orientation="horizontal">
++
++            <ImageView
++                android:id="@+id/back"
++                android:layout_width="wrap_content"
++                android:layout_height="45dp"
++                android:paddingStart="16dp"
++                android:paddingEnd="16dp"
++                android:src="@drawable/baseline_arrow_back_24" />
++
++            <TextView
++                android:id="@+id/tv_title_control_noticia"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_weight="1"
++                android:fontFamily="@font/librefranklin_mediumitalic"
++                android:gravity="start|center_vertical"
++                android:paddingStart="4dp"
++                android:text="Redactar Notificaciones"
++                android:textColor="@color/white"
++                android:textSize="25sp"
++                android:textStyle="bold" />
++        </LinearLayout>
++    </androidx.appcompat.widget.Toolbar>
++
++    <androidx.fragment.app.FragmentContainerView
++        android:id="@+id/fcv_rnotificaciones_main"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/tb_noti_rnotificaciones"/>
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_registro_de_noticiaciones.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_registro_de_noticiaciones.xml b/app/src/main/res/layout/fragment_registro_de_noticiaciones.xml
+new file mode 100644
+--- /dev/null	(date 1713161410097)
++++ b/app/src/main/res/layout/fragment_registro_de_noticiaciones.xml	(date 1713161410097)
+@@ -0,0 +1,139 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/md_theme_dark_outline"
++    tools:context=".view.fragments.RegistroDeNotificacionFragment">
++
++    <androidx.constraintlayout.widget.Guideline
++        android:id="@+id/guideline_start"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:orientation="vertical"
++        app:layout_constraintGuide_percent="0.1" />
++    <androidx.constraintlayout.widget.Guideline
++        android:id="@+id/guideline_end"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:orientation="vertical"
++        app:layout_constraintGuide_percent="0.9" />
++    <androidx.cardview.widget.CardView
++        android:id="@+id/cv_nombre"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        app:cardCornerRadius="16dp"
++        app:cardElevation="34dp"
++        android:layout_marginBottom="40dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="@id/guideline_end"
++        app:layout_constraintStart_toStartOf="@id/guideline_start"
++        app:layout_constraintTop_toTopOf="parent">
++        <FrameLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent">
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:orientation="vertical"
++                android:paddingHorizontal="24dp"
++                android:paddingTop="32dp"
++                android:paddingBottom="24dp"
++                android:layout_marginLeft="12dp"
++                android:layout_marginRight="12dp">
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:orientation="vertical"
++                    android:layout_marginTop="8dp"
++                    android:layout_marginBottom="8dp">
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="wrap_content"
++                        android:text="Titulo:"
++                        android:maxLines="1"
++                        android:ellipsize="end"
++                        android:textSize="20sp"
++                        android:textStyle="bold" />
++                    <EditText
++                        android:id="@+id/txt_NotiTitulo"
++                        android:layout_width="match_parent"
++                        android:layout_height="25dp"
++                        android:layout_gravity="left"
++                        app:layout_constrainedHeight="true"
++                        android:textSize="15sp"
++                        android:textStyle="bold"
++                        android:background="@color/nude"
++                        android:inputType="text" />
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="wrap_content"
++                        android:text="Descripción:"
++                        android:maxLines="1"
++                        android:ellipsize="end"
++                        android:textSize="20sp"
++                        android:textStyle="bold" />
++                    <EditText
++                        android:id="@+id/txt_NotiDescrip"
++                        android:layout_width="match_parent"
++                        android:layout_height="25dp"
++                        android:layout_gravity="left"
++                        app:layout_constrainedHeight="true"
++                        android:textSize="15sp"
++                        android:textStyle="bold"
++                        android:background="@color/nude"
++                        android:inputType="text" />
++                </LinearLayout>
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:orientation="vertical"
++                    android:layout_marginTop="4dp"
++                    android:layout_marginBottom="8dp">
++                    <TextView
++                        android:layout_width="match_parent"
++                        android:layout_height="wrap_content"
++                        android:text="Destinatario:"
++                        android:maxLines="1"
++                        android:ellipsize="end"
++                        android:textSize="20sp"
++                        android:textStyle="bold" />
++                    <AutoCompleteTextView
++                        android:id="@+id/autoCompleteTextView"
++                        android:layout_width="match_parent"
++                        android:layout_height="wrap_content"
++                        android:hint="Buscar destinatario"
++                        android:background="@color/nude"
++                        android:textSize="15sp"
++                        android:textStyle="bold"
++                        android:inputType="text" />
++
++                </LinearLayout>
++            </LinearLayout>
++            <com.google.android.material.progressindicator.CircularProgressIndicator
++                android:id="@+id/pb_nombre"
++                android:layout_gravity="center"
++                android:indeterminate="true"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"/>
++        </FrameLayout>
++    </androidx.cardview.widget.CardView>
++    <Button
++        android:id="@+id/fg_btn_funcion"
++        android:layout_width="300dp"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:textColor="@color/white"
++        android:textSize="35sp"
++        android:layout_marginVertical="15dp"
++        android:text="Enviar"
++        android:backgroundTint="@color/md_theme_light_tertiary"
++        android:padding="0dp"
++        android:fontFamily="@font/librefranklin_extrabolditalic"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/cv_nombre" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/javierprado/jmapp/view/login/OptionLogin.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.javierprado.jmapp.view.login\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.LinearLayout\r\nimport com.javierprado.jmapp.R\r\n\r\nclass OptionLogin : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_option_login)\r\n\r\n        // Obteniendo referencias a los layouts de Administrador, Apoderado y Docente\r\n        val lyAdmin = findViewById<LinearLayout>(R.id.lyAdmin)\r\n        val lyApoderado = findViewById<LinearLayout>(R.id.lyApoderado)\r\n        val lyDocente = findViewById<LinearLayout>(R.id.lyDocente)\r\n\r\n        // Agregando listeners de clics a los layouts\r\n        lyAdmin.setOnClickListener {\r\n            // Abrir la actividad de login para el Administrador\r\n            val intent = Intent(this@OptionLogin, LoginAdmin::class.java)\r\n            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP\r\n            startActivity(intent)\r\n        }\r\n\r\n        lyApoderado.setOnClickListener {\r\n            // Abrir la actividad de login para el Apoderado\r\n            val intent = Intent(this@OptionLogin, LoginActivity::class.java)\r\n            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP\r\n            startActivity(intent)\r\n        }\r\n\r\n        lyDocente.setOnClickListener {\r\n            // Abrir la actividad de login para el Docente\r\n            val intent = Intent(this@OptionLogin, LoginDocente::class.java)\r\n            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP\r\n            startActivity(intent)\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/login/OptionLogin.kt b/app/src/main/java/com/javierprado/jmapp/view/login/OptionLogin.kt
+--- a/app/src/main/java/com/javierprado/jmapp/view/login/OptionLogin.kt	(revision 96ec80a8987175827ab29cd6945b74308a6296b9)
++++ b/app/src/main/java/com/javierprado/jmapp/view/login/OptionLogin.kt	(date 1713161410121)
+@@ -6,6 +6,7 @@
+ import android.view.View
+ import android.widget.LinearLayout
+ import com.javierprado.jmapp.R
++import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+ 
+ class OptionLogin : AppCompatActivity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
