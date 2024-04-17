@@ -101,8 +101,9 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:enabled="false"
-                    android:backgroundTint="@color/md_theme_light_primary"
+                    android:backgroundTint="@color/md_theme_light_tertiary"
                     android:text="Asignar tarea"
+                    android:textColor="@color/black"
                     android:textSize="18sp"/>
             </RelativeLayout>
         </FrameLayout>
