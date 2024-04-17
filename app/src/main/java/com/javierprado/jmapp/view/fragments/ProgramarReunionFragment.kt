@@ -22,10 +22,8 @@ import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AnotherUtil
-import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.databinding.FragmentProgramarReunionBinding
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
-import com.javierprado.jmapp.mvvm.NotisApp
 import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
@@ -41,7 +39,6 @@ import java.time.format.DateTimeParseException
 //REU primero info - luego id
 class ProgramarReunionFragment : Fragment() {
     lateinit var binding: FragmentProgramarReunionBinding
-    lateinit var viewModel: NotisApp
     val REUNION = "reunion" ; val IDREUNION = "reunionid"
     var docentes: List<Docente> = ArrayList()
     private lateinit var reunion: Reunion
@@ -148,7 +145,7 @@ class ProgramarReunionFragment : Fragment() {
                 if (response.isSuccessful) {
                     //ENVIAR CORREO A DOCENTE
                     val reuActualizada = response.body()!!
-                    NotisApp().accionReuniones(AnotherUtil.getUidLoggedIn(),
+                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
                         reunion.apoderadoId.split("-")[1], "D_ACEPTA", reuActualizada)
                     Toast.makeText(activity, "Se envió la notificación de aprobación.", Toast.LENGTH_SHORT).show()
                     activity.supportFragmentManager.popBackStackImmediate()
@@ -202,7 +199,7 @@ class ProgramarReunionFragment : Fragment() {
 
                     reuCreada.apoderadoId = cidApoderado.split("-")[1]
                     reuCreada.docenteId = cidDocente.split("-")[1]
-                    NotisApp().accionReuniones(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada)
+                    ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada)
                     Toast.makeText(activity,
                         "Se ha enviado la notificacion para solicitar"+if(toProgramar) "programación de reunión." else " la reprogramación.", Toast.LENGTH_SHORT).show()
                     activity.supportFragmentManager.popBackStackImmediate()
