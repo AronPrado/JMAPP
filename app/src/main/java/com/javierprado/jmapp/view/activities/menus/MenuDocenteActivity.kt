@@ -131,12 +131,12 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             }
             R.id.nav_item_5 -> {
 //                Toast.makeText(this, "Programar Tareas y Evaluaciones", Toast.LENGTH_SHORT).show()
-                transport = NavigationWindows.EVALUACIONES.name
-            }
-            R.id.nav_item_6 -> {
-//                Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.TAREAS.name
             }
+//            R.id.nav_item_6 -> {
+//                Toast.makeText(this, "Notificar Tareas", Toast.LENGTH_SHORT).show()
+//                transport = NavigationWindows.TAREAS.name
+//            }
             R.id.nav_item_7 -> {
 //                Toast.makeText(this, "Comunicarse con el apoderado", Toast.LENGTH_SHORT).show()
                 clase =  ChatDocenteApoderadoActivity()
