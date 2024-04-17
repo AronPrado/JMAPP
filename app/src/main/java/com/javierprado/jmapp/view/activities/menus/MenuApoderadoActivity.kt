@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
@@ -25,6 +26,7 @@ import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
 import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
@@ -39,6 +41,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     companion object{
         lateinit var instance : MenuApoderadoActivity
     }
+    lateinit var viewModel: ChatAppViewModel
     private lateinit var drawer:DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
@@ -57,6 +60,8 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_apoderado)
+
+        viewModel = ViewModelProvider(this)[ChatAppViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()

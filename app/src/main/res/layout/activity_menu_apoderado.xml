@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+<data>
+    <variable
+        name="viewModel"
+        type="com.javierprado.jmapp.mvvm.ChatAppViewModel" />
+</data>
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,3 +29,4 @@
         app:menu="@menu/activity_main_drawner"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
