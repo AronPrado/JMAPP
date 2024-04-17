@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "270043942864",
-    "project_id": "prueba-9b8fe",
-    "storage_bucket": "prueba-9b8fe.appspot.com"
+    "project_number": "876266259789",
+    "project_id": "backend-colegio",
+    "storage_bucket": "backend-colegio.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:270043942864:android:c46b19293e13572e4833d5",
+        "mobilesdk_app_id": "1:876266259789:android:e9cab3eecfca7f13d32304",
         "android_client_info": {
           "package_name": "com.javierprado.jmapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAoVx51iv0KUTDaqkTAEeDOmUXO0O9aO4s"
+          "current_key": "AIzaSyAdN43bYYdszAKyCq2c57PO3T_9sQRdl_s"
         }
       ],
       "services": {
