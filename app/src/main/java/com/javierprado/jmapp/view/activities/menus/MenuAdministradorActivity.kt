@@ -26,6 +26,8 @@ import com.javierprado.jmapp.view.activities.agregar.RegisterApoderadoActivity
 import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
+import com.javierprado.jmapp.view.activities.notificaciones.RegistroDeNotificacionActivity
+import com.javierprado.jmapp.view.fragments.RegistroDeNotificacionFragment
 import com.javierprado.jmapp.view.login.OptionLogin
 
 class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -100,7 +102,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
             }
             R.id.nav_item_4 -> {
                 Toast.makeText(this, "Redactar y Enviar Notificaciones", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, NotiEventosEsco::class.java)
+                val intent = Intent(this, RegistroDeNotificacionActivity::class.java)
                 intent.putExtra(USUARIOID, adminId)
                 startActivity(intent)
             }
@@ -144,10 +146,10 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
 
                 true
             }
-            R.id.action_notificaciones -> {
-
-                true
-            }
+//            R.id.action_notificaciones -> {
+//
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }

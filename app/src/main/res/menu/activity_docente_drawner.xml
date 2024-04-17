@@ -21,7 +21,7 @@
                     android:icon="@drawable/ic_attendance"/>
                 <item
                     android:id="@+id/nav_item_5"
-                    android:title="Programar Tareas y Evaluaciones"
+                    android:title="Programar Tareas"
                     android:icon="@drawable/ic_scheduled"/>
             </menu>
         </item>
@@ -39,7 +39,7 @@
             </menu>
         </item>
         <item
-            android:title="Cuenta">
+            android:title="Salir del App">
             <menu>
                 <item
 

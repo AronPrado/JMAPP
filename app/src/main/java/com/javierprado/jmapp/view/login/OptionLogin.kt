@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import com.javierprado.jmapp.R
+import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 
 class OptionLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

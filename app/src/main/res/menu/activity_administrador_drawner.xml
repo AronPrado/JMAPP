@@ -12,27 +12,27 @@
                 <item
                     android:id="@+id/nav_item_3"
                     android:title="Registrar Docente"/>
-                <item
-                    android:id="@+id/nav_item_4"
-                    android:title="Redactar y Enviar Notificaciones"/>
+<!--                <item-->
+<!--                    android:id="@+id/nav_item_4"-->
+<!--                    android:title="Redactar y Enviar Notificaciones"/>-->
                 <item
                     android:id="@+id/nav_item_5"
-                    android:title="Editar Horario Escolar"/>
+                    android:title="Ver Horario Escolar"/>
                 <item
                     android:id="@+id/nav_item_6"
-                    android:title="Editar Tablero de Noticias"/>
+                    android:title="Agregar Noticias"/>
             </menu>
         </item>
 
-        <item android:title="Ver Docentes">
+        <item android:title="Salir del App">
             <menu>
                 <item
-                    android:id="@+id/nav_item_7"
-                    android:title="Docentes Registrados"/>
+                    android:id="@+id/nav_item_8"
+                    android:title="Cerrar Sesion"/>
+<!--                <item-->
+<!--                    android:id="@+id/nav_item_7"-->
+<!--                    android:title="Docentes Registrados"/>-->
             </menu>
         </item>
-        <item
-            android:id="@+id/nav_item_8"
-            android:title="Cerrar Sesion"/>
     </group>
 </menu>

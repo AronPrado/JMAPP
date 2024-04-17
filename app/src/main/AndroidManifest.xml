@@ -23,6 +23,8 @@
         android:theme="@style/Theme.JMAPP"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity android:name=".view.activities.notificaciones.RegistroDeNotificacionActivity"
+            android:exported="true"/>
         <activity
             android:name=".view.activities.control.ControlEstudianteActivity"
             android:exported="false" />
@@ -111,6 +113,7 @@
         </service>
         <receiver android:name=".notificaciones.NotificationReply" />
         <receiver android:name=".notificaciones.NotificationReunion" />
+
     </application>
 
 </manifest>

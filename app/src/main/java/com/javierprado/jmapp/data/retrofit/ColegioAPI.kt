@@ -71,6 +71,7 @@ interface ColegioAPI {
     @POST("/api/asistencias") // OBTENER ASISTENCIAS
     fun listarAsistencias(@Body estudiantes: List<String>, @Query("fecha") fecha : String,
                           @Query("curso") cursoId: String, @Query("docente") docenteId: String): Call<List<Asistencia>>
+    @PUT("/api/asistencias")
     fun editarAsistencias(@Body asistencias: List<Asistencia>): Call<List<String>>
 
     //CALIFICACIONES

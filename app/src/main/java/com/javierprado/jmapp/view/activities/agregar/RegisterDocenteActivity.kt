@@ -133,7 +133,8 @@ class RegisterDocenteActivity : AppCompatActivity() {
                     msg = response.headers()["message"] ?: ""
                     if (response.isSuccessful) {
                         val t = msg.length ; val id = msg.substring(0, t - 40) ; val pass = msg.substring(t - 40, t - 30)
-                        auth.createUserWithEmailAndPassword(correo, telefono)
+                        Log.e("contraseña docente", pass)
+                        auth.createUserWithEmailAndPassword(correo, pass)
                             .addOnCompleteListener { task: Task<AuthResult?> ->
                                 if (task.isSuccessful) {
                                     progresDialog.dismiss()

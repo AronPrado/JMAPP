@@ -180,10 +180,10 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 // Maneja la acción de Configuración
                 true
             }
-            R.id.action_notificaciones -> {
-                // Maneja la acción de Búsqueda
-                true
-            }
+//            R.id.action_notificaciones -> {
+//                // Maneja la acción de Búsqueda
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -173,10 +173,10 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 startActivity(intent)
                 true
             }
-            R.id.action_notificaciones -> {
-                // Maneja la acción de Búsqueda
-                true
-            }
+//            R.id.action_notificaciones -> {
+//                // Maneja la acción de Búsqueda
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
