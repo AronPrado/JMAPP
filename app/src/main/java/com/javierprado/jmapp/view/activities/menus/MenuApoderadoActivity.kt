@@ -71,13 +71,6 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             retro.setBearerToken(tokenApod)
         }
         api = retro.getApi()
-        //BORRAR
-//        val user = auth.currentUser
-//        if(user!=null){
-//            val dataHashMap = hashMapOf("userid" to user.uid, "info" to "Marcos Juan Castro Granada", "correo" to "macebv22@gmail.com", "estado" to "Desconectado", "tipo" to "APOD", "tipoid" to "2", "token" to "")
-//            firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
-//                    task -> Log.e("ERROR FSTORE", task.exception.toString()) }
-//        }
         //Noticias
         recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)

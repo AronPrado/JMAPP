@@ -12,6 +12,7 @@ import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
+import com.javierprado.jmapp.mvvm.NotisApp
 
 private const val CHANNEL_ID = "my_channel"
 class NotificationReunion: BroadcastReceiver() {
@@ -36,7 +37,7 @@ class NotificationReunion: BroadcastReceiver() {
         val estado = if (ap == "CANCELAR") "CANCELADA" else "PROGRAMADA"
 
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
-        ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
+        NotisApp().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, Reunion(), true)
 
 //        val hashMap = hashMapOf<String, Any>("estado" to estado)

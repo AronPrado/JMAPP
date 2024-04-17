@@ -7,11 +7,11 @@
             android:icon="@drawable/ic_home"/>
         <item android:title="Funciones del Docente" >
             <menu>
-                <item
-                    android:id="@+id/nav_item_2"
-                    android:title="Seleccionar Seccion"
-                    android:icon="@drawable/ic_select_section"/>
-                <item
+<!--                <item-->
+<!--                    android:id="@+id/nav_item_2"-->
+<!--                    android:title="Seleccionar Seccion"-->
+<!--                    android:icon="@drawable/ic_select_section"/>-->
+<!--                <item-->
                     android:id="@+id/nav_item_3"
                     android:title="Ingresar notas"
                     android:icon="@drawable/ic_enter_grades"/>
@@ -39,10 +39,9 @@
             </menu>
         </item>
         <item
-            android:title="Salir del App">
+            android:title="Salir de la aplicación">
             <menu>
                 <item
-
                     android:id="@+id/nav_item_8"
                     android:title="Cerrar Sesión"
                     android:icon="@drawable/ic_logout"/>

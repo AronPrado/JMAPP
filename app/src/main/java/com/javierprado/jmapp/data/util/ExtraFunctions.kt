@@ -64,13 +64,13 @@ class ExtraFunctions {
     }
 
     fun obtenerFragment(nav: String, token: String, lista: Serializable, usuarioId: String, extraId: String  ): Fragment{
-        var fragment = Fragment()//usuario=doc,apod - extra = curso - aula
+        var fragment = Fragment()
         when(nav){
             //DOCENTE
             NavigationWindows.SELECT.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav, usuarioId, extraId) }
-            NavigationWindows.FUNCIONES.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista, usuarioId, extraId) }
+//            NavigationWindows.FUNCIONES.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav, usuarioId, extraId) }//EstudiantesConFuncionesFragment.newInstance(token, lista, usuarioId, extraId) }
             NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista, usuarioId, extraId) }
-//            NavigationWindows.NOTAS.name-> { fragment = IngresarCalificacionesFragment.newInstance(token, estudianteId) }
+            NavigationWindows.NOTAS.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista, usuarioId, extraId) }
             NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista) }
             //APODERADO
             NavigationWindows.REUNIONES.name-> { fragment = ProgramarReunionFragment.newInstance(token, lista, usuarioId, extraId) }

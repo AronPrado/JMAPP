@@ -59,7 +59,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
     var usuarioId: String = ""
     private val retro = RetrofitHelper.getInstanceStatic()
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seleccionar_usuario, container, false)
         return binding.root
     }
@@ -75,13 +74,6 @@ class SeleccionarUsuarioFragment : Fragment(), OnItemClickListener, onChatClicke
 //        viewModel.imageUrl.observe(viewLifecycleOwner, Observer {
 //            Glide.with(requireContext()).load(it).into(circleImageView)
 //        })
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
-//            object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    getActivity()?.moveTaskToBack(true);
-//                    getActivity()?.finish();
-//                }
-//            })
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 

@@ -33,18 +33,18 @@ class ChatApoderadoDocenteActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        generateToken()
+//        generateToken()
     }
-    fun generateToken(){
-        val firebaseInstance = FirebaseInstallations.getInstance()
-        firebaseInstance.id.addOnSuccessListener{installationid->
-            FirebaseMessaging.getInstance().token.addOnSuccessListener { gettoken->
-                token = gettoken
-                val hasHamp = hashMapOf<String, Any>("token" to token)
-                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp)
-            }
-        }.addOnFailureListener {}
-    }
+//    fun generateToken(){
+//        val firebaseInstance = FirebaseInstallations.getInstance()
+//        firebaseInstance.id.addOnSuccessListener{installationid->
+//            FirebaseMessaging.getInstance().token.addOnSuccessListener { gettoken->
+//                token = gettoken
+//                val hasHamp = hashMapOf<String, Any>("token" to token)
+//                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp)
+//            }
+//        }.addOnFailureListener {}
+//    }
     override fun onPause() {
         super.onPause()
         if (auth.currentUser!=null){

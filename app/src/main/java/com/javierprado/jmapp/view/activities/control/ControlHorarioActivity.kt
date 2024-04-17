@@ -27,8 +27,10 @@ class ControlHorarioActivity : AppCompatActivity() {
             token = bundle.getString(MenuAdministradorActivity().TOKEN, "")
             usuarioId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
             role = bundle.getString(ROLE, "")
-            val estudiantesP = bundle.getSerializable(ESTUDIANTES) as List<Estudiante>
-            estudiantes =  estudiantesP
+            if(role != RoleType.ADMIN.name){
+                val estudiantesP = bundle.getSerializable(ESTUDIANTES) as List<Estudiante>;
+                estudiantes =  estudiantesP
+            }
         }
         // Botón regresar
         val backImageView: ImageView = findViewById(R.id.back)

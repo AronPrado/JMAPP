@@ -107,7 +107,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
                 startActivity(intent)
             }
             R.id.nav_item_5 -> {
-                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Editar Horario Escolar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ControlHorarioActivity::class.java)
                 intent.putExtra(MenuAdministradorActivity().USUARIOID, adminId)
                 intent.putExtra(MenuAdministradorActivity().TOKEN, tokenAdmin)
@@ -121,7 +121,7 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
                 startActivity(intent)
                 Toast.makeText(this, "Agregar Noticia", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_item_7 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
+//            R.id.nav_item_7 -> Toast.makeText(this, "Docentes Registrados", Toast.LENGTH_SHORT).show()
             R.id.nav_item_8 ->  {
                 auth.signOut()
                 val intent = Intent(this, OptionLogin::class.java)

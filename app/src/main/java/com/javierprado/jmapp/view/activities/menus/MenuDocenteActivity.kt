@@ -70,14 +70,6 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             retro.setBearerToken(tokenDoc)
         }
         api = retro.getApi()
-        //BORRAR
-//        val user = auth.currentUser
-//        if(user!=null){
-//            val dataHashMap = hashMapOf("userid" to user.uid, "info" to "Profesor Prueba Prueba 1", "correo" to "prueba@gmail.com", "estado" to "Desconectado", "tipo" to "DOC", "tipoid" to "2", "token" to "")
-//            firestore.collection("Users").document(user.uid).set(dataHashMap).addOnCompleteListener {
-//                    task -> Log.e("ERROR FSTORE", task.exception.toString()) }
-//        }
-        //BORRAR
         //Noticias
         recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -119,13 +111,12 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var clase: AppCompatActivity? = null
-        val intent: Intent
-        var transport = NavigationWindows.FUNCIONES.name
+        var transport = NavigationWindows.SELECT.name
         when(item.itemId){
             R.id.nav_item_1 -> Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_2 -> {
-                Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
-            }
+//            R.id.nav_item_2 -> {
+//                Toast.makeText(this, "Seleccionar Seccion", Toast.LENGTH_SHORT).show()
+//            }
             R.id.nav_item_3 -> {
                 Toast.makeText(this, "Ingresar notas", Toast.LENGTH_SHORT).show()
                 transport = NavigationWindows.NOTAS.name
@@ -155,7 +146,7 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         }
         val isNull = clase == null
         clase = if (isNull) ControlSeleccionActivity() else clase
-        intent = Intent(this, clase!!::class.java)
+        val intent = Intent(this, clase!!::class.java)
         if (!isNull && transport != NavigationWindows.COMUNICACION.name){
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }else{

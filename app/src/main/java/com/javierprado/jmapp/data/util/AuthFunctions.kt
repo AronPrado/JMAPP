@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.installations.FirebaseInstallations
+import com.google.firebase.messaging.FirebaseMessaging
 import com.javierprado.jmapp.BuildConfig
 import com.javierprado.jmapp.data.entities.UserAuth
 import com.javierprado.jmapp.data.entities.Usuario
@@ -33,7 +36,7 @@ import javax.mail.internet.MimeMessage
 
 
 class AuthFunctions {
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance(FirebaseApp.getInstance())
+    private val mAuth = FirebaseAuth.getInstance()
     fun mostrarCarga(context: Context, text: String):AlertDialog{
         return AlertDialog.Builder(context).setView(ProgressBar(context)).setMessage(text).setCancelable(false).create()
     }
@@ -82,6 +85,7 @@ class AuthFunctions {
                                     msg = response.headers()["message"] ?: ""
                                     if (response.isSuccessful) {
                                         progresDialog.dismiss()
+                                        generateToken()
                                         val user = response.body()!!
                                         val intent = Intent(interfaceActual, nextMenu::class.java)
                                         intent.putExtra(MenuAdministradorActivity().USUARIOID, user.usuarioId)
@@ -171,5 +175,18 @@ class AuthFunctions {
             Log.e("CORREO", e.message.toString())
         }
     }
-}
 
+    fun generateToken(){
+        val firestore = FirebaseFirestore.getInstance()
+        var token = ""
+        val firebaseInstance = FirebaseInstallations.getInstance()
+        firebaseInstance.id.addOnSuccessListener{installationid->
+            FirebaseMessaging.getInstance().token.addOnSuccessListener { gettoken->
+                token = gettoken
+                val hasHamp = hashMapOf<String, Any>("token" to token)
+                firestore.collection("Tokens").document(AnotherUtil.getUidLoggedIn()).set(hasHamp)
+            }
+        }.addOnFailureListener {}
+    }
+
+}

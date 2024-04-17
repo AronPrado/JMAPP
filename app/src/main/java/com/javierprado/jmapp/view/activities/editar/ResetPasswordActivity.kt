@@ -58,13 +58,12 @@ class ResetPasswordActivity : AppCompatActivity() {
         progresDialog.show()
         api.existeCorreo(email).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                msg = "EL CORREO NO EXISTE"
+                msg = response.headers()["message"] ?: ""
                 if (response.isSuccessful) {
                     auth.fetchSignInMethodsForEmail(email)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful ) {
                                 sendEmail(email)
-                                msg = "Correo para restablecer contraseña enviado."
                                 val usuario = Usuario(email, newPass, "")
                                 api.actualizarContrasena(usuario).enqueue(object : Callback<Void> {
                                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -79,7 +78,6 @@ class ResetPasswordActivity : AppCompatActivity() {
                                 } )
                             } else {
                                 progresDialog.dismiss()
-                                msg+=" EN FIREBASE"
                                 Toast.makeText(this@ResetPasswordActivity, msg, Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -89,7 +87,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                     Log.e("NR COMPROBAR CORREO", msg) }
             }
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                msg = "Error en la API: ${t.message}"
+                msg = "${t.message}"
                 Toast.makeText(this@ResetPasswordActivity, msg, Toast.LENGTH_SHORT).show()
                 Log.e("ERROR COMPROBAR CORREO", t.message.toString())
             }
@@ -111,7 +109,7 @@ class ResetPasswordActivity : AppCompatActivity() {
         auth.sendPasswordResetEmail(emailAddress)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this@ResetPasswordActivity, "Correo enviado!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ResetPasswordActivity, "Correo para restablecer contraseña enviado.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@ResetPasswordActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
