@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_dark_outline"
+    tools:context=".view.fragments.JustificarFaltaFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_nombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="34dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/pb_editar_horario"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="32dp"
+                android:paddingBottom="24dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:id="@+id/estudiante_falta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Justificar falta del estudiante: Enmanuel Benjamín Carrillo Apaza"
+                        android:maxLines="3"
+                        android:textAlignment="center"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/librefranklin_blackitalic"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:id="@+id/tiempo_curso_falta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="La inasistencia se dio el 20 de Abril a las 9:30 en el curso de Matemáticas."
+                        android:maxLines="3"
+                        android:textAlignment="center"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/librefranklin_medium"
+                        android:textSize="17sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_subir_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Subir imagen"
+                        android:layout_marginTop="20dp"
+                        app:icon="@drawable/notas"
+                        android:backgroundTint="@color/md_theme_light_primary"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_subir_doc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Subir documento"
+                        app:icon="@drawable/repogramar"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/md_theme_light_primary"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_curso_horario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Puede seleccionar un archivo de pdf o seleccionar una imagen de la galería."
+                    app:layout_constrainedHeight="true"
+                    android:textAlignment="center"
+                    android:ellipsize="end"
+                    android:layout_marginTop="8dp"/>
+                <ImageView
+                    android:id="@+id/fg_img_horario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginVertical="15dp"/>
+
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_justificar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:enabled="false"
+        android:layout_marginVertical="15dp"
+        android:text="JUSTIFICAR"
+        android:backgroundTint="@color/md_theme_light_tertiary"
+        android:padding="0dp"
+        android:fontFamily="@font/librefranklin_extrabolditalic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_nombre" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
