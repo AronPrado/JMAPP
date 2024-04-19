@@ -36,7 +36,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeParseException
-//REU primero info - luego id
+
 class ProgramarReunionFragment : Fragment() {
     lateinit var binding: FragmentProgramarReunionBinding
     val REUNION = "reunion" ; val IDREUNION = "reunionid"
@@ -53,7 +53,6 @@ class ProgramarReunionFragment : Fragment() {
     private lateinit var api: ColegioAPI
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //CAMBIAR TEXTO EN TOOLBARS
         try{
             activity = context as ControlSeleccionActivity
         }catch (e: Exception){
@@ -111,7 +110,6 @@ class ProgramarReunionFragment : Fragment() {
             infoApoderado = nsa + "\n" + infoe + "\n" + nse
             binding.txtApoderadoReunion.text = infoApoderado
             binding.fechaReunion.setText(reunion.fecha) ; binding.horaReunion.setText(reunion.horaInicio)
-
         }
 
         binding.fgBtn1Reunion.setOnClickListener { funcionBtn1() }

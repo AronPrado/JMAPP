@@ -31,6 +31,7 @@ import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoAc
 import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.editar.ActualizarInfoApoderadoActivity
+import com.javierprado.jmapp.view.fragments.NotificacionesUsuarioFragment
 import com.javierprado.jmapp.view.login.OptionLogin
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,6 +77,18 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             retro.setBearerToken(tokenApod)
         }
         api = retro.getApi()
+        val user = auth.currentUser!!
+        val dataHashMap = hashMapOf(
+            "userid" to user.uid,
+            "info" to "Mayne Greated",
+            "correo" to "mgreated0@howstuffworks.com",
+            "estado" to "Desconectado",
+            "tipo" to "APOD",
+            "tipoid" to "pkeQyokWzX0HLdtTnvtR",
+            "token" to ""
+        )
+        firestore.collection("Users").document(user.uid)
+            .set(dataHashMap)
         //Noticias
         recyclerView = findViewById(R.id.recyclerViewNews)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -171,16 +184,17 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 startActivity(intent)
                 true
             }
-//            R.id.action_notificaciones -> {
-//                // Maneja la acción de Búsqueda
-//                true
-//            }
+            R.id.action_notificaciones -> {
+                val fragment = NotificacionesUsuarioFragment.newInstance(apoderadoId, RoleType.APOD.name, tokenApod)
+                fragment.show(supportFragmentManager, "NOTIFICACIONES")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
     fun actualizarNoticias(token: String){
-        val adapter = NoticiaAdapter(this@MenuApoderadoActivity, ArrayList(), api, token, true)
-        extraFuns.listarNoticias(api, adapter, this@MenuApoderadoActivity)
-        recyclerView.adapter = adapter
+//        val adapter = NoticiaAdapter(this@MenuApoderadoActivity, ArrayList(), api, token, true)
+//        extraFuns.listarNoticias(api, adapter, this@MenuApoderadoActivity)
+//        recyclerView.adapter = adapter
     }
 }

@@ -31,7 +31,7 @@
                 android:padding="16dp">
 
                 <ImageView
-                    android:id="@+id/img_estudiante_genero"
+                    android:id="@+id/img_noti"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_alignParentStart="true"
@@ -42,7 +42,7 @@
                     android:id="@+id/descripcion_tarea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/img_estudiante_genero"
+                    android:layout_below="@+id/img_noti"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/librefranklin_extrabold"

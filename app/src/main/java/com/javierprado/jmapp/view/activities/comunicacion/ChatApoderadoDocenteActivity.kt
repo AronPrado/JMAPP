@@ -54,7 +54,7 @@ class ChatApoderadoDocenteActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (auth.currentUser!=null){
-            firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("estado", "En línea")
+            firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).update("estado", "En linea")
         }
     }
 //    @Deprecated("Deprecated in Java")

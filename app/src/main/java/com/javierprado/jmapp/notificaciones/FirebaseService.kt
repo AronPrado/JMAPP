@@ -62,6 +62,7 @@ class FirebaseService: FirebaseMessagingService() {
             TIPOJ -> { notiJustificaciones(message.data) }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channelName = "channelName"
         val channel = NotificationChannel(CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH).apply {
