@@ -19,8 +19,9 @@ class NotificationReunion: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val ap = intent?.extras?.getString("ACCION", "")
-        Log.e("ACCION", ap?:"NO SE SELECCIONOXD")
+        val ap = intent!!.extras!!
+        val accionPrueba = ap.getString("ACCION", "")
+        Log.e("ACCION", accionPrueba)
 
         val sharedCustomPref = SharedPrefs(context)
         val notificationId : Int = sharedCustomPref.getIntValue("values", 0)
@@ -29,11 +30,11 @@ class NotificationReunion: BroadcastReceiver() {
         val tipoRecibido = accionEnviadaACambiar.substring(0, 2)
         val tipoEnviar = if(tipoRecibido == "A_") "D_" else "A_"
 
-        val accion = if (ap == "CANCELAR") tipoEnviar+"CANCELA" else tipoEnviar+"ACEPTA"
-        val msg = if(ap == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
+        val accion = if (accionPrueba == "CANCELAR") tipoEnviar+"CANCELA" else tipoEnviar+"ACEPTA"
+        val msg = if(accionPrueba == "CANCELAR") "Reunión cancelada." else "Reunión programada correctamente."
 
         val reunionId = sharedCustomPref.getValue("idreunion") ?: "null"
-        val estado = if (ap == "CANCELAR") "CANCELADA" else "PROGRAMADA"
+        val estado = if (accionPrueba == "CANCELAR") "CANCELADA" else "PROGRAMADA"
 
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),

@@ -67,7 +67,7 @@ class ChatAppViewModel : ViewModel() {
                         "time" to AnotherUtil.getTime(),
                         "sender" to AnotherUtil.getUidLoggedIn(),
                         "message" to message.value!!,
-                        "name" to friendname,
+                        "info" to friendname,
                         "person" to "you"
                     )
                     firestore.collection("Conversation${AnotherUtil.getUidLoggedIn()}").document(receiver)
@@ -178,14 +178,14 @@ class ChatAppViewModel : ViewModel() {
     fun getCurrentUser() = viewModelScope.launch(Dispatchers.IO) {
         val context = MyApplication.instance.applicationContext
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn())
-            .addSnapshotListener { value, error ->
+            .addSnapshotListener { value, _ ->
                 if (value!!.exists()) {
                     val users = value.toObject(Users::class.java)
                     name.value = users?.info!!
 //                    imageUrl.value = users.tipo!!
 
                     val mysharedPrefs = SharedPrefs(context)
-                    mysharedPrefs.setValue("username", users.info!!)
+                    mysharedPrefs.setValue("username", users.info)
                 }
             }
     }
@@ -201,7 +201,7 @@ class ChatAppViewModel : ViewModel() {
         val mysharedPrefs = SharedPrefs(context)
         val friendid = mysharedPrefs.getValue("friendid")
         //"friendsimage" to imageUrl.value!!
-        val hashMapUpdate = hashMapOf<String, Any>("name" to name.value!!, "person" to name.value!!)
+        val hashMapUpdate = hashMapOf<String, Any>("info" to name.value!!, "person" to name.value!!)
 
         // updating the chatlist and recent list message, image etc
         firestore.collection("Conversation${friendid}").document(AnotherUtil.getUidLoggedIn()).update(hashMapUpdate)
