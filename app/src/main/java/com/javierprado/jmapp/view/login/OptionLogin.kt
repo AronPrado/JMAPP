@@ -9,6 +9,7 @@ import com.javierprado.jmapp.R
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 
 class OptionLogin : AppCompatActivity() {
+    val ROL="rolusaurio"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_option_login)

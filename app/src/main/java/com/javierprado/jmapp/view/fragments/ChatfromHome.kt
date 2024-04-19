@@ -29,7 +29,7 @@ class ChatfromHome : Fragment() {
     lateinit var adapter : MessageAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatfrom_home, container, false)
+        binding = FragmentChatfromHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

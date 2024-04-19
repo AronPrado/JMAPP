@@ -36,8 +36,8 @@ class NotificationReply: BroadcastReceiver() {
 
             firestore.collection("Messages").document(chatroomid!!)
                 .collection("chats").document(AnotherUtil.getTime()).set(hashMap).addOnCompleteListener {
-
                     if (it.isSuccessful){
+
                     }
                 }
             // this can be further improved if user in other chatroom and message comes, he can use notification
@@ -48,7 +48,7 @@ class NotificationReply: BroadcastReceiver() {
                 "sender" to AnotherUtil.getUidLoggedIn(),
                 "message" to repliedText,
 //                "friendsimage" to friendimage!!,
-                "name" to friendname!!,
+                "info" to friendname!!,
                 "person" to "you",
             )
 
@@ -56,7 +56,7 @@ class NotificationReply: BroadcastReceiver() {
                 .set(setHashap)
 
             val updateHashMap =
-                hashMapOf<String, Any>("message" to repliedText, "time" to AnotherUtil.getTime(), "person" to friendname!!)
+                hashMapOf<String, Any>("message" to repliedText, "time" to AnotherUtil.getTime(), "person" to friendname)
 
             firestore.collection("Conversation${friendid}").document(AnotherUtil.getUidLoggedIn())
                 .update(updateHashMap)

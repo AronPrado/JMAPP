@@ -35,9 +35,9 @@ class AsistenciaAdapter(): RecyclerView.Adapter<AsistenciaAdapter.VHAsistencia>(
 
             val e = asistencia.estado ; val estado = if(e=="F") "Falta" else if(e=="T") "Tardanza" else "Asistencia"
             val indice = (binding.sAsistencia.adapter as ArrayAdapter<String>).getPosition(estado)
-            binding.imgEstudianteGenero.setImageResource(R.drawable.estudiantem)
+            binding.imgGenero.setImageResource(R.drawable.estudiantem)
             if(estudiante.split("-")[2] == "F"){
-                binding.imgEstudianteGenero.setImageResource(R.drawable.estudiantef)
+                binding.imgGenero.setImageResource(R.drawable.estudiantef)
             }
 
             binding.sAsistencia.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{

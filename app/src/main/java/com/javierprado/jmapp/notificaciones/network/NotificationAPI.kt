@@ -13,5 +13,4 @@ interface NotificationAPI {
     @Headers("Authorization:${SERVER_KEY}", "Content-Type:$CONTENT_TYPE")
     @POST("fcm/send")
     suspend fun postNotificacion(@Body notification: PushNotificacion): Response<ResponseBody>
-
 }

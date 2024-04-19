@@ -62,6 +62,7 @@ class FirebaseService: FirebaseMessagingService() {
             TIPOJ -> { notiJustificaciones(message.data) }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channelName = "channelName"
         val channel = NotificationChannel(CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH).apply {
@@ -135,7 +136,7 @@ class FirebaseService: FirebaseMessagingService() {
                 PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
+            val notificationID = System.currentTimeMillis().toInt() ; createNotificationChannel(notificationManager)
 
             // NotificationCompat.Action IZQUIERDA ACTION
             val izquierdaAction = NotificationCompat.Action.Builder(
@@ -264,42 +265,44 @@ class FirebaseService: FirebaseMessagingService() {
         firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject(Users::class.java)!!
-                val tipo = user.tipo
+                val tipo = user.tipo!!
+                Log.e("TIPO RECIBIDO", tipo)
                 if(tipo == RoleType.DOC.name){ intent = Intent(this, ChatDocenteApoderadoActivity::class.java) }
                 else if(tipo == RoleType.APOD.name){ intent = Intent(this, ChatApoderadoDocenteActivity::class.java) }
+                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val notificationID = Random.nextInt()
+
+                createNotificationChannel(notificationManager)
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
+                // for replies on notification
+                val remoteInput = RemoteInput.Builder(KEY_REPLY_TEXT)
+                    .setLabel("Reply")
+                    .build()
+                // Create a PendingIntent for the reply action
+                val replyIntent = Intent(this, NotificationReply::class.java)
+                val replyPendingIntent = PendingIntent.getBroadcast(this, 0, replyIntent, PendingIntent.FLAG_MUTABLE)
+                // Create a NotificationCompat.Action object for the reply action
+                val replyAction = NotificationCompat.Action.Builder(
+                    R.drawable.reply,
+                    "Reply",
+                    replyPendingIntent
+                ).addRemoteInput(remoteInput).build()
+                val sharedCustomPref = SharedPrefs(applicationContext)
+                sharedCustomPref.setIntValue("values", notificationID)
+
+                val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+//            .setContentTitle(message.data["title"])
+                    .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
+                    .setSmallIcon(R.drawable.chatapp)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .addAction(replyAction)
+                    .build()
+                notificationManager.notify(notificationID, notification)
             }
         }
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationID = Random.nextInt()
 
-        createNotificationChannel(notificationManager)
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-        // for replies on notification
-        val remoteInput = RemoteInput.Builder(KEY_REPLY_TEXT)
-            .setLabel("Reply")
-            .build()
-        // Create a PendingIntent for the reply action
-        val replyIntent = Intent(this, NotificationReply::class.java)
-        val replyPendingIntent = PendingIntent.getBroadcast(this, 0, replyIntent, PendingIntent.FLAG_MUTABLE)
-        // Create a NotificationCompat.Action object for the reply action
-        val replyAction = NotificationCompat.Action.Builder(
-            R.drawable.reply,
-            "Reply",
-            replyPendingIntent
-        ).addRemoteInput(remoteInput).build()
-        val sharedCustomPref = SharedPrefs(applicationContext)
-        sharedCustomPref.setIntValue("values", notificationID)
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setContentTitle(message.data["title"])
-            .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
-            .setSmallIcon(R.drawable.chatapp)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .addAction(replyAction)
-            .build()
-        notificationManager.notify(notificationID, notification)
     }
 }

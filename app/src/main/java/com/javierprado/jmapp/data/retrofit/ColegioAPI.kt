@@ -10,6 +10,7 @@ import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Horario
 import com.javierprado.jmapp.data.entities.Justificacion
 import com.javierprado.jmapp.data.entities.Noticia
+import com.javierprado.jmapp.data.entities.Notificacion
 import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.entities.Tarea
 import com.javierprado.jmapp.data.entities.Usuario
@@ -44,6 +45,10 @@ interface ColegioAPI {
     fun editarNoticia(@Body noticia : Noticia, @Path("id")  noticiaId: String) : Call<Void>
     @DELETE("/api/noticias/{id}") // ELIMINAR NOTICIA
     fun eliminarNoticia(@Path("id")  noticiaId: String): Call<Void>
+
+    // NOTICIAS
+    @GET("/api/notificaciones") // OBTENER NOTIFICACIONES
+    fun listarNotificaciones(@Query("usuario")  usuarioId: String, @Query("notificacion")  notificacionId: String): Call<List<Notificacion>>
 
     // HORARIOS
     @POST("/api/horarios") // OBTENER HORARIOS

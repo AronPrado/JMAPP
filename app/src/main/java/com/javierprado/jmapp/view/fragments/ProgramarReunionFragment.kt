@@ -36,7 +36,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeParseException
-//REU primero info - luego id
+
 class ProgramarReunionFragment : Fragment() {
     lateinit var binding: FragmentProgramarReunionBinding
     val REUNION = "reunion" ; val IDREUNION = "reunionid"
@@ -53,7 +53,6 @@ class ProgramarReunionFragment : Fragment() {
     private lateinit var api: ColegioAPI
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //CAMBIAR TEXTO EN TOOLBARS
         try{
             activity = context as ControlSeleccionActivity
         }catch (e: Exception){
@@ -77,7 +76,7 @@ class ProgramarReunionFragment : Fragment() {
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_programar_reunion, container, false)
+        binding = FragmentProgramarReunionBinding.inflate(inflater, container, false)
         return binding.root
     }
     @SuppressLint("SetTextI18n")
@@ -111,7 +110,6 @@ class ProgramarReunionFragment : Fragment() {
             infoApoderado = nsa + "\n" + infoe + "\n" + nse
             binding.txtApoderadoReunion.text = infoApoderado
             binding.fechaReunion.setText(reunion.fecha) ; binding.horaReunion.setText(reunion.horaInicio)
-
         }
 
         binding.fgBtn1Reunion.setOnClickListener { funcionBtn1() }
@@ -199,6 +197,7 @@ class ProgramarReunionFragment : Fragment() {
 
                     reuCreada.apoderadoId = cidApoderado.split("-")[1]
                     reuCreada.docenteId = cidDocente.split("-")[1]
+
                     ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada)
                     Toast.makeText(activity,
                         "Se ha enviado la notificacion para solicitar"+if(toProgramar) "programación de reunión." else " la reprogramación.", Toast.LENGTH_SHORT).show()

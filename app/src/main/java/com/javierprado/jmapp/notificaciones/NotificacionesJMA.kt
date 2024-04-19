@@ -12,6 +12,7 @@ import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.javierprado.jmapp.notificaciones.entities.NotificacionData
 import com.javierprado.jmapp.notificaciones.entities.PushNotificacion
 import com.javierprado.jmapp.notificaciones.entities.Token
+import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 
 class NotificacionesJMA {
     companion object{
@@ -31,7 +32,7 @@ class NotificacionesJMA {
                         users.forEach { u ->
                             enviarNoticacion(u.userid!!, titulo, msg)
                         }
-                        (context as AppCompatActivity).supportFragmentManager.popBackStackImmediate()
+//                        (context as ControlSeleccionActivity).supportFragmentManager.popBackStackImmediate()
                     } else{ Log.e("FAIL", "No users") }
                 }
             }
@@ -49,7 +50,7 @@ class NotificacionesJMA {
                     Log.e("TOKENS", token)
                     if (destino.isNotEmpty()) {
                         PushNotificacion(
-                            NotificacionData(titulo, msg, ""), token
+                            NotificacionData(titulo, msg, FirebaseService().TIPOM), token
                         ).also { ChatAppViewModel().sendNotification(it) }
                     } else { Log.e("FAIL", "NO TOKEN, NO NOTIFICATION") }
                 }

@@ -40,7 +40,6 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     companion object{
         lateinit var instance : MenuDocenteActivity
     }
-    lateinit var viewModel: ChatAppViewModel
     private lateinit var drawer: DrawerLayout
     private lateinit var toogle: ActionBarDrawerToggle
 
@@ -58,8 +57,6 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_docente)
-
-        viewModel = ViewModelProvider(this)[ChatAppViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
