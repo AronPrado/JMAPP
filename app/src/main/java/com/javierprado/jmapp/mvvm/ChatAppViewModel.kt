@@ -119,6 +119,7 @@ class ChatAppViewModel : ViewModel() {
                         "A_ACEPTA" -> mensaje = "El apoderado $nombreSender ha aceptado la solicitud de reprogramación."
                         "A_CANCELA" -> mensaje = "El apoderado $nombreSender ha cancelado la solicitud de reprogramación."
                     }
+                    Log.e("ENVIA NOTI", mensaje)
                     firestore.collection("Tokens").document(idReceiver).addSnapshotListener { value, _ ->
                         if (value != null && value.exists()) {
                             val tokenObject = value.toObject(Token::class.java)

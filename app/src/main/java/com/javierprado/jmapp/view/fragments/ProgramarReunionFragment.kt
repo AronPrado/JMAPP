@@ -197,7 +197,7 @@ class ProgramarReunionFragment : Fragment() {
 
                     reuCreada.apoderadoId = cidApoderado.split("-")[1]
                     reuCreada.docenteId = cidDocente.split("-")[1]
-                    listOf(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada).map { xd->Log.e("XD",xd.toString()) }
+
                     ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(), correo, accion, reuCreada)
                     Toast.makeText(activity,
                         "Se ha enviado la notificacion para solicitar"+if(toProgramar) "programación de reunión." else " la reprogramación.", Toast.LENGTH_SHORT).show()
