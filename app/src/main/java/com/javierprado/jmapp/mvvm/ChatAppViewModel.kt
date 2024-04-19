@@ -106,13 +106,12 @@ class ChatAppViewModel : ViewModel() {
         }
     // PROGRAMACION DE REUNION
     fun accionReuniones(sender: String, dataReceiver: String, accion: String, reunion: Reunion?, esid: Boolean = false) = viewModelScope.launch(Dispatchers.IO) {
-        var receiver = "" ; var nombreSender = "" ; var nombreEstudiante = reunion?.estudianteId
+        var receiver = "" ; var nombreSender = ""
         fun enviar(idReceiver: String){
             firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
                 if (value != null && value.exists()) {
                     val user = value.toObject(Users::class.java)!! ; nombreSender = user.info!!
                     var mensaje = "" ; val fechaHora = reunion?.horaInicio+ " el "+reunion?.fecha
-                    Log.e("ULTIMA NOTI", accion)
                     when(accion){
                         "A_PROGRAMA" -> mensaje = "Solicitud de reunión con el apoderado $nombreSender a las $fechaHora"
                         "D_ACEPTA" -> mensaje = "El docente $nombreSender ha aceptado la solicitud de programación de la reunión."
@@ -120,7 +119,6 @@ class ChatAppViewModel : ViewModel() {
                         "A_ACEPTA" -> mensaje = "El apoderado $nombreSender ha aceptado la solicitud de reprogramación."
                         "A_CANCELA" -> mensaje = "El apoderado $nombreSender ha cancelado la solicitud de reprogramación."
                     }
-                    Log.e("ULTIMA NOTI", mensaje)
                     firestore.collection("Tokens").document(idReceiver).addSnapshotListener { value, _ ->
                         if (value != null && value.exists()) {
                             val tokenObject = value.toObject(Token::class.java)
