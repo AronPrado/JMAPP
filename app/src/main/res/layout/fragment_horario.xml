@@ -75,12 +75,13 @@
                 android:maxLines="2"
                 android:text="Lunes"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/dia_martes"
                 app:layout_constraintEnd_toStartOf="@+id/dia_martes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/dia_martes"
@@ -90,7 +91,7 @@
                 android:maxLines="2"
                 android:text="Martes"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/dia_miercoles"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,7 +117,7 @@
                 android:maxLines="2"
                 android:text="Jueves"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/dia_miercoles"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +130,7 @@
                 android:maxLines="2"
                 android:text="Viernes"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/dia_jueves"
                 app:layout_constraintTop_toTopOf="parent" />

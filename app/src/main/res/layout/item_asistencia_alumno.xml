@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/img_estudiante_genero"
+            android:id="@+id/img_genero"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/img_estudiante_genero"
+            android:layout_toEndOf="@+id/img_genero"
             android:fontFamily="@font/librefranklin_extrabold"
             android:text="Nombre de estudiante"
             android:textAlignment="center"

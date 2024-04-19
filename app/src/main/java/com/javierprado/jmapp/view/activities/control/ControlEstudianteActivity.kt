@@ -2,6 +2,7 @@ package com.javierprado.jmapp.view.activities.control
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.javierprado.jmapp.R
 import com.javierprado.jmapp.data.entities.Estudiante
 import com.javierprado.jmapp.data.entities.Reunion
@@ -9,6 +10,7 @@ import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
 import com.javierprado.jmapp.view.activities.menus.MenuApoderadoActivity
 import com.javierprado.jmapp.view.fragments.EstudiantesHFragment
+import com.javierprado.jmapp.view.fragments.JustificarFaltaFragment
 import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 import java.io.Serializable
 
@@ -31,8 +33,12 @@ class ControlEstudianteActivity : AppCompatActivity() {
         // Botón regresar
 //        val backImageView: ImageView = findViewById(R.id.back)
 //        backImageView.setOnClickListener { finish() }
-
-        val fragment = EstudiantesHFragment.newInstance(token, direct, apoderadoId, hijos as Serializable)
+        var fragment: Fragment
+        if(direct == NavigationWindows.JUSTIFICACIONES.name){
+            fragment = JustificarFaltaFragment.newInstance(token, apoderadoId, hijos as Serializable)
+        }else{
+            fragment = EstudiantesHFragment.newInstance(token, direct, apoderadoId, hijos as Serializable)
+        }
         supportFragmentManager.beginTransaction().replace(R.id.fcv_apoderado_main, fragment).addToBackStack("").commit()
     }
 }

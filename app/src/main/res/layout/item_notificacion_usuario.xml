@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="#d2ddd5">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_noti"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/person" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_tipo_noti"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/notas"
+                app:civ_circle_background_color="@color/black"
+                android:layout_gravity="bottom|end" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/titulo_noti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/librefranklin_semibold"
+            android:maxLines="2"
+            android:text="Confirm your e-mail address"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/detalle_noti"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/detalle_noti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:fontFamily="@font/librefranklin_light"
+            android:text="Tipo • Viernes, 05:30 PM"
+            android:textColor="#000000"
+            android:textSize="7sp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

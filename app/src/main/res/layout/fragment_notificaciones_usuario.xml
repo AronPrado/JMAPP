@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_notificaciones_usuario"
+    android:layout_width="match_parent"
+    android:layout_height="700dp"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+    <!--    tools:context=".view.fragments.NotificacionesUsuarioFragment">-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_cerrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notificaciones"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/btn_leidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLayout6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="#d2ddd5"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nuevas"
+                android:layout_marginHorizontal="10dp"
+                android:textSize="25sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/actuales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/material_dynamic_neutral_variant70"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Antiguas"
+                android:layout_marginHorizontal="10dp"
+                android:textSize="25sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pasadas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="380dp"
+                android:background="@color/material_dynamic_neutral_variant70"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

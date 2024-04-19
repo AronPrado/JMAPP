@@ -36,8 +36,8 @@ class NotificationReply: BroadcastReceiver() {
 
             firestore.collection("Messages").document(chatroomid!!)
                 .collection("chats").document(AnotherUtil.getTime()).set(hashMap).addOnCompleteListener {
-
                     if (it.isSuccessful){
+
                     }
                 }
             // this can be further improved if user in other chatroom and message comes, he can use notification

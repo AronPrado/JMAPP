@@ -36,7 +36,7 @@ class MessageRepo {
                             )
                         ) {
                             messageModel.let {
-                                messagesList.add(it!!)
+                                messagesList.add(it)
                             }
                         }
                     }

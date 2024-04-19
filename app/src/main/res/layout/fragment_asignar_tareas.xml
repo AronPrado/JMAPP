@@ -31,9 +31,9 @@
                 android:padding="16dp">
 
                 <ImageView
-                    android:id="@+id/img_estudiante_genero"
+                    android:id="@+id/img_noti"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true" />
@@ -42,7 +42,7 @@
                     android:id="@+id/descripcion_tarea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/img_estudiante_genero"
+                    android:layout_below="@+id/img_noti"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/librefranklin_extrabold"
@@ -62,7 +62,8 @@
                     android:fontFamily="@font/librefranklin_extrabold"
                     android:background="@color/white"
                     android:textAlignment="center"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:backgroundTint="@color/nude"/>
 
                 <TextView
                     android:id="@+id/fecha_entrega_tarea"
@@ -74,7 +75,8 @@
                     android:fontFamily="@font/librefranklin_extrabold"
                     android:text="Fecha de Entrega:"
                     android:textAlignment="center"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:layout_marginTop="12dp"/>
                 <EditText
                     android:id="@+id/txt_fechaentrega_tarea"
                     android:layout_width="wrap_content"
@@ -87,23 +89,24 @@
                     android:background="@color/white"
                     android:textAlignment="center"
                     android:inputType="date"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:backgroundTint="@color/nude"/>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_asignar_tarea"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="300dp"
+                    android:layout_height="60dp"
                     android:layout_below="@+id/txt_fechaentrega_tarea"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="18dp"
+                    android:backgroundTint="@color/md_theme_light_tertiary"
                     android:enabled="false"
-                    android:backgroundTint="@color/md_theme_light_primary"
                     android:text="Asignar tarea"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
             </RelativeLayout>
         </FrameLayout>
 

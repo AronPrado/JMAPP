@@ -58,8 +58,8 @@ class ChatFragment : Fragment() {
 
 //        Glide.with(view.getContext()).load(args.users.tipo!!).placeholder(R.drawable.person)
 //            .dontAnimate().into(circleImageView);
-        textViewName.setText(args.users.info)
-        textViewStatus.setText(args.users.estado)
+        textViewName.text = args.users.info
+        textViewStatus.text = args.users.estado
 
         chatBackBtn.setOnClickListener {
             view.findNavController().navigate(R.id.action_chatFragment_to_seleccionarUsuarioFragment4)
