@@ -16,4 +16,5 @@ class Estudiante: Serializable{
 
     var cursos: List<String> = ArrayList()
     var aulaId: String= ""
+    var faltas = 0
 }

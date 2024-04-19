@@ -46,9 +46,15 @@ interface ColegioAPI {
     @DELETE("/api/noticias/{id}") // ELIMINAR NOTICIA
     fun eliminarNoticia(@Path("id")  noticiaId: String): Call<Void>
 
-    // NOTICIAS
+    // NOTIFICACIONES
     @GET("/api/notificaciones") // OBTENER NOTIFICACIONES
     fun listarNotificaciones(@Query("usuario")  usuarioId: String, @Query("notificacion")  notificacionId: String): Call<List<Notificacion>>
+    @POST("/api/noticias") // AGREGAR NOTIFICACION
+    fun agregarNotificacion(@Body noti : Notificacion) : Call<Void>
+    @PUT("/api/noticias/{id}") // EDITAR NOTIFICACION
+    fun editarNotificacion(@Path("id")  noticiaId: String, @Query("estado") estado: String) : Call<Void>
+    @DELETE("/api/noticias/{id}") // ELIMINAR NOTIFICACION
+    fun eliminarNotificacion(@Path("id")  notiId: String): Call<Void>
 
     // HORARIOS
     @POST("/api/horarios") // OBTENER HORARIOS
@@ -127,9 +133,9 @@ interface ColegioAPI {
 
     //JUSTIFICACIONES
     @GET("/api/justificaciones") // LISTAR
-    fun listarJustificaciones(@Query("estudiante") estudianteId: String): Call<List<Reunion>>
+    fun listarJustificaciones(@Query("estudiante") estudianteId: String): Call<List<Justificacion>>
     @GET("/api/justificaciones/{id}") // BUSCAR
-    fun buscarJustificacion(@Path("id") id: String): Call<Reunion>
+    fun buscarJustificacion(@Path("id") id: String): Call<Justificacion>
     @POST("/api/justificaciones/{id}") // GUARDAR - EDITAR
     fun guardarJustificacion(@Body justificacion: Justificacion, @Path("id") id: String): Call<Void>
     @DELETE("/api/justificaciones/{id}") // ELIMINAR

@@ -77,7 +77,7 @@ class RegistroAsistenciaFragment : Fragment() {
         fechaAsistencia.text = fecha
         adapter = AsistenciaAdapter(ArrayList(), object: AsistenciaClick {
             override fun onAsistenciaClicker(asistencia: Asistencia?) {
-                Toast.makeText(activity, "CAMBIAR ESTADO DE ASISTENCIA", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(activity, "CAMBIAR ESTADO DE ASISTENCIA", Toast.LENGTH_SHORT).show()
 //                val fragment = extraF.obtenerFragment(direct)
 //                                .newInstance(horario!!, retro.getBearerToken())
 //                activity.supportFragmentManager.beginTransaction()
@@ -116,9 +116,10 @@ class RegistroAsistenciaFragment : Fragment() {
                     override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                         msg = response.headers()["message"] ?: ""
                         if (response.isSuccessful) {
+                            cursoId = msg
+                            val ids = response.headers()["ids"]?.split("-") ?: ArrayList()
                             val emails = response.body()!!
-                            Log.e("LLEANEMAILS", emails.toString())
-                            NotificacionesJMA.notificarFalta(viewLifecycleOwner, emails, "Matemática", activity)
+                            NotificacionesJMA.notificarFalta(viewLifecycleOwner, emails, cursoId, ids)
                         }else{
                             Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
                         }

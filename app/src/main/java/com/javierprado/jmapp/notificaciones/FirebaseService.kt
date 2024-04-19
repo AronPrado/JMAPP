@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -21,16 +22,20 @@ import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
 import androidx.core.app.RemoteInput
 import com.google.firebase.firestore.FirebaseFirestore
+import com.javierprado.jmapp.data.entities.Justificacion
 import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.AnotherUtil
+import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.data.util.RoleType
 import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.modal.Users
 import com.javierprado.jmapp.view.activities.comunicacion.ChatApoderadoDocenteActivity
 import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
+import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
 import com.javierprado.jmapp.view.activities.menus.MenuAdministradorActivity
+import com.javierprado.jmapp.view.fragments.JustificarFaltaFragment
 import com.javierprado.jmapp.view.fragments.ProgramarReunionFragment
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +44,7 @@ import retrofit2.Response
 private const val CHANNEL_ID = "my_channel"
 class FirebaseService: FirebaseMessagingService() {
     val TIPOM = "MENSAJES" ; val TIPOR = "REUNIONES" ; val TIPOJ = "JUSTIFICACIONES"
+    val TIPOF ="FALTAS"
     companion object {
         private const val KEY_REPLY_TEXT = "KEY_REPLY_TEXT"
 
@@ -60,8 +66,10 @@ class FirebaseService: FirebaseMessagingService() {
             TIPOM -> { notiMensajes(message.data) }
             TIPOR -> { notiReuniones(message.data) }
             TIPOJ -> { notiJustificaciones(message.data) }
+            TIPOF -> { notiJustificaciones(message.data) }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channelName = "channelName"
@@ -93,7 +101,10 @@ class FirebaseService: FirebaseMessagingService() {
         var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_IMMUTABLE)
 
 
+        val sharedCustomPref = SharedPrefs(applicationContext)
+        var tokenAll = sharedCustomPref.getValue("tokenAll")?:""
         val bundle = Bundle()
+        Log.e("SISISISILLEGAELTOKEN", tokenAll)
         fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
             firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
                 if (value != null && value.exists()) {
@@ -115,9 +126,8 @@ class FirebaseService: FirebaseMessagingService() {
                                     if(tipo == dcode){
                                         intent.putExtras(bundle);
                                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                    //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     }
-                                    onResult(intent)
+//                                    onResult(intent)
                                 }else{ Log.e("REUNION:", msg) }
                             }
                             override fun onFailure(call: Call<Reunion>, t: Throwable) {
@@ -137,6 +147,7 @@ class FirebaseService: FirebaseMessagingService() {
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val notificationID = System.currentTimeMillis().toInt() ; createNotificationChannel(notificationManager)
+            sharedCustomPref.setIntValue("values", notificationID)
 
             // NotificationCompat.Action IZQUIERDA ACTION
             val izquierdaAction = NotificationCompat.Action.Builder(
@@ -152,8 +163,6 @@ class FirebaseService: FirebaseMessagingService() {
                 R.drawable.reply,//CAMBIAR
                 if (accion == "A_PROGRAMA") "Reprogramar" else "Cancelar" , derechaPI).build()
 
-            val sharedCustomPref = SharedPrefs(applicationContext)
-            sharedCustomPref.setIntValue("values", notificationID)
             sharedCustomPref.setValue("d_notir", userDestino)
             sharedCustomPref.setValue("a_notir", accion)
             sharedCustomPref.setValue("idreunion", data["reunion"]!!)
@@ -170,93 +179,58 @@ class FirebaseService: FirebaseMessagingService() {
     }
 
     private fun notiJustificaciones(data: Map<String, String>){
-//        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-//        val accion = data["accion"]!! ; val userDestino = data["sender"]!!
-//        val tipo = if (accion.contains("D")) RoleType.APOD.name else RoleType.DOC.name
-//        val accionTipo = accion.split("_")[1][0].toString()// R, P, A, C
-//        val dcode = RoleType.DOC.name; val acode = RoleType.APOD.name
-//        //INTENT NOTIFICACION PARA EL DOCENTE
-//        var intent = if(tipo == dcode) { Intent(this@FirebaseService, ControlSeleccionActivity::class.java) } else{ Intent() }
-//        //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
-////        val ia = Intent(this, NotificationReunion::class.java) ; ia.putExtra("ACCION", "ACEPTAR")
-////        val izquierdaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
-//        //INTENTS DERECHA: A_CANCELA - D_CANCELA - D_REPROGRAMA
-//        val ic = Intent(this, NotificationReunion::class.java) ; ic.putExtra("ACCION", "CANCELAR")
-//        var derechaPI = PendingIntent.getBroadcast(this@FirebaseService, 0, ic, PendingIntent.FLAG_MUTABLE)
-//
-//        val bundle = Bundle()
-//        fun obtenerIntentBusqueda(intent: Intent, onResult: (Intent) -> Unit){
-//            firestore.collection("Users").document(AnotherUtil.getUidLoggedIn()).addSnapshotListener { value, _ ->
-//                if (value != null && value.exists()) {
-//                    val user = value.toObject(Users::class.java)!!
-//                    val tokenUser = user.token!!
-//                    retro.setBearerToken(tokenUser)
-//
-//                    val reunionId = data["reunion"]!!
-//                    if(!reunionId.isEmpty()){
-//                        retro.getApi().buscarReunion(reunionId).enqueue(object: Callback<Reunion> {
-//                            override fun onResponse(call: Call<Reunion>, response: Response<Reunion>) {
-//                                val msg = response.headers()["message"] ?: ""
-//                                if (response.isSuccessful) {
-//                                    val reu = response.body()!!
-//                                    bundle.putSerializable(ProgramarReunionFragment().REUNION, reu)
-//                                    bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
-//                                    bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
-//                                    bundle.putBoolean(TIPOR, true)
-//                                    if(tipo == dcode){
-//                                        intent.putExtras(bundle);
-//                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-//                                        //; intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                    }
-//                                    onResult(intent)
-//                                }else{ Log.e("REUNION:", msg) }
-//                            }
-//                            override fun onFailure(call: Call<Reunion>, t: Throwable) {
-//                                Log.e("REUNION", t.message.toString())
-//                            }
-//                        } )
-//                    }
-////                    onResult(intent)
-//                }
-//            }
-//        }
-//        obtenerIntentBusqueda(intent) { updatedIntent ->
-//            intent = updatedIntent
-//
-//            val pendingIntent = PendingIntent.getActivity(this, 0, intent,
-//                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-//
-//            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-//            val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
-//
-//            // NotificationCompat.Action IZQUIERDA ACTION
-//            val izquierdaAction = NotificationCompat.Action.Builder(
-//                R.drawable.reply,//CAMBIAR
-//                "Aceptar", izquierdaPI ).build()
-//            if(tipo == dcode && accionTipo == "P"){
-//                derechaPI = PendingIntent.getActivity(this@FirebaseService, 0, intent,
-//                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-//            }
-//            // NotificationCompat.Action DERECHA action
-//            val derechaAction = NotificationCompat.Action.Builder(
-//                R.drawable.reply,//CAMBIAR
-//                if (accion == "A_PROGRAMA") "Reprogramar" else "Cancelar" , derechaPI).build()
-//
-//            val sharedCustomPref = SharedPrefs(applicationContext)
-//            sharedCustomPref.setIntValue("values", notificationID)
-//            sharedCustomPref.setValue("d_notir", userDestino)
-//            sharedCustomPref.setValue("a_notir", accion)
-//            sharedCustomPref.setValue("idreunion", data["reunion"]!!)
-//
-//            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-////            .setContentTitle(message.data["title"])
-//                .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
-//                .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
-//                .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
-//            if(!listOf("A", "C").contains(accionTipo)) {  notification.addAction(izquierdaAction); notification.addAction(derechaAction) }
-//            notificationManager.notify(notificationID, notification.build())
-//        }
+        val tipoNoti = data["tipo"]
+        val accion = data["accion"]!!
+        val tipo = if (accion.contains("AD_")) RoleType.APOD.name else RoleType.ADMIN.name
+        val accionTipo = accion.split("_")[1][0].toString()// F,J,A,R
+        val aadcode = RoleType.ADMIN.name; val acode = RoleType.APOD.name
+
+        val intent = if(tipo == aadcode) { Intent(this@FirebaseService, MenuAdministradorActivity::class.java) }
+            else{ Intent(this@FirebaseService, ControlEstudianteActivity::class.java) }
+
+        val bundle = Bundle()
+        val justificacionId = data["justificacion"]!!
+//        bundle.putString(MenuAdministradorActivity().TOKEN, tokenUser)
+//        bundle.putString(MenuAdministradorActivity().USUARIOID, user.tipoid)
+        bundle.putSerializable(ControlEstudianteActivity().DIRECT, NavigationWindows.JUSTIFICACIONES.name)
+        bundle.putSerializable(JustificarFaltaFragment().JUSTIFICACION, justificacionId)
+        bundle.putBoolean(TIPOJ, true)
+        val asistenciaId = data["asistenciaId"] ?: ""
+
+        //INTENTS IZQUIERDA: A_ACEPTA - D_ACEPTA    NotificactionReunion
+        val ia = if(tipoNoti == TIPOF || tipoNoti == TIPOJ){
+            bundle.putString("TIPONOTI_PARAAPODERADO", tipoNoti)
+            bundle.putString("POR_FALTA", asistenciaId)
+            Intent(this, ControlEstudianteActivity::class.java)
+        }else{
+            Intent(this, MenuAdministradorActivity::class.java)
+        }
+        ia.putExtras(bundle) ; intent.putExtras(bundle)
+        val izquierdaPI = PendingIntent.getActivity(this@FirebaseService, 0, ia, PendingIntent.FLAG_MUTABLE)
+
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationID = Random.nextInt() ; createNotificationChannel(notificationManager)
+
+        // NotificationCompat.Action IZQUIERDA ACTION
+        val izquierdaAction = NotificationCompat.Action.Builder(
+            R.drawable.reply,
+            if(listOf("F","J").contains(accionTipo)) "Ver detalles" else "", izquierdaPI ).build()
+
+        if(tipoNoti == TIPOF){
+            val mp = MediaPlayer.create(this, R.raw.timbredeescuela) ; mp.start()
+        }
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+//            .setContentTitle(message.data["title"])
+            .setContentText(Html.fromHtml("<b>${data["titulo"]}</b>: ${data["mensaje"]}"))
+            .setSmallIcon(R.drawable.chatapp)//CAMBIAR ICONO DE REUNIONES
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+        if(listOf("F", "J").contains(accionTipo)) {  notification.addAction(izquierdaAction) }
+        notificationManager.notify(notificationID, notification.build())
     }
 
     private fun notiMensajes(data: Map<String, String>){
@@ -305,4 +279,5 @@ class FirebaseService: FirebaseMessagingService() {
         }
 
     }
+
 }

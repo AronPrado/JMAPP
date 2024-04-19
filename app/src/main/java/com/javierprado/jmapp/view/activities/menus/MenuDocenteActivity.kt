@@ -29,9 +29,12 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.NavigationWindows
+import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
 import com.javierprado.jmapp.view.activities.control.ControlSeleccionActivity
+import com.javierprado.jmapp.view.fragments.NotificacionesUsuarioFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,6 +72,8 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             docenteId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
             tokenDoc = bundle.getString(MenuAdministradorActivity().TOKEN, "")
             retro.setBearerToken(tokenDoc)
+            val mysharedPrefs = SharedPrefs(applicationContext)
+            mysharedPrefs.setValue("tokenAll", tokenDoc)
         }
         api = retro.getApi()
         //Noticias
@@ -174,10 +179,11 @@ class MenuDocenteActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                 // Maneja la acción de Configuración
                 true
             }
-//            R.id.action_notificaciones -> {
-//                // Maneja la acción de Búsqueda
-//                true
-//            }
+            R.id.action_notificaciones -> {
+                val fragment = NotificacionesUsuarioFragment.newInstance(docenteId, RoleType.DOC.name, tokenDoc)
+                fragment.show(supportFragmentManager, "NOTIFICACIONES")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

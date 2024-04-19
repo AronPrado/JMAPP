@@ -21,12 +21,14 @@ import com.javierprado.jmapp.data.retrofit.ColegioAPI
 import com.javierprado.jmapp.data.retrofit.RetrofitHelper
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.view.NotiEventosEsco
 import com.javierprado.jmapp.view.activities.agregar.RegisterApoderadoActivity
 import com.javierprado.jmapp.view.activities.agregar.RegisterDocenteActivity
 import com.javierprado.jmapp.view.activities.control.ControlHorarioActivity
 import com.javierprado.jmapp.view.activities.control.ControlNoticiaActivity
 import com.javierprado.jmapp.view.activities.notificaciones.RegistroDeNotificacionActivity
+import com.javierprado.jmapp.view.fragments.NotificacionesUsuarioFragment
 import com.javierprado.jmapp.view.fragments.RegistroDeNotificacionFragment
 import com.javierprado.jmapp.view.login.OptionLogin
 
@@ -57,6 +59,8 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
             tokenAdmin=bundle.getString(TOKEN, "")
             adminId=bundle.getString(USUARIOID, "")
             retro.setBearerToken(tokenAdmin)
+            val mysharedPrefs = SharedPrefs(applicationContext)
+            mysharedPrefs.setValue("tokenAll", tokenAdmin)
         }
         api = retro.getApi()
         //Noticias
@@ -146,10 +150,11 @@ class MenuAdministradorActivity : AppCompatActivity(), NavigationView.OnNavigati
 
                 true
             }
-//            R.id.action_notificaciones -> {
-//
-//                true
-//            }
+            R.id.action_notificaciones -> {
+                val fragment = NotificacionesUsuarioFragment.newInstance(adminId, RoleType.ADMIN.name, tokenAdmin)
+                fragment.show(supportFragmentManager, "NOTIFICACIONES")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

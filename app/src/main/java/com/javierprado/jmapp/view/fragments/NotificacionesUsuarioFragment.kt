@@ -39,10 +39,9 @@ class NotificacionesUsuarioFragment : DialogFragment() {
 
     lateinit var adapterN: NotificacionAdapter ; lateinit var adapterP: NotificacionAdapter
     lateinit var usuarioId: String ; lateinit var fecha: LocalDate
-    private var cargando = false ; private var cargadas = true;
-    lateinit var nuevas: MutableList<Notificacion> ; lateinit var pasadas: MutableList<Notificacion>
-
-    val notisInit = listOf(Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion(), Notificacion())
+    private var cargando = false ; private var cargadas = true
+    var nuevas: MutableList<Notificacion> = ArrayList()
+    var pasadas: MutableList<Notificacion> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,26 +100,29 @@ class NotificacionesUsuarioFragment : DialogFragment() {
     }
 
     private fun cargarMasNotificaciones(ultimaNotificacion: String) {
-        if(cargadas){
-            msg = "No hay más noticias."
-            val fechas = listOf(fecha.minusDays(1),fecha.minusDays(3), fecha.minusDays(4))
-            val titulo = "Notificacion de mas atras"
-            val horas = generarHoras(3)
-            for(i in 0..2){
-                val n = Notificacion(); n.fecha= fechas[i].toString() ; n.hora=horas[i] ; n.titulo=titulo+i.toString()
-                pasadas.add(n)
-            }
-            adapterP.setNotificaciones(pasadas)
-            cargadas = false
 //        if(cargadas){
+//            msg = "No hay más noticias."
+//            val fechas = listOf(fecha.minusDays(1),fecha.minusDays(3), fecha.minusDays(4))
+//            val titulo = "Notificacion de mas atras"
+//            val horas = generarHoras(3)
+//            for(i in 0..2){
+//                val n = Notificacion(); n.fecha= fechas[i].toString() ; n.hora=horas[i] ; n.titulo=titulo+i.toString()
+//                pasadas.add(n)
+//            }
+//            adapterP.setNotificaciones(pasadas)
+//            cargadas = false
+        if(cargadas){
+            cargadas = false;
             api.listarNotificaciones(usuarioId, ultimaNotificacion).enqueue(object : Callback<List<Notificacion>> {
                 override fun onResponse(call: Call<List<Notificacion>>, response: Response<List<Notificacion>>) {
-                    msg = response.headers()["message"] ?: "" ; cargadas = false
+                    msg = response.headers()["message"] ?: ""
+                    cargadas = response.headers()["extra"].equals("true")
                     if (response.isSuccessful) {
                         val notificaciones = response.body()!!
-                        if(notificaciones.isNotEmpty()){ cargadas = true ; pasadas.addAll(notificaciones) }
+                        if(notificaciones.isNotEmpty()){ pasadas.addAll(notificaciones) }
                     }else{
                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        Log.e("FAIL", msg)
                     }
                 }
                 override fun onFailure(call: Call<List<Notificacion>>, t: Throwable) {
@@ -135,27 +137,28 @@ class NotificacionesUsuarioFragment : DialogFragment() {
     }
 
     private fun buscarNotificacionesIniciales(usuarioId: String) {
-        val fechas = listOf(fecha,fecha, fecha,fecha, fecha) + generarFechaAlAzar(notisInit.size)
-        val titulo = "Notificacion de prueba"
-        val horas = generarHoras(notisInit.size)
-        notisInit.mapIndexed { i, n->n.fecha=fechas[i].toString(); n.titulo=titulo+(i+1).toString();n.hora=horas[i] }
-        nuevas = notisInit.filter { n-> fecha == LocalDate.parse(n.fecha) } as MutableList
-        pasadas = notisInit.filter{ n->LocalDate.parse(n.fecha).isBefore(fecha) } as MutableList
-        Log.e("NUEVAS",nuevas.size.toString())
-        Log.e("PASADAS",pasadas.size.toString())
+//        val fechas = listOf(fecha,fecha, fecha,fecha, fecha) + generarFechaAlAzar(notisInit.size)
+//        val titulo = "Notificacion de prueba"
+//        val horas = generarHoras(notisInit.size)
+//        notisInit.mapIndexed { i, n->n.fecha=fechas[i].toString(); n.titulo=titulo+(i+1).toString();n.hora=horas[i] }
+//        nuevas = notisInit.filter { n-> fecha == LocalDate.parse(n.fecha) } as MutableList
+//        pasadas = notisInit.filter{ n->LocalDate.parse(n.fecha).isBefore(fecha) } as MutableList
+//        Log.e("NUEVAS",nuevas.size.toString())
+//        Log.e("PASADAS",pasadas.size.toString())
         adapterN.setNotificaciones(nuevas); adapterP.setNotificaciones(pasadas)
         api.listarNotificaciones(usuarioId, "null").enqueue(object : Callback<List<Notificacion>> {
             override fun onResponse(call: Call<List<Notificacion>>, response: Response<List<Notificacion>>) {
                 msg = response.headers()["message"] ?: ""
+                cargadas = response.headers()["extra"].equals("true")
                 if (response.isSuccessful) {
                     val notificaciones = response.body()!!
-                    if(!notificaciones.isEmpty()){
-                        nuevas = notificaciones.filter { n->fecha.equals(LocalDate.parse(n.fecha)) } as MutableList
-                        pasadas = notificaciones.filter{ n->LocalDate.parse(n.fecha).isBefore(fecha) } as MutableList
-                        adapterN.setNotificaciones(nuevas); adapterP.setNotificaciones(pasadas)
-                    }
+                    nuevas = notificaciones.filter { n->fecha.equals(LocalDate.parse(n.fecha)) } as MutableList
+                    pasadas = notificaciones.filter{ n->LocalDate.parse(n.fecha).isBefore(fecha) } as MutableList
+                    adapterN.setNotificaciones(nuevas); adapterP.setNotificaciones(pasadas)
                 }else{
+                    dismiss()
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Log.e("FAIL", msg)
                 }
             }
             override fun onFailure(call: Call<List<Notificacion>>, t: Throwable) {

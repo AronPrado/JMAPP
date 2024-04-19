@@ -86,7 +86,7 @@ class ExtraFunctions {
 //            NavigationWindows.FUNCIONES.name-> { fragment = SeleccionarAulaFragment.newInstance(token, nav, usuarioId, extraId) }//EstudiantesConFuncionesFragment.newInstance(token, lista, usuarioId, extraId) }
             NavigationWindows.ASISTENCIAS.name-> { fragment = RegistroAsistenciaFragment.newInstance(token, lista, usuarioId, extraId) }
             NavigationWindows.NOTAS.name-> { fragment = EstudiantesConFuncionesFragment.newInstance(token, lista, usuarioId, extraId) }
-            NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista) }
+            NavigationWindows.TAREAS.name-> { fragment = AsignarTareasFragment.newInstance(token, lista, extraId, usuarioId) }
             //APODERADO
             NavigationWindows.REUNIONES.name-> { fragment = ProgramarReunionFragment.newInstance(token, lista, usuarioId, extraId) }
 //            NavigationWindows.JUSTIFICACIONES.name-> { fragment = ProgramarReunionFragment.newInstance(token, lista, usuarioId, extraId) }

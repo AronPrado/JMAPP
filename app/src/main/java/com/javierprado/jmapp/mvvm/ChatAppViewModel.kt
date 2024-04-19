@@ -16,11 +16,15 @@ import com.javierprado.jmapp.notificaciones.entities.PushNotificacion
 import com.javierprado.jmapp.notificaciones.entities.Token
 import com.javierprado.jmapp.notificaciones.network.RetrofitNoti
 import com.google.firebase.firestore.FirebaseFirestore
+import com.javierprado.jmapp.data.entities.Justificacion
 import com.javierprado.jmapp.data.entities.Reunion
 import com.javierprado.jmapp.notificaciones.FirebaseService
+import com.javierprado.jmapp.notificaciones.entities.NotificacionDataJustificacion
 import com.javierprado.jmapp.notificaciones.entities.NotificacionDataReunion
 import com.javierprado.jmapp.view.activities.MyApplication
 import kotlinx.coroutines.*
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ChatAppViewModel : ViewModel() {
     val message = MutableLiveData<String>()
@@ -158,8 +162,48 @@ class ChatAppViewModel : ViewModel() {
         }
     }
 
-    fun accionJustificaciones(){
-
+    fun accionJustificaciones(dataReceiver: String, accion: String, justificacion: Justificacion?,
+                              esid: Boolean){
+        var receiver: String
+        fun enviar(idReceiver: String){
+            val estudiante = justificacion?.asistenciaId?.split("-")?.get(0)
+            val curso = justificacion?.asistenciaId?.split("-")?.get(1)
+            val fecha = LocalDate.now().toString() ; val hora = LocalTime.now()
+            val tiempo = "$hora del $fecha" ; val rechazo = justificacion?.motivoRechazo?: ""
+            var mensaje = ""
+            when(accion){
+                "A_FALTA" -> mensaje = "Inasistencia del(a) estudiante $estudiante a las $tiempo en el curso de $curso."
+                "AP_JUSTIFICA" -> mensaje = "Un apoderado ha enviado la justificación de inasistencia."
+                "AD_ACEPTA" -> mensaje = "Se ha aceptado la justificación de inasistencia de su hijo(a) $estudiante"
+                "AD_RECHAZA" -> mensaje = "Se ha cancelado la justificación por: $rechazo."
+            }
+            firestore.collection("Tokens").document(idReceiver).addSnapshotListener { value, _ ->
+                if (value != null && value.exists()) {
+                    val tokenObject = value.toObject(Token::class.java)
+                    token = tokenObject?.token!!
+                    if (idReceiver.isNotEmpty()) {
+                        PushNotificacion(
+                            NotificacionDataJustificacion("Justificaciones", mensaje,
+                                FirebaseService().TIPOJ, justificacion?.id ?: "", accion), token!!
+                        ).also { sendNotification(it) }
+                    } else { Log.e("ChatAppViewModel", "NO TOKEN, NO NOTIFICATION") }
+                }
+                Log.e("ViewModel", token.toString())
+            }
+        }
+        if(!esid){
+            //OBTENER INFO DEL USUARIO DESTINO
+            val query = firestore.collection("Users").whereEqualTo("correo", dataReceiver)
+            query.get().addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val user = querySnapshot.documents[0].toObject(Users::class.java)!!
+                    enviar(user.userid!!)
+                }
+            }.addOnFailureListener { }
+        }else{
+            receiver = dataReceiver
+            enviar(receiver)
+        }
     }
     // OBTENER MENSAJES
     fun getMessages(friend: String): LiveData<List<Messages>> {

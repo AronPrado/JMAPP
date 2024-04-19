@@ -131,11 +131,13 @@ class AsignarTareasFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(token: String, estudiantes: Serializable) =
+        fun newInstance(token: String, estudiantes: Serializable, aulaId: String, docenteId: String) =
             AsignarTareasFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TOKEN, token)
+                    putString(TOKEN, token)
                     putSerializable(ESTUDIANTES, estudiantes)
+                    putString("AULAID", aulaId)
+                    putString("DOCENTEID", docenteId)
                 }
             }
     }

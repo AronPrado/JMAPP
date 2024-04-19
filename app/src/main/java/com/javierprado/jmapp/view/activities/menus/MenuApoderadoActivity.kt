@@ -26,6 +26,7 @@ import com.javierprado.jmapp.data.util.AnotherUtil
 import com.javierprado.jmapp.data.util.ExtraFunctions
 import com.javierprado.jmapp.data.util.NavigationWindows
 import com.javierprado.jmapp.data.util.RoleType
+import com.javierprado.jmapp.data.util.SharedPrefs
 import com.javierprado.jmapp.mvvm.ChatAppViewModel
 import com.javierprado.jmapp.view.activities.comunicacion.ChatDocenteApoderadoActivity
 import com.javierprado.jmapp.view.activities.control.ControlEstudianteActivity
@@ -75,6 +76,8 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             apoderadoId = bundle.getString(MenuAdministradorActivity().USUARIOID, "")
             tokenApod = bundle.getString(MenuAdministradorActivity().TOKEN, "")
             retro.setBearerToken(tokenApod)
+            val mysharedPrefs = SharedPrefs(applicationContext)
+            mysharedPrefs.setValue("tokenAll", tokenApod)
         }
         api = retro.getApi()
         //Noticias
