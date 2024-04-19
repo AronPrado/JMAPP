@@ -110,6 +110,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         drawer.addDrawerListener(toogle)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_despl)
         supportActionBar?.setHomeButtonEnabled(true)
 
         val navigationView: NavigationView = findViewById(R.id.nav_view_apoderado)

@@ -31,7 +31,7 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:src="@drawable/baseline_arrow_back_24"
+                android:src="@drawable/back"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"/>
 
@@ -218,7 +218,8 @@
                                     android:inputType="number"
                                     android:paddingLeft="12dp"
                                     android:textSize="15sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:maxLength="9"/>
 
                                 <View
                                     android:layout_width="1dp"
