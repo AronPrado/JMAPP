@@ -76,7 +76,7 @@ class ProgramarReunionFragment : Fragment() {
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_programar_reunion, container, false)
+        binding = FragmentProgramarReunionBinding.inflate(inflater, container, false)
         return binding.root
     }
     @SuppressLint("SetTextI18n")
