@@ -119,7 +119,15 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         when(item.itemId){
             R.id.nav_item_1 -> {}//Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
 //            R.id.nav_item_2 -> Toast.makeText(this, "Trabajos", Toast.LENGTH_SHORT).show()
-//            R.id.nav_item_3 -> Toast.makeText(this, "Recursos", Toast.LENGTH_SHORT).show()
+            R.id.nav_item_3 -> {
+//                Toast.makeText(this, "Justificaciones", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ControlEstudianteActivity::class.java)
+                intent.putExtra(ControlEstudianteActivity().DIRECT, NavigationWindows.JUSTIFICACIONES.name)
+                intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
+                intent.putExtra(MenuAdministradorActivity().TOKEN, tokenApod)
+                intent.putExtra(HIJOS, hijos as Serializable)
+                startActivity(intent)
+            }
             R.id.nav_item_4 -> {
                 val intent = Intent(this, ControlHorarioActivity::class.java)
                 intent.putExtra(MenuAdministradorActivity().USUARIOID, apoderadoId)
@@ -139,7 +147,7 @@ class MenuApoderadoActivity : AppCompatActivity(), NavigationView.OnNavigationIt
                 startActivity(intent)
 //                Toast.makeText(this, "Reuniones", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_item_6 -> Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show()
+//            R.id.nav_item_6 -> { Toast.makeText(this, "Docentes", Toast.LENGTH_SHORT).show() }
             R.id.nav_item_7 -> {
 //                Toast.makeText(this, "Comunicación", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, ChatDocenteApoderadoActivity::class.java)

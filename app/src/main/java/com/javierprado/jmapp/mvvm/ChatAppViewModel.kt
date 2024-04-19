@@ -141,6 +141,7 @@ class ChatAppViewModel : ViewModel() {
             }
         }
         if(!esid){
+            Log.e("ACEPTAEMAIL","SIESEMAIL")
             //OBTENER INFO DEL USUARIO DESTINO
             val query = firestore.collection("Users").whereEqualTo("correo", dataReceiver)
             query.get().addOnSuccessListener { querySnapshot ->
@@ -151,6 +152,8 @@ class ChatAppViewModel : ViewModel() {
             }.addOnFailureListener { }
         }else{
             receiver = dataReceiver
+
+            Log.e("ACEPTAUSER","DESTINO:$receiver")
             enviar(receiver)
         }
     }

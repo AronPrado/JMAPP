@@ -15,10 +15,10 @@
 <!--                    android:id="@+id/nav_item_2"-->
 <!--                    android:title="Trabajos"-->
 <!--                    android:icon="@drawable/ic_work" />-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_item_3"-->
-<!--                    android:title="Recursos"-->
-<!--                    android:icon="@drawable/ic_resources" />-->
+                <item
+                    android:id="@+id/nav_item_3"
+                    android:title="Justificaciones"
+                    android:icon="@drawable/ic_resources" />
                 <item
                     android:id="@+id/nav_item_4"
                     android:title="Horario"

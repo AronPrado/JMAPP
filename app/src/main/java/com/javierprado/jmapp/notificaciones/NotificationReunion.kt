@@ -19,8 +19,7 @@ class NotificationReunion: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationManager : NotificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val ap = intent!!.extras!!
-        val accionPrueba = ap.getString("ACCION", "")
+        val accionPrueba = intent?.getStringExtra("ACCION")!!
         Log.e("ACCION", accionPrueba)
 
         val sharedCustomPref = SharedPrefs(context)
@@ -36,6 +35,7 @@ class NotificationReunion: BroadcastReceiver() {
         val reunionId = sharedCustomPref.getValue("idreunion") ?: "null"
         val estado = if (accionPrueba == "CANCELAR") "CANCELADA" else "PROGRAMADA"
 
+        Log.e("ACCION DE ACEPTAR", accion)
         //ENVIAR NOTI DE ACEPTACION O CANCELACION
         ChatAppViewModel().accionReuniones(AnotherUtil.getUidLoggedIn(),
             userAenviar, accion, Reunion(), true)
@@ -44,10 +44,26 @@ class NotificationReunion: BroadcastReceiver() {
         firestore.collection("reuniones").document(reunionId).update(hashMap)
 
 
-        val repliedNotification  =
-            NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.chatapp)//CAMBIAR
-                .setContentText(msg).build()
-        notificationManager.notify(notificationId, repliedNotification)
+//        val repliedNotification  =
+//            NotificationCompat.Builder(context, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.chatapp)//CAMBIAR
+//                .setContentText(msg)
+//                .build()
+//        notificationManager.notify(notificationId, repliedNotification)
     }
 }
+
+//class ActionBroadcastReceiver : BroadcastReceiver() {
+//    override fun onReceive(context: Context?, intent: Intent?) {
+//        // Extraer información de la acción del intent recibido
+//        val accionPrueba = intent?.getStringExtra("ACCION") ?: ""
+//        val reunionId = intent?.getStringExtra("ID_REUNION") ?: ""
+//
+//        // Aquí implementa la lógica para enviar una nueva notificación
+//        // Puedes utilizar Retrofit o cualquier otro método para enviar la notificación
+//
+//        // Por ejemplo, enviar una notificación con Firebase Cloud Messaging (FCM)
+//        // Llama a tu función o método para enviar la notificación
+//        // sendNotification(accionPrueba, reunionId)
+//    }
+//}
