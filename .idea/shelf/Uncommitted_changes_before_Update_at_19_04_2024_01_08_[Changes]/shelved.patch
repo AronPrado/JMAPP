@@ -1,0 +1,116 @@
+Index: app/src/main/res/layout/activity_aler_no_asistencia.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_aler_no_asistencia.xml b/app/src/main/res/layout/activity_aler_no_asistencia.xml
+new file mode 100644
+--- /dev/null	(date 1713506517634)
++++ b/app/src/main/res/layout/activity_aler_no_asistencia.xml	(date 1713506517634)
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/main"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:gravity="center"
++    tools:context=".view.AlerNoAsistencia">
++
++    <Button
++        android:id="@+id/btn_alert_notification"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="Mandar Notificación de Inasistencia"/>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt b/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt
+new file mode 100644
+--- /dev/null	(date 1713384387913)
++++ b/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt	(date 1713384387913)
+@@ -0,0 +1,9 @@
++package com.javierprado.jmapp.view
++
++import android.content.Context
++import android.graphics.Bitmap
++import android.graphics.BitmapFactory
++
++fun Int.createBitmap(context: Context): Bitmap {
++    return BitmapFactory.decodeResource(context.resources, this)
++}
+\ No newline at end of file
+Index: app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt b/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt
+new file mode 100644
+--- /dev/null	(date 1713506867800)
++++ b/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt	(date 1713506867800)
+@@ -0,0 +1,29 @@
++package com.javierprado.jmapp.view
++
++import android.app.Notification
++import android.app.NotificationChannel
++import android.app.NotificationManager
++import android.content.Context
++import android.os.Build
++import android.os.Bundle
++import android.widget.Button
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import androidx.core.app.NotificationCompat
++import androidx.core.app.NotificationManagerCompat
++import androidx.core.view.ViewCompat
++import androidx.core.view.WindowInsetsCompat
++import com.google.type.Color
++import com.javierprado.jmapp.R
++import com.javierprado.jmapp.databinding.ActivityAlerNoAsistenciaBinding
++
++class AlerNoAsistencia : AppCompatActivity() {
++
++    private lateinit var binding: ActivityAlerNoAsistenciaBinding
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        binding = ActivityAlerNoAsistenciaBinding.inflate(layoutInflater)
++        setContentView(R.layout.activity_aler_no_asistencia)
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\" package=\"com.javierprado.jmapp\">\r\n\r\n    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.KILL_BACKGROUND_PROCESSES\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n    <uses-permission android:name=\"com.google.android.c2dm.permission.RECEIVE\" />\r\n    <uses-permission\r\n        android:name=\"android.permission.READ_EXTERNAL_STORAGE\"\r\n        android:maxSdkVersion=\"32\" />\r\n\r\n    <application\r\n        android:name=\"com.javierprado.jmapp.view.activities.MyApplication\"\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/icono_jmapp\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/icono_jmapp_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.JMAPP\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"31\">\r\n        <activity android:name=\".view.activities.notificaciones.RegistroDeNotificacionActivity\"\r\n            android:exported=\"true\"/>\r\n        <activity\r\n            android:name=\".view.activities.control.ControlEstudianteActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatApoderadoDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatDocenteApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlSeleccionActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ActualizarInfoApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlHorarioActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlNoticiaActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activity_noticias\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginAdmin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuAdministradorActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.NotiEventosEsco\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.Seleccion_Sesion_Activity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MensajeDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.OptionLogin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ResetPasswordActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MenuPrincipalApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <service\r\n            android:name=\".notificaciones.FirebaseService\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"false\"\r\n            android:permission=\"com.google.android.c2dm.permission.SEND\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\r\n                <action android:name=\"com.google.android.c2dm.intent.RECEIVE\" />\r\n            </intent-filter>\r\n        </service>\r\n        <receiver android:name=\".notificaciones.NotificationReply\" />\r\n        <receiver android:name=\".notificaciones.NotificationReunion\" />\r\n\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision aefebb83891d4c7a348d2c7398ea04e551d55586)
++++ b/app/src/main/AndroidManifest.xml	(date 1713384387655)
+@@ -23,8 +23,6 @@
+         android:theme="@style/Theme.JMAPP"
+         android:usesCleartextTraffic="true"
+         tools:targetApi="31">
+-        <activity android:name=".view.activities.notificaciones.RegistroDeNotificacionActivity"
+-            android:exported="true"/>
+         <activity
+             android:name=".view.activities.control.ControlEstudianteActivity"
+             android:exported="false" />
+@@ -113,7 +111,6 @@
+         </service>
+         <receiver android:name=".notificaciones.NotificationReply" />
+         <receiver android:name=".notificaciones.NotificationReunion" />
+-
+     </application>
+ 
+ </manifest>
+\ No newline at end of file

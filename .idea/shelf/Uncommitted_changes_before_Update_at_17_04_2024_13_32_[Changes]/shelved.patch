@@ -1,0 +1,256 @@
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"corretto-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n  <component name=\"SuppressKotlinCodeStyleNotification\">\r\n    <option name=\"disableForAll\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 5718a803126c133c0a1300812d7f6189f0ec3941)
++++ b/.idea/misc.xml	(date 1713312893900)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt b/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt
+new file mode 100644
+--- /dev/null	(date 1713328735824)
++++ b/app/src/main/java/com/javierprado/jmapp/view/ViewExtensions.kt	(date 1713328735824)
+@@ -0,0 +1,9 @@
++package com.javierprado.jmapp.view
++
++import android.content.Context
++import android.graphics.Bitmap
++import android.graphics.BitmapFactory
++
++fun Int.createBitmap(context: Context): Bitmap {
++    return BitmapFactory.decodeResource(context.resources, this)
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_aler_no_asistencia.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_aler_no_asistencia.xml b/app/src/main/res/layout/activity_aler_no_asistencia.xml
+new file mode 100644
+--- /dev/null	(date 1713321108587)
++++ b/app/src/main/res/layout/activity_aler_no_asistencia.xml	(date 1713321108587)
+@@ -0,0 +1,43 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/main"
++    android:layout_width="match_parent"
++    android:layout_height="64dp"
++    android:orientation="horizontal"
++    android:background="@color/md_theme_light_inverseOnSurface"
++    android:padding="8dp"
++    tools:context=".view.AlerNoAsistencia">
++
++    <LinearLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:orientation="vertical"
++        android:layout_weight="5"
++        android:padding="4dp">
++
++        <TextView
++            android:id="@+id/textView_title_alert"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Su menor hijo no esta en clase"
++            android:textSize="16sp"
++            style="@style/TextAppearance.Compat.Notification.Title"/>
++        
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Justificar su inasistencia"
++            style="@style/TextAppearance.Compat.Notification"/>
++
++    </LinearLayout>
++
++    <ImageView
++        android:id="@+id/imageViewAlert"
++        android:layout_width="48dp"
++        android:layout_height="48dp"
++        android:src="@drawable/colegiologo"
++        android:layout_weight="2"/>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\" package=\"com.javierprado.jmapp\">\r\n\r\n    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.KILL_BACKGROUND_PROCESSES\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n    <uses-permission android:name=\"com.google.android.c2dm.permission.RECEIVE\" />\r\n    <uses-permission\r\n        android:name=\"android.permission.READ_EXTERNAL_STORAGE\"\r\n        android:maxSdkVersion=\"32\" />\r\n\r\n    <application\r\n        android:name=\"com.javierprado.jmapp.view.activities.MyApplication\"\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.JMAPP\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".view.activities.control.ControlEstudianteActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatApoderadoDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.comunicacion.ChatDocenteApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlSeleccionActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ActualizarInfoApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlHorarioActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.control.ControlNoticiaActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.agregar.RegisterApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activity_noticias\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginAdmin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.LoginActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuAdministradorActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.NotiEventosEsco\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuDocenteActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.menus.MenuApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.Seleccion_Sesion_Activity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MensajeDocente\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.login.OptionLogin\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.activities.editar.ResetPasswordActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MenuPrincipalApoderadoActivity\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".view.MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <service\r\n            android:name=\".notificaciones.FirebaseService\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"false\"\r\n            android:permission=\"com.google.android.c2dm.permission.SEND\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\r\n                <action android:name=\"com.google.android.c2dm.intent.RECEIVE\" />\r\n            </intent-filter>\r\n        </service>\r\n        <receiver android:name=\".notificaciones.NotificationReply\" />\r\n        <receiver android:name=\".notificaciones.NotificationReunion\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 5718a803126c133c0a1300812d7f6189f0ec3941)
++++ b/app/src/main/AndroidManifest.xml	(date 1713312651406)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools" package="com.javierprado.jmapp">
++    xmlns:tools="http://schemas.android.com/tools"
++    package="com.javierprado.jmapp">
+ 
+     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+     <uses-permission android:name="android.permission.INTERNET" />
+@@ -12,7 +13,7 @@
+         android:maxSdkVersion="32" />
+ 
+     <application
+-        android:name="com.javierprado.jmapp.view.activities.MyApplication"
++        android:name=".view.activities.MyApplication"
+         android:allowBackup="true"
+         android:dataExtractionRules="@xml/data_extraction_rules"
+         android:fullBackupContent="@xml/backup_rules"
+@@ -23,6 +24,12 @@
+         android:theme="@style/Theme.JMAPP"
+         android:usesCleartextTraffic="true"
+         tools:targetApi="31">
++        <activity
++            android:name=".view.AlerNoAsistencia"
++            android:exported="false" />
++        <activity
++            android:name=".notificaciones.AlertaNoAsistencia"
++            android:exported="false" />
+         <activity
+             android:name=".view.activities.control.ControlEstudianteActivity"
+             android:exported="false" />
+@@ -109,6 +116,7 @@
+                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+             </intent-filter>
+         </service>
++
+         <receiver android:name=".notificaciones.NotificationReply" />
+         <receiver android:name=".notificaciones.NotificationReunion" />
+     </application>
+Index: .idea/render.experimental.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/render.experimental.xml b/.idea/render.experimental.xml
+new file mode 100644
+--- /dev/null	(date 1713317660918)
++++ b/.idea/render.experimental.xml	(date 1713317660918)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RenderSettings">
++    <option name="showDecorations" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt b/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt
+new file mode 100644
+--- /dev/null	(date 1713331661843)
++++ b/app/src/main/java/com/javierprado/jmapp/view/AlerNoAsistencia.kt	(date 1713331661843)
+@@ -0,0 +1,67 @@
++package com.javierprado.jmapp.view
++
++import android.app.Notification
++import android.app.NotificationChannel
++import android.app.NotificationManager
++import android.content.Context
++import android.os.Build
++import android.os.Bundle
++import androidx.activity.enableEdgeToEdge
++import androidx.appcompat.app.AppCompatActivity
++import androidx.core.app.NotificationCompat
++import androidx.core.view.ViewCompat
++import androidx.core.view.WindowInsetsCompat
++import com.google.type.Color
++import com.javierprado.jmapp.R
++
++class AlerNoAsistencia : AppCompatActivity() {
++
++    private val channelName = "channelName"
++    private val channelId = "channelId"
++
++    private lateinit var notificationStyle1: Notification
++    private val notificationStyleID = 0
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_aler_no_asistencia)
++
++        createNotificationChannel()
++
++        buildNotificationStyle1()
++
++        buttonsListener()
++    }
++
++    private fun buildNotificationStyle1(){
++        val myBitmap = R.drawable.notification.createBitmap(this)
++
++        notificationStyle1 = NotificationCompat.Builder(this, channelId).also {
++            it.setSmallIcon(R.drawable.colegiologo)
++            it.setContentTitle("Su menor hijo no esta en el colegio")
++            it.setContentText("Justifique la inasistencia porfavor")
++            it.setStyle(
++                NotificationCompat.BigPictureStyle()
++                    .bigPicture(myBitmap)
++            )
++            it.setLargeIcon(myBitmap)
++        }.build()
++    }
++
++    private fun buttonsListener(){
++
++    }
++    private fun createNotificationChannel(){
++        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
++            val channelImportance = NotificationManager.IMPORTANCE_HIGH
++
++            val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
++                lightColor = Color.RED_FIELD_NUMBER
++                enableLights(true)
++            }
++
++            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
++            manager.createNotificationChannel(channel)
++        }
++    }
++}
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"#JAVA_HOME\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveExternalAnnotations\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 5718a803126c133c0a1300812d7f6189f0ec3941)
++++ b/.idea/gradle.xml	(date 1713312893916)
+@@ -5,7 +5,7 @@
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+-        <option name="gradleJvm" value="#JAVA_HOME" />
++        <option name="gradleJvm" value="jbr-17" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
